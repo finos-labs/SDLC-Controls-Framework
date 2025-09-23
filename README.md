@@ -2,9 +2,28 @@
 
 # SDLC Controls Framework Website
 
+The website source for the SDLC Controls Framework working group (under the FINSO DevOps SIG).
 
+# Building the Site
 
-## License
+This an Astro site, based on Starlight template. The source sits under the `docs` folder.
+
+To build and run the site locally, run the following.
+
+```bash
+cd docs
+npm run dev
+```
+
+To build the site ready for publishing, run:
+
+```bash
+npm run build
+```
+
+...it will create the site in the `dist` folder ready for hosting.
+
+# License
 
 Copyright © 2025 Fintech Open Source Foundation
 
