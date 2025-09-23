@@ -12,6 +12,7 @@ To build and run the site locally, run the following.
 
 ```bash
 cd docs
+npm install
 npm run dev
 ```
 
