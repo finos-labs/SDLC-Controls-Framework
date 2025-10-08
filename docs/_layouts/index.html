@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+<header class="py-5 bg-light border-bottom">
+    <div class="container">
+        <div class="d-flex align-items-center">
+            <img src="/2025_AIGovernanceFramework_Icon.png" alt="AI Governance Framework Icon" style="height: 48px;" class="me-3 mb-0">
+            <div>
+                <h1 class="display-4 mb-0">{{ page.title }}</h1>
+            </div>
+        </div>
+        <p class="lead mb-0">{{ page.subtitle }}</p>
+        <p class="lead mb-0 small fst-italic" style="font-size: 0.8em;">
+            <em>
+            version: {{ site.version }} 
+            {% assign formatted_date = site.release-date | date: "%B %d, %Y" %}
+            ({{ formatted_date }})
+            </em>
+        </p>
+    </div>
+</header>
+
+<main class="container py-4">
+{{ content }}
+</main>
