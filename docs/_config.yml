@@ -1,0 +1,43 @@
+title: FINOS AI Readiness - AI Governance Framework
+
+version: pre-alpha
+release-date: 2025-09-23
+
+risk_classification:
+  RC: Regulatory and Compliance
+  OP: Operational
+  SEC: Security
+
+mitigation_classification:
+  PREV: Preventative
+  DET: Detective
+
+document_status:
+  - name: Pre-Draft
+    description: "Initial brainstorming or collection of ideas, notes, and outlines. The document is not yet formally written."
+  - name: Draft
+    description: "The document is in the early stages of development, with content being written and structured but not yet polished."
+  - name: Working-Group-Approved
+    description: "The document is in its final form and has been approved by the AIGF team."
+  - name: Published
+    description: "The publication of an Approved Specification in a publicly accessible manner."
+
+# FFIEC IT Booklet abbreviations mapping
+ffiec_itbooklet_abbreviations:
+  architecture-infrastructure-and-operations: aio
+  archived-booklets: arc
+  audit: aud
+  business-continuity-management: bcm
+  development-acquisition-and-maintenance: dam
+  information-security: sec
+  management: mgt
+  outsourcing-technology-services: ots
+  retail-payment-systems: rps
+  supervision-of-technology-service-providers: tsp
+  wholesale-payment-systems: wps
+
+collections:
+  risks:
+    output: true
+  mitigations:
+    output: true
