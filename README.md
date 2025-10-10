@@ -2,61 +2,23 @@
 
 # SDLC Controls Framework
 
-Short blurb about what your project does.
+The purpose of this working group is to establish a common controls catalogue for software governance across financial institutions to increase reuse, reduce toil and provide additional clarity through consistency.
 
-## Installation
+This repository contains the documentation and website, generated via Jekyll.
 
-OS X & Linux:
 
-```sh
-npm install my-crazy-module --save
-```
+## Running Jekyll
 
-Windows:
+You will need Ruby and `bundle` installed, then run the site locally using the following.
 
 ```sh
-edit autoexec.bat
+cd docs
+bundle install
+jekyll serve
 ```
 
-## Usage example
+If all goes well, view your freshly minted site at http://127.0.0.1:4000. It should 'hot reload' (Jekyll does its thing) so you can edit and see your changes in the browser.
 
-A few motivating and useful examples of how your project can be used. Spice this up with code blocks and potentially screenshots / videos ([LiceCap](https://www.cockos.com/licecap/) is great for this kind of thing).
-
-_For more examples and usage, please refer to the [Wiki][wiki]._
-
-## Development setup
-
-Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
-
-```sh
-make install
-npm test
-```
-
-## Roadmap
-
-List the roadmap steps; alternatively link the Confluence Wiki page where the project roadmap is published.
-
-1. Item 1
-2. Item 2
-3. ....
-
-## Contributing
-
-**All commits** must be signed with a DCO signature to avoid being flagged by the DCO Bot. This means that your commit log message must contain a line that looks like the following one, with your actual name and email address:
-
-```
-Signed-off-by: John Doe <john.doe@example.com>
-```
-
-Adding the `-s` flag to your `git commit` will add that line automatically. You can also add it manually as part of your commit log message or add it afterwards with `git commit --amend -s`.
-
-See [CONTRIBUTING.md](./.github/CONTRIBUTING.md) for more information
-
-### Helpful DCO Resources
-- [Git Tools - Signing Your Work](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work)
-- [Signing commits
-](https://docs.github.com/en/github/authenticating-to-github/signing-commits)
 
 ## License
 
