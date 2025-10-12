@@ -1,6 +1,6 @@
 ---
 layout: index
-title: "FINOS Common SDLC Controls"
+title: "FINOS SDLC Common Controls"
 subtitle: "A comprehensive collection of risks and control that support the regulated software development lifecycle"
 risk_order:
   - OP
@@ -11,10 +11,10 @@ mitigation_order:
   - DET
 ---
 
-AI, especially Generative AI, is reshaping financial services, enhancing products, client interactions, and productivity. However, challenges like hallucinations and model unpredictability make safe deployment complex. Rapid advancements require flexible governance.
+In today’s highly regulated technology landscape, the Software Development Life Cycle (SDLC) must be executed with rigor, discipline, and with increasing focus on compliance. Organizations are increasingly required to demonstrate adherence to governance frameworks, regulatory standards, and internal risk management policies.
 
-Financial institutions are eager to adopt AI but face regulatory hurdles. Existing frameworks may not address AI's unique risks, necessitating an adaptive governance model for safe and compliant integration.
+To meet these expectations, SDLC processes must incorporate robust controls that not only ensure product quality and security but also provide clear evidence of compliance. However, many teams struggle with identifying which risks are most critical and how best to mitigate them consistently across projects.
 
-The following framework has been developed by [FINOS (Fintech Open Source Foundation)](https://www.finos.org/) members, providing a comprehensive catalogue of risks and associated mitigations. We suggest using our [heuristic risk identification framework](heuristic-assessment.html) to determine which risks are most relevant for a given use case.
+This project aims to present a curated set of common risks encountered during the SDLC, along with their corresponding mitigations. By establishing a standardized library of controls, the goal is to streamline compliance efforts, reduce uncertainty, and promote safe, repeatable development practices aligned with regulatory expectations.
 
 {% include catalogue.html %}
