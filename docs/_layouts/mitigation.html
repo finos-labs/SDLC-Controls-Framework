@@ -56,7 +56,7 @@ layout: default
                         {% if page.mitigates contains risk_prefix %}
                         <div class="list-group-item">
                             <h3 class="h6 mb-1">
-                                <a href="{{ risk.url }}">{% include risk-id.html risk=risk %} : {{ risk.title }}</a>
+                                <a href="{{ site.baseurl }}/{{ risk.url }}">{% include risk-id.html risk=risk %} : {{ risk.title }}</a>
                             </h3>
                         </div>
                         {% endif %}
@@ -75,7 +75,7 @@ layout: default
                         {% if page.related_mitigations contains mitigation_prefix %}
                         <div class="list-group-item">
                             <h3 class="h6 mb-1">
-                                <a href="{{ mitigation.url }}">{% include mitigation-id.html mitigation=mitigation %} : {{ mitigation.title }}</a>
+                                <a href="{{ site.baseurl }}/{{ mitigation.url }}">{% include mitigation-id.html mitigation=mitigation %} : {{ mitigation.title }}</a>
                             </h3>
                         </div>
                         {% endif %}
