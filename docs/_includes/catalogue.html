@@ -129,7 +129,7 @@
                               {% assign sorted_risks = risk_group.items | sort: "sequence" %}
                               {% for risk in sorted_risks %}
                               <div class="col-12 risk-item" data-title="{{ risk.title | downcase }}" data-content="{{ risk.content | strip_html | strip_newlines | downcase }}">
-                                  <div class="card border-start border-primary border-3 h-100 card-hover" onclick="window.location.href='{{ risk.id }}.html'" style="cursor: pointer;">
+                                  <div class="card border-start border-primary border-3 h-100 card-hover" onclick="window.location.href='{{ site.baseurl }}{{ risk.id }}.html'" style="cursor: pointer;">
                                       <div class="card-body py-2">
                                           <div class="d-flex justify-content-between align-items-start">
                                               <div class="flex-grow-1">
@@ -152,7 +152,7 @@
                                                   <p class="small text-muted mb-0 description-text">{{ clean_summary }}</p>
                                               </div>
                                               <div class="ms-2">
-                                                  <a href="{{ risk.id }}.html" class="btn btn-outline-primary btn-sm" onclick="event.stopPropagation();">
+                                                  <a href="{{ site.baseurl }}{{ risk.id }}.html" class="btn btn-outline-primary btn-sm" onclick="event.stopPropagation();">
                                                       View
                                                   </a>
                                               </div>
@@ -205,7 +205,7 @@
                               {% assign sorted_mitigations = mitigation_group.items | sort: "sequence" %}
                               {% for mitigation in sorted_mitigations %}
                               <div class="col-12 mitigation-item" data-title="{{ mitigation.title | downcase }}" data-content="{{ mitigation.content | strip_html | strip_newlines | downcase }}">
-                                  <div class="card border-start border-success border-3 h-100 card-hover" onclick="window.location.href='{{ mitigation.id }}.html'" style="cursor: pointer;">
+                                  <div class="card border-start border-success border-3 h-100 card-hover" onclick="window.location.href='{{ site.baseurl }}{{ mitigation.id }}.html'" style="cursor: pointer;">
                                       <div class="card-body py-2">
                                           <div class="d-flex justify-content-between align-items-start">
                                               <div class="flex-grow-1">
@@ -233,7 +233,7 @@
                                                   <p class="small text-muted mb-0 description-text">{{ clean_summary }}</p>
                                               </div>
                                               <div class="ms-2">
-                                                  <a href="{{ mitigation.id }}.html" class="btn btn-outline-success btn-sm" onclick="event.stopPropagation();">
+                                                  <a href="{{ site.baseurl }}{{ mitigation.id }}.html" class="btn btn-outline-success btn-sm" onclick="event.stopPropagation();">
                                                       View
                                                   </a>
                                               </div>

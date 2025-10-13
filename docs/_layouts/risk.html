@@ -58,7 +58,7 @@ layout: default
                         {% if related_risk %}
                         <div class="list-group-item">
                             <h3 class="h6 mb-1">
-                                <a href="{{ related_risk.url }}">{{ risk_id | upcase }}: {{ related_risk.title }}</a>
+                                <a href="{{ site.baseurl }}/{{ related_risk.url }}">{{ risk_id | upcase }}: {{ related_risk.title }}</a>
                             </h3>
                         </div>
                         {% else %}
@@ -79,7 +79,7 @@ layout: default
                         {% for mitigation in related_mitigations %}
                         <div class="list-group-item">
                             <h3 class="h6 mb-1">
-                                <a href="{{ mitigation.url }}">{% include mitigation-id.html mitigation=mitigation %} : {{ mitigation.title }}</a>
+                                <a href="{{ site.baseurl }}/{{ mitigation.url }}">{% include mitigation-id.html mitigation=mitigation %} : {{ mitigation.title }}</a>
                             </h3>
                         </div>
                         {% endfor %}
