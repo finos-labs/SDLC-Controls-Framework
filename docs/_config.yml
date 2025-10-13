@@ -2,6 +2,7 @@ title: FINOS AI Readiness - AI Governance Framework
 
 version: pre-alpha
 release-date: 2025-09-23
+baseurl: "/SDLC-Controls-Framework"
 
 risk_classification:
   RC: Regulatory and Compliance
