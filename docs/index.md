@@ -1,6 +1,6 @@
 ---
 layout: index
-title: "FINOS SDLC Common Controls"
+title: "FINOS SDLC³- SDLC Common Controls Catalog"
 subtitle: "A comprehensive collection of risks and control that support the regulated software development lifecycle"
 risk_order:
   - OP

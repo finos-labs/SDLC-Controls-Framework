@@ -23,38 +23,42 @@ related_risks:
 ---
 ## Summary
 
-Using third-party hosted LLMs creates a **two-way trust boundary** where neither inputs nor outputs can be fully trusted. Sensitive financial data sent for inference may be memorized by models, leaked through prompt attacks, or exposed via inadequate provider controls. This risks exposing customer PII, proprietary algorithms, and confidential business information, particularly with free or poorly-governed LLM services.
+Authorized personnel (developers, contractors, administrators, or other trusted users) with legitimate access to source code repositories, development environments, production systems, or sensitive data may intentionally or unintentionally compromise the confidentiality, integrity, or availability of software assets. 
 
 ## Description
 
-A core challenge arises from the nature of interactions with external LLMs, which can be conceptualized as a **two-way trust boundary**. Neither the data inputted into the LLM nor the output received can be fully trusted by default. Inputs containing sensitive financial information may be retained or processed insecurely by the provider, while outputs may inadvertently reveal previously processed sensitive data, even if the immediate input prompt appears benign.
+Insider Threat includes risks of malicious code injection, unauthorized data exfiltration, credential misuse, sabotage of build/deployment pipelines, or negligent security practices that expose systems to exploitation. Additionally, insider threat encompasses scenarios where external attackers have compromised the credentials of legitimate users, enabling them to conduct attacks while masquerading as trusted personnel with valid access. The trusted position and technical knowledge of insiders—or attackers leveraging insider credentials—makes detection difficult and potential impact significant.
 
-Several mechanisms unique to or amplified by LLMs contribute to this risk:
 
-*   **Model Memorization**: LLMs can [memorize](https://arxiv.org/pdf/2310.18362) sensitive data from training or user interactions, later disclosing customer details, loan terms, or trading strategies in unrelated sessions—even to different users. This includes potential cross-user leakage, where one user's sensitive data might be disclosed to another.
 
-*   **Prompt-Based Attacks**: Adversaries can craft prompts to extract memorized sensitive information (see ri-10).
+- **Malicious code injection** - Inserting backdoors, vulnerabilities, or malicious logic into applications or infrastructure
+- **Compromised credentials** - Attackers using stolen or phished developer/admin credentials to access systems and data
+- **Data exfiltration** - Stealing source code, intellectual property, customer data, or sensitive business information
+- **CI/CD pipeline manipulation** - Tampering with build processes, deployment pipelines, or supply chain components to inject malicious code
+- **Cloud/infrastructure misconfiguration** - Accidentally or intentionally exposing databases, storage, or services to unauthorized access
 
-*   **Inadequate Data Controls**: Insufficient sanitization, encryption, or access controls by providers or institutions increases disclosure risk. Hosted models may not provide transparent mechanisms for how input data is processed, retained, or sanitized, increasing the risk of persistent exposure of proprietary data.
-
-The risk profile can be further influenced by the provider's data handling practices and the specific services utilized:
-
-*   **Provider Data Practices**: Without clear contracts ensuring encryption, retention limits, and secure deletion, institutions lose control over sensitive data. Providers may lack transparency about data processing and retention.
-
-*   **Fine-Tuning Risks**: Using proprietary data for fine-tuning embeds sensitive information in models, potentially accessible to unauthorized users if access controls are inadequate.
-
-Enterprise LLMs typically offer better protections (private endpoints, no training data usage, encryption) than free services, which often use input data for model improvements. Thorough due diligence on provider practices is essential.
-
-This risk is aligned with OWASP’s [LLM02:2025 Sensitive Information Disclosure](https://genai.owasp.org/llmrisk/llm02-sensitive-information-disclosure/), which highlights the dangers of exposing proprietary or personally identifiable information (PII) through large-scale, externally hosted AI systems.
 
 ### Consequences
 
-The consequences of such information leakage for a financial institution can be severe:
-* **Breach of Data Privacy Regulations:** Unauthorized disclosure of PII can lead to significant fines under regulations like GDPR, CCPA, and others, alongside mandated customer notifications.
-* **Violation of Financial Regulations:** Leakage of confidential customer information or market-sensitive data can breach specific financial industry regulations concerning data security and confidentiality (e.g., GLBA in the US).
-* **Loss of Competitive Advantage:** Exposure of proprietary algorithms, trading strategies, or confidential business plans can erode a firm's competitive edge.
-* **Reputational Damage:** Public disclosure of sensitive data leakage incidents can lead to a substantial loss of customer trust and damage to the institution's brand.
-* **Legal Liabilities:** Beyond regulatory fines, institutions may face lawsuits from affected customers or partners.
+The consequences of an insider threat materializing for a financial institution can be severe:
+
+* **Direct Financial Losses:** Fraudulent transactions, theft of funds, unauthorized wire transfers, or manipulation of accounts can result in immediate monetary losses to the institution and its customers.
+
+* **Breach of Data Privacy Regulations:** Unauthorized access to or exfiltration of customer PII can lead to significant fines under regulations like GDPR, CCPA, and GLBA, alongside mandated breach notifications and regulatory scrutiny.
+
+* **Violation of Financial Regulations:** Insider actions compromising system integrity, audit trails, or customer data can breach banking regulations (e.g., SOX, PCI DSS, Basel III) and trigger enforcement actions from regulatory bodies.
+
+* **Reputational Damage:** Public disclosure of insider attacks—particularly those involving customer funds or data—can severely erode customer trust, leading to account closures, deposit flight, and long-term brand damage.
+
+* **Operational Disruption:** Sabotage of critical banking systems, payment processing infrastructure, or core applications can halt operations, impacting customer service and transaction processing capabilities.
+
+* **Loss of Competitive Advantage:** Theft of proprietary trading algorithms, risk models, customer insights, or strategic plans can benefit competitors and undermine market position.
+
+* **Legal Liabilities:** The institution may face lawsuits from affected customers, shareholders, or partners, as well as potential criminal investigations if insider actions involve fraud or data breaches.
+
+---
+
+Does this capture the right scope and tone for your risk register?
 
 ## Links
 
