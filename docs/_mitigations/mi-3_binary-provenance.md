@@ -17,28 +17,28 @@ related_mitigations:
   - mi-1  # Peer Source Code Review
 ---
 
-**Binary Provenance**
+## Summary
 
-## Purpose
-To ensure that every software artifact running in a production environment has known and verifiable provenance, establishing a documented chain of custody from source code commit through build and into deployment. This control enables organizations to answer the question "where did this binary come from?" for any artifact at any time.
+Every software artifact running in a production environment has known and verifiable provenance, establishing a documented chain of custody from source code commit through build and into deployment.
 
-## Key Principles
-* Every production artifact must be traceable back to a specific source code commit, build process, and build environment
-* Provenance records are created at build time and are immutable once written
-* Provenance information includes the source commit, repository state, build environment details, build log references, and the resulting artifact identity
-* No artifact may be deployed to production without a corresponding provenance record
-* Provenance records are stored in a tamper-evident system that prevents retroactive modification
+## Description
 
-## Implementation Guidance
-* Record the following for every official build: SHA-256 hash of the output artifact, source git commit reference, repository URL, build log URL, build environment identifier, and timestamp
+Binary provenance answers the question "where did this binary come from?" for any artifact at any time. Provenance records are created at build time and capture the source commit, repository state, build environment details, build log references, and the resulting artifact identity. These records are immutable once written and stored in a tamper-evident system that prevents retroactive modification.
+
+By linking the cryptographic identity of an artifact (from content addressable identities) to its source and build metadata, binary provenance ensures that only artifacts built from known source code through authorized build processes reach production.
+
+## Requirements
+
+* Every production artifact MUST be traceable back to a specific source code commit, build process, and build environment
+* Provenance records MUST be created at build time and be immutable once written
+* Provenance records MUST include: SHA-256 hash of the output artifact, source git commit reference, repository URL, build log URL, build environment identifier, and timestamp
+* No artifact MAY be deployed to production without a corresponding provenance record
+* Provenance records MUST be stored in a tamper-evident system that prevents retroactive modification
+* A Software Bill of Materials (SBOM) MUST be generated as part of the build process and associated with the artifact's provenance record
+
+## Examples & Commentary
+
 * Use a dedicated provenance store or attestation service to maintain build records independently of the CI/CD system
 * Implement deployment gates that verify an artifact has a valid provenance record before allowing promotion to production environments
-* Ensure provenance records link the cryptographic identity of the artifact (from content addressable identities) to its source and build metadata
 * Periodically audit provenance records against running deployments to confirm that all production artifacts have known origins
-
-## Importance and Benefits
-* **Insider Threat Mitigation:** Makes it extremely difficult for a malicious insider to introduce unauthorized binaries into production, as every artifact must have a verifiable build record
-* **Supply Chain Security:** Ensures that only artifacts built from known source code through authorized build processes reach production
-* **Incident Response:** Enables rapid identification of exactly what source code and dependencies produced any given production artifact during security investigations
-* **Regulatory Compliance:** Provides the audit trail required by financial regulators to demonstrate control over what software is running in production systems
-* **Deployment Confidence:** Guarantees that the artifact deployed is the same one that was tested and approved, eliminating risks from manual or ad-hoc artifact handling
+* Distinguish between human-friendly identifiers (semantic versioning, commit references) for navigation and cryptographic hashes for security and compliance purposes

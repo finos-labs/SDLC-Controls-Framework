@@ -15,29 +15,28 @@ related_mitigations:
   - mi-1  # Peer Source Code Review
 ---
 
-**Content Addressable Identities**
+## Summary
 
-## Purpose
-To establish tamper-proof identification of software artifacts using cryptographic hashing, ensuring that any change to an artifact produces a different identity. This control provides the foundation for verifiable integrity of binaries, containers, packages, and other deliverables throughout the software development lifecycle.
+Software artifacts are identified by cryptographic hashes of their contents, ensuring that any change to an artifact produces a different identity and making tampering immediately detectable.
 
-## Key Principles
-* Every software artifact is identified by a cryptographic hash (e.g., SHA-256) of its contents, not by mutable labels such as version tags or filenames
-* Any modification to an artifact, even a single byte, produces a completely different identity, making tampering immediately detectable
-* Content addressable identities are immutable and cannot be forged or reassigned to different content
-* Human-readable identifiers (semantic versions, branch names, commit references) are used for navigation and convenience but are never relied upon for security or compliance verification
-* All systems that store, transfer, or deploy artifacts must reference them by their cryptographic identity
+## Description
 
-## Implementation Guidance
-* Generate SHA-256 (or stronger) hashes for all build outputs including container images, compiled binaries, archives, and packages
-* Store artifact hashes in a secure, append-only record that serves as a source of truth for artifact identity
+High-security environments require a tamper-proof identity scheme for software artifacts. Content addressable identification uses cryptographic hashing (e.g., SHA-256) to derive an artifact's identity directly from its contents. Unlike mutable labels such as version tags or filenames, these identities are immutable: even a single-byte change produces a completely different hash. This provides the foundation for verifiable integrity of binaries, containers, packages, and other deliverables throughout the software development lifecycle.
+
+Human-readable identifiers (semantic versions, branch names, commit references) remain useful for navigation and convenience but must never be relied upon for security or compliance verification.
+
+## Requirements
+
+* Every software artifact MUST be identified by a cryptographic hash (SHA-256 or stronger) of its contents
+* Any modification to an artifact MUST produce a completely different identity
+* Content addressable identities MUST be immutable and cannot be forged or reassigned to different content
+* All systems that store, transfer, or deploy artifacts MUST reference them by their cryptographic identity
+* A mapping between human-readable identifiers and cryptographic hashes MUST be maintained
+
+## Examples & Commentary
+
+* Generate SHA-256 hashes for all build outputs including container images, compiled binaries, archives, and packages
 * Configure container registries and artifact repositories to use content-addressable storage (e.g., Docker content trust, OCI image digests)
-* Ensure CI/CD pipelines propagate cryptographic identities rather than mutable tags when referencing artifacts across stages
+* CI/CD pipelines should propagate cryptographic identities rather than mutable tags when referencing artifacts across stages
 * Implement verification checks at deployment boundaries that confirm the cryptographic identity of an artifact before allowing it to proceed
-* Maintain a mapping between human-readable identifiers and cryptographic hashes to support developer workflows without compromising integrity guarantees
-
-## Importance and Benefits
-* **Tamper Detection:** Any unauthorized modification to a software artifact is immediately detectable because the cryptographic hash will no longer match
-* **Insider Threat Mitigation:** Prevents malicious insiders from substituting or altering artifacts without detection, as any change produces a new identity
-* **Supply Chain Integrity:** Provides a verifiable chain of identity from build to deployment, ensuring the artifact that was tested is the same one that is deployed
-* **Audit and Compliance:** Creates an immutable record of exactly which artifact was present at each stage, supporting regulatory and forensic requirements
-* **Reproducibility:** Enables precise identification of what was running in any environment at any point in time
+* Store artifact hashes in a secure, append-only record that serves as the source of truth for artifact identity
