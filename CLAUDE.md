@@ -43,7 +43,11 @@ Optional frontmatter fields for external standard references:
 - `eu-ai-act_references` - keys from `_data/eu-ai-act.yml`
 - `related_risks` - array of `ri-{n}` identifiers
 
-Body sections: `## Summary`, `## Description`, `## Links`
+Body sections:
+- `## Summary` - one sentence overview of the risk
+- `## Description` - detailed explanation of the risk
+- `### Consequences` - impact if the risk materialises
+- `## Links` - external references
 
 ## Adding mitigations
 
@@ -64,7 +68,11 @@ mitigates:                   # Required: which risks this addresses
 
 Optional: same external standard references as risks, plus `related_mitigations` (array of `mi-{n}`).
 
-Body sections: bold title line, `## Purpose`, `## Key Principles`, `## Implementation Guidance`, `## Importance and Benefits`
+Body sections:
+- `## Summary` - one sentence overview of the control
+- `## Description` - detailed explanation
+- `## Requirements` - expectations using RFC 2119 language (MUST, SHOULD, MAY)
+- `## Examples & Commentary` - practical implementation examples and guidance
 
 ## Referencing external standards
 
