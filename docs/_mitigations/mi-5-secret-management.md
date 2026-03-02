@@ -31,13 +31,13 @@ Build and runtime secrets are stored securely on organization approved tools and
 This control provides a framework for managing sensitive application secrets throughout their lifecycle. It ensures that credentials, keys, and other confidential information are handled in a secure and consistent manner, reducing the risk of unauthorized access or exposure. By promoting centralized management, controlled access, and ongoing monitoring, the control helps organizations maintain the confidentiality and integrity of critical information while supporting compliance with security and regulatory standards.
 
 ## Requirements
-* All application secrets (including API keys, credentials, certificates, and tokens) are centrally managed using an approved secrets management solution.
-* Secrets are encrypted at rest and in transit.
-* Secrets are never hardcoded in source code or configuration files.
-* Access is enforced through role-based, least-privilege controls.
-* All access to secrets is logged and continuously monitored.
-* Automated rotation and revocation processes are implemented.
-* Audit capabilities are maintained to support security best practices and regulatory compliance requirements.
+* All application secrets (including API keys, credentials, certificates, and tokens) must be centrally managed using an approved secrets management solution.
+* Secrets must be encrypted at rest and in transit.
+* Secrets should never be hardcoded in source code or configuration files.
+* Access must be enforced through role-based, least-privilege controls.
+* All access to secrets must be logged and continuously monitored.
+* Automated rotation and revocation processes must be implemented.
+
 
 ## Examples & Commentary
 * **Centralized vault storage** Using tools like HashiCorp Vault, AWS Secrets Manager, or Azure Key Vault to store API keys, database passwords, certificates, and tokens.
