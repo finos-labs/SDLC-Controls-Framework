@@ -9,16 +9,17 @@ type: PREV
 
 ## Summary
 
-Software must maintain an accurate, machine-readable inventory of what is actually shipped in each artifact, as the input for downstream analysis.
+Component inventory provides traceability and enables fast response by maintaining an accurate, machine-readable record of what is actually shipped in each artifact. Additional analysis (e.g. vulnerability scanning, license compliance) adds further value.
 
 ## Description
 
 Component inventory is the practice of identifying and cataloguing all third-party components (libraries, packages, modules) that are included in a software artifact — i.e. what is actually shipped. This includes direct and transitive dependencies. The output is typically a Software Bill of Materials (SBOM) in a standard format such as SPDX or CycloneDX.
 
-Without an inventory of what is shipped, downstream mitigations (vulnerability scanning, license compliance, etc.) cannot be performed; this inventory is the input for those analyses. Extraction from the actual artifact (container image, binary, filesystem) rather than from declarations alone enables detection of discrepancies between what is declared and what is present.
+The inventory provides traceability and enables fast response: you know what you ship, you can trace components to artifacts, and when a vulnerability is disclosed, a license concern arises, or another issue surfaces, you can query the inventory to see which artifacts are affected and respond quickly. Additional analysis (e.g. vulnerability scanning, license compliance) adds further value by enabling prevention before issues reach production. Extraction from the actual artifact (container image, binary, filesystem) rather than from declarations alone enables detection of discrepancies between what is declared and what is present.
 
 ## Map to related risks
 
+- Lack of traceability of components in software
 - Exposure to known vulnerabilities (CVEs)
 - Incompatible or prohibited licenses
 - Supply chain tampering
@@ -33,11 +34,12 @@ Without an inventory of what is shipped, downstream mitigations (vulnerability s
 2. The output MUST be a structured, machine-readable SBOM (e.g. SPDX or CycloneDX).
 3. The inventory MUST include direct and transitive dependencies with version and provenance information where available.
 4. The SBOM MUST be produced for each releasable artifact.
-5. The SBOM MAY include recommended elements to address the related risks:
-   - *CVEs, advisories:* component name, version, unique identifiers (PURL, CPE), dependency relationships — enables vulnerability matching and rapid response.
-   - *Licenses:* license information — enables automated license compliance checks.
-   - *Supply chain, typosquatting, compromised packages:* supplier name, component point of origin (PURL), file hashes, signature — enables provenance verification and tampering detection.
-   - *Discrepancies:* author of SBOM record, unique SBOM identifier, timestamp — enables auditability and traceability.
+5. The process MUST be repeatable and auditable (e.g. attested in a workflow).
+6. The SBOM MAY include recommended elements to mitigate the related risks. These elements help enable a faster response when issues arise and enable downstream analysis (e.g. vulnerability scanning, license compliance) to prevent issues from reaching production:
+   - *CVEs, advisories:* component name, version, unique identifiers (PURL, CPE), dependency relationships.
+   - *Licenses:* license information.
+   - *Supply chain, typosquatting, compromised packages:* supplier name, component point of origin (PURL), file hashes, signature.
+   - *Discrepancies:* author of SBOM record, unique SBOM identifier, timestamp.
 
 ## Examples
 
