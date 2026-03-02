@@ -7,9 +7,23 @@ The purpose of this working group is to establish a common controls catalogue fo
 This repository contains the documentation and website, generated via Jekyll.
 
 
-## Running Jekyll
+## Running locally
 
-You will need Ruby and `bundle` installed, then run the site locally using the following.
+### Using Docker (recommended)
+
+With Docker running, use the Makefile targets:
+
+```sh
+make run    # Serve the site at http://localhost:4000
+make build  # Build the site without serving
+make stop   # Stop the running dev server
+make clean  # Remove generated _site and cache
+make help   # Show all available targets
+```
+
+### Using Ruby
+
+You will need Ruby and `bundle` installed, then run the site locally:
 
 ```sh
 cd docs
@@ -17,7 +31,7 @@ bundle install
 jekyll serve
 ```
 
-If all goes well, view your freshly minted site at http://127.0.0.1:4000. It should 'hot reload' (Jekyll does its thing) so you can edit and see your changes in the browser.
+Either way, view the site at http://localhost:4000.
 
 
 ## License
