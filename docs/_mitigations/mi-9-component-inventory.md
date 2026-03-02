@@ -9,17 +9,17 @@ type: PREV
 
 ## Summary
 
-Component inventory provides traceability and enables fast response by maintaining an accurate, machine-readable record of what is actually shipped in each artifact. Additional analysis (e.g. vulnerability scanning, license compliance) adds further value.
+Component inventory provides visibility and traceability and enables fast response by maintaining an accurate, machine-readable record of what is actually shipped in each artifact. Additional analysis (e.g. vulnerability scanning, license compliance) adds further value.
 
 ## Description
 
 Component inventory is the practice of identifying and cataloguing all third-party components (libraries, packages, modules) that are included in a software artifact — i.e. what is actually shipped. This includes direct and transitive dependencies. The output is typically a Software Bill of Materials (SBOM) in a standard format such as SPDX or CycloneDX.
 
-The inventory provides traceability and enables fast response: you know what you ship, you can trace components to artifacts, and when a vulnerability is disclosed, a license concern arises, or another issue surfaces, you can query the inventory to see which artifacts are affected and respond quickly. Additional analysis (e.g. vulnerability scanning, license compliance) adds further value by enabling prevention before issues reach production. Extraction from the actual artifact (container image, binary, filesystem) rather than from declarations alone enables detection of discrepancies between what is declared and what is present.
+The inventory provides visibility and traceability and enables fast response: you know what you ship (visibility), you can trace components to artifacts (traceability), and when a vulnerability is disclosed, a license concern arises, or another issue surfaces, you can query the inventory to see which artifacts are affected and respond quickly. Additional analysis (e.g. vulnerability scanning, license compliance) adds further value by enabling prevention before issues reach production. Extraction from the actual artifact (container image, binary, filesystem) rather than from declarations alone enables detection of discrepancies between what is declared and what is present.
 
 ## Map to related risks
 
-- Lack of traceability of components in software
+- Lack of visibility and traceability of components in software
 - Exposure to known vulnerabilities (CVEs)
 - Incompatible or prohibited licenses
 - Supply chain tampering
