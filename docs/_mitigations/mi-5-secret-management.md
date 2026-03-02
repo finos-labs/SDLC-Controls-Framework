@@ -1,8 +1,8 @@
 ---
 sequence: 5
 title: Secret Management
-layout: controls
-doc-status: Approved-Specification
+layout: mitigation
+doc-status: Draft
 type: PREV
 iso-42001_references:
   - A-8-1  # ISO/IEC 42001 – Management of sensitive data
