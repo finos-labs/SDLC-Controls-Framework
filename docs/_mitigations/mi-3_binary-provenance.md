@@ -19,7 +19,7 @@ related_mitigations:
 
 ## Summary
 
-Every software artifact running in a production environment has known and verifiable provenance, establishing a documented chain of custody from source code commit through build and into deployment.
+Every internally built software artifact running in a production environment has known and verifiable provenance, establishing a documented chain of custody from source code commit through build and into deployment.
 
 ## Description
 
