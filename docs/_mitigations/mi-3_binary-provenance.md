@@ -31,10 +31,15 @@ By linking the cryptographic identity of an artifact (from content addressable i
 
 * Every production artifact MUST be traceable back to a specific source code commit, build process, and build environment
 * Provenance records MUST be created at build time and be immutable once written
-* Provenance records MUST include: SHA-256 hash of the output artifact, source git commit reference, repository URL, build log URL, build environment identifier, and timestamp
+* Provenance records MUST include:
+  * SHA-256 hash of the output artifact
+  * Source git commit reference
+  * Repository URL
+  * Build log URL
+  * Build environment identifier
+  * Timestamp
 * No artifact MAY be deployed to production without a corresponding provenance record
 * Provenance records MUST be stored in a tamper-evident system that prevents retroactive modification
-* A Software Bill of Materials (SBOM) MUST be generated as part of the build process and associated with the artifact's provenance record
 
 ## Examples & Commentary
 
