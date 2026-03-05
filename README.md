@@ -4,6 +4,13 @@
 
 The purpose of this working group is to establish a common controls catalogue for software governance across financial institutions to increase reuse, reduce toil and provide additional clarity through consistency.
 
+View the live website: https://finos-labs.github.io/SDLC-Controls-Framework/
+
+
+
+
+# Development guide
+
 This repository contains the documentation and website, generated via Jekyll.
 
 
@@ -18,6 +25,18 @@ jekyll serve
 ```
 
 If all goes well, view your freshly minted site at http://127.0.0.1:4000. It should 'hot reload' (Jekyll does its thing) so you can edit and see your changes in the browser.
+
+
+## Running with Docker
+
+If you don't have Ruby installed, you can use Docker to run the site locally.
+
+```sh
+cd docs
+docker run --rm -v "$PWD:/srv/jekyll" -p 4000:4000 jekyll/jekyll jekyll serve
+```
+
+Then visit http://127.0.0.1:4000 to view the site.
 
 
 ## License
