@@ -13,7 +13,6 @@ nist-sp-800-53r5_references:
   - ca-2   # CA-2 Control Assessments
 mitigates:
 related_mitigations:
-  - mi-4   # Automated Security Scanning
   - mi-5   # Vulnerability Scanning - SAST
   - mi-6   # Vulnerability Scanning - DAST
   - mi-7   # Vulnerability Scanning - Dependencies

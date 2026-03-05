@@ -12,7 +12,6 @@ nist-sp-800-53r5_references:
   - si-2   # SI-2 Flaw Remediation
 mitigates:
 related_mitigations:
-  - mi-4   # Automated Security Scanning
   - mi-5   # Vulnerability Scanning - SAST
   - mi-11  # Vulnerability Remediation SLAs
   - mi-12  # Deployment Gating
