@@ -1,4 +1,5 @@
 .DS_Store
+.claude/
 
 # Docusaurus generated folders
 website/translated_docs/
