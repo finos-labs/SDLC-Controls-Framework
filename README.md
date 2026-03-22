@@ -33,7 +33,7 @@ A **composable, technology-agnostic controls catalogue** that provides:
 
 ### Join the Working Group
 
-- **Bi-weekly calls (every 2 weeks on Mondays)**: [Join via Zoom](https://zoom-lfx.platform.linuxfoundation.org/meeting/96292319760?password=a023f03e-c2aa-46fb-aae3-5d93c9d9664e&invite=true)
+- **Bi-weekly calls (every 2 weeks on Mondays)**: [Join via Zoom](https://zoom-lfx.platform.linuxfoundation.org/meeting/96292319760?password=a023f03e-c2aa-46fb-aae3-5d93c9d9664e&invite=true) — alternating between a regular call and a 3-hour workshop session, both on the same dial-in. See the [FINOS calendar](https://calendar.finos.org) for dates.
 - **Mailing list**: Send an email to `sdlc-framework+subscribe@lists.finos.org`
 - **Background**: [Issue #261 — Software Development Lifecycle Common Controls Catalogue Framework](https://github.com/finos/devops-automation/issues/261)
 - **Introductory talk from OSFF NY 2025**: [An Open SDLC Controls Framework for Financial Services](https://www.finos.org/hubfs/OSFF%202025%20(Open%20Source%20in%20Finance%20Forum)/OSFF%20New%20York%20NYC%202025/OSFF%20NYC%202025%20Videos/The%20Forge%20Shaping%20New%20Ideas%20Projects/An%20Open%20SDLC%20Controls%20Framework%20for%20Financial%20Services%20-%20Aaron%20Searle%20%26%20Toby%20Weston.mp4)
