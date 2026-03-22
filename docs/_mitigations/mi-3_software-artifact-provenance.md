@@ -2,7 +2,7 @@
 sequence: 3
 title: Software Artifact Provenance
 layout: mitigation
-doc-status: Pre-Draft
+doc-status: Draft
 type: PREV
 nist-sp-800-53r5_references:
   - sa-10  # SA-10 Developer Configuration Management

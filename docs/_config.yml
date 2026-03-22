@@ -19,9 +19,7 @@ document_status:
   - name: Draft
     description: "The document is in the early stages of development, with content being written and structured but not yet polished."
   - name: Working-Group-Approved
-    description: "The document is in its final form and has been approved by the AIGF team."
-  - name: Published
-    description: "The publication of an Approved Specification in a publicly accessible manner."
+    description: "The document is in its final form and has been approved by the working group."
 
 # FFIEC IT Booklet abbreviations mapping
 ffiec_itbooklet_abbreviations:

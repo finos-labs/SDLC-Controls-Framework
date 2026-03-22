@@ -2,7 +2,7 @@
 sequence: 2
 title: Content Addressable Identities
 layout: mitigation
-doc-status: Pre-Draft
+doc-status: Draft
 type: PREV
 nist-sp-800-53r5_references:
   - si-7   # SI-7 Software, Firmware, And Information Integrity
