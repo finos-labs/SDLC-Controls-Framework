@@ -16,7 +16,7 @@
                 <!-- Filter content that can be collapsed -->
                 <div class="filter-content" id="filterContent" style="display: none;">
                     <div class="row g-3">
-                        <div class="col-md-5">
+                        <div class="col-md-3">
                             <label for="searchInput" class="form-label fw-bold">Search</label>
                             <input type="text" class="form-control" id="searchInput" placeholder="Search risks and mitigations by title or content...">
                         </div>
@@ -26,6 +26,15 @@
                                 <option value="">All Types</option>
                                 <option value="risk">Risks Only</option>
                                 <option value="mitigation">Mitigations Only</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="statusFilter" class="form-label fw-bold">Filter by Status</label>
+                            <select class="form-select" id="statusFilter">
+                                <option value="">All Statuses</option>
+                                {% for status in site.document_status %}
+                                <option value="{{ status.name }}">{{ status.name }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -128,13 +137,21 @@
                           <div class="row g-2" data-category="{{ order }}" data-type="risk">
                               {% assign sorted_risks = risk_group.items | sort: "sequence" %}
                               {% for risk in sorted_risks %}
-                              <div class="col-12 risk-item" data-title="{{ risk.title | downcase }}" data-content="{{ risk.content | strip_html | strip_newlines | downcase }}">
+                              {% assign risk_status = risk['doc-status'] | default: '' %}
+                              <div class="col-12 risk-item" data-title="{{ risk.title | downcase }}" data-content="{{ risk.content | strip_html | strip_newlines | downcase }}" data-status="{{ risk_status }}">
                                   <div class="card border-start border-primary border-3 h-100 card-hover" onclick="window.location.href='{{ site.baseurl }}{{ risk.id }}.html'" style="cursor: pointer;">
                                       <div class="card-body py-2">
                                           <div class="d-flex justify-content-between align-items-start">
                                               <div class="flex-grow-1">
-                                                  <div class="risk-id small mb-1">
+                                                  <div class="risk-id small mb-1 d-flex align-items-center gap-2">
                                                     {% include risk-id.html risk=risk %}
+                                                    {% if risk_status != '' %}
+                                                      {% if risk_status == 'Published' %}{% assign status_badge = 'bg-success' %}
+                                                      {% elsif risk_status == 'Working-Group-Approved' %}{% assign status_badge = 'bg-info text-dark' %}
+                                                      {% elsif risk_status == 'Draft' %}{% assign status_badge = 'bg-warning text-dark' %}
+                                                      {% else %}{% assign status_badge = 'bg-secondary' %}{% endif %}
+                                                      <span class="badge {{ status_badge }}" style="font-size:0.65em;">{{ risk_status }}</span>
+                                                    {% endif %}
                                                   </div>
                                                   <h4 class="h6 mb-1">{{ risk.title }}</h4>
                                                   {% assign raw_content = risk.content | strip_html | strip_newlines %}
@@ -204,13 +221,21 @@
                           <div class="row g-2" data-category="{{ order }}" data-type="mitigation">
                               {% assign sorted_mitigations = mitigation_group.items | sort: "sequence" %}
                               {% for mitigation in sorted_mitigations %}
-                              <div class="col-12 mitigation-item" data-title="{{ mitigation.title | downcase }}" data-content="{{ mitigation.content | strip_html | strip_newlines | downcase }}">
+                              {% assign mitigation_status = mitigation['doc-status'] | default: '' %}
+                              <div class="col-12 mitigation-item" data-title="{{ mitigation.title | downcase }}" data-content="{{ mitigation.content | strip_html | strip_newlines | downcase }}" data-status="{{ mitigation_status }}">
                                   <div class="card border-start border-success border-3 h-100 card-hover" onclick="window.location.href='{{ site.baseurl }}{{ mitigation.id }}.html'" style="cursor: pointer;">
                                       <div class="card-body py-2">
                                           <div class="d-flex justify-content-between align-items-start">
                                               <div class="flex-grow-1">
-                                                  <div class="mitigation-id small mb-1">
+                                                  <div class="mitigation-id small mb-1 d-flex align-items-center gap-2">
                                                     {% include mitigation-id.html mitigation=mitigation %}
+                                                    {% if mitigation_status != '' %}
+                                                      {% if mitigation_status == 'Published' %}{% assign status_badge = 'bg-success' %}
+                                                      {% elsif mitigation_status == 'Working-Group-Approved' %}{% assign status_badge = 'bg-info text-dark' %}
+                                                      {% elsif mitigation_status == 'Draft' %}{% assign status_badge = 'bg-warning text-dark' %}
+                                                      {% else %}{% assign status_badge = 'bg-secondary' %}{% endif %}
+                                                      <span class="badge {{ status_badge }}" style="font-size:0.65em;">{{ mitigation_status }}</span>
+                                                    {% endif %}
                                                   </div>
                                                   <h4 class="h6 mb-1">{{ mitigation.title }}</h4>
                                                   {% assign raw_content = mitigation.content | strip_html | strip_newlines %}
@@ -256,6 +281,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
     const typeFilter = document.getElementById('typeFilter');
+    const statusFilter = document.getElementById('statusFilter');
     const resetButton = document.getElementById('resetFilters');
     const riskCatalogue = document.getElementById('riskCatalogue');
     const mitigationCatalogue = document.getElementById('mitigationCatalogue');
@@ -353,19 +379,23 @@ document.addEventListener('DOMContentLoaded', function() {
         let riskCount = 0;
         let mitigationCount = 0;
         
+        const selectedStatus = statusFilter.value;
+
         // Filter items
         ['risk', 'mitigation'].forEach(type => {
             document.querySelectorAll(`.${type}-item`).forEach(item => {
                 const title = item.getAttribute('data-title') || '';
                 const content = item.getAttribute('data-content') || '';
+                const itemStatus = item.getAttribute('data-status') || '';
                 const parentSection = item.closest('[data-category]');
                 const itemCategory = parentSection?.getAttribute('data-category') || '';
-                
+
                 const matchesSearch = !searchTerm || title.includes(searchTerm) || content.includes(searchTerm);
                 const matchesType = !selectedType || selectedType === type;
                 const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(itemCategory);
-                
-                const isVisible = matchesSearch && matchesType && matchesCategory;
+                const matchesStatus = !selectedStatus || itemStatus === selectedStatus;
+
+                const isVisible = matchesSearch && matchesType && matchesCategory && matchesStatus;
                 item.style.display = isVisible ? 'block' : 'none';
                 
                 // Count visible items
@@ -481,6 +511,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function resetAllFilters() {
         searchInput.value = '';
         typeFilter.value = '';
+        statusFilter.value = '';
         
         // Uncheck and enable all category checkboxes
         document.querySelectorAll('.category-checkbox').forEach(checkbox => {
@@ -535,6 +566,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCategoryOptions();
         filterItems();
     });
+    statusFilter.addEventListener('change', filterItems);
     resetButton.addEventListener('click', resetAllFilters);
     
     // Initialize

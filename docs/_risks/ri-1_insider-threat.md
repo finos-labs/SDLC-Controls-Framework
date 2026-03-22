@@ -2,7 +2,7 @@
 sequence: 1
 title: Insider Threat
 layout: risk
-doc-status: Approved-Specification
+doc-status: Working-Group-Approved
 type: RC
 owasp-llm_references:
   - llm02-2025  # LLM02:2025 Sensitive Information Disclosure
