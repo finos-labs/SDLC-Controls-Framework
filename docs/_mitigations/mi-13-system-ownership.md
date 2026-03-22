@@ -1,5 +1,5 @@
 ---
-sequence: 12
+sequence: 13
 title: System Inventory
 layout: mitigation
 doc-status: Draft
