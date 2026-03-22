@@ -1,3 +1,12 @@
+---
+sequence: 4
+title: Requirements Management
+layout: mitigation
+doc-status: Pre-Draft
+type: PREV
+mitigates:
+related_mitigations:
+---
 
 # Control 1: Requirement Repository Confirmation and Usage Attestation (XXXX-x§§1024)
 
