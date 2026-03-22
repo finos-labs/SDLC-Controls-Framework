@@ -8,4 +8,4 @@ This file lists the maintainers of this project.
 | Toby Weston | Deutsche Bank | @tobyweston |
 | Aaron Searle | Morgan Stanley | @aaronsearle |
 | Gay Pinto | UBS | |
-| Abhishek Chowdhury | UBS | |
+| Abhishek Chowdhury | UBS | @abhishek-chowdhury_ee2 |
