@@ -1,0 +1,41 @@
+---
+sequence: 4
+title: Vulnerable Software in Production
+layout: risk
+doc-status: Draft
+type: SEC
+nist-sp-800-53r5_references:
+  - ra-5   # RA-5 Vulnerability Monitoring and Scanning (primary)
+  - si-2   # SI-2 Flaw Remediation (primary)
+  - si-5   # SI-5 Security Alerts, Advisories, and Directives (supporting)
+ffiec-itbooklets_references:
+  - dam-4  # DAM: IV Common Development, Acquisition, and Maintenance Risk Topics (primary)
+  - sec-3  # SEC: III Security Operations (supporting)
+related_risks:
+  - ri-2   # Supply Chain Compromise
+  - ri-7   # Configuration Drift
+---
+
+## Summary
+
+Applications or their dependencies containing known security vulnerabilities are deployed to and remain running in production environments, exposing the organisation to exploitation by attackers who actively scan for and weaponise publicly disclosed weaknesses.
+
+## Description
+
+This risk arises from inadequate vulnerability scanning during the build and release process, failure to keep dependencies up to date, delayed patching of known CVEs, or insufficient visibility into the software composition of running workloads. Unlike supply chain compromise (ri-2), which concerns the deliberate introduction of malicious components, this risk focuses on the presence of known, publicly disclosed vulnerabilities that remain unaddressed in production. Attackers actively scan for known vulnerabilities and can exploit them rapidly once public disclosures are made, making timely detection and remediation critical.
+
+- **Unpatched known vulnerabilities (CVEs)** — Production systems running software with publicly disclosed vulnerabilities for which patches or mitigations are available but have not been applied
+- **Outdated or end-of-life dependencies** — Libraries, frameworks, or runtime components that no longer receive security updates, leaving known vulnerabilities permanently unaddressed
+- **Incomplete vulnerability scanning** — Security scans that do not cover the full software stack — including transitive dependencies, container base images, and runtime libraries — leaving blind spots in vulnerability detection
+- **Delayed remediation cycles** — Organisational processes that are too slow to triage, prioritise, and deploy fixes for critical vulnerabilities before they can be exploited
+- **Shadow dependencies** — Components pulled in through indirect or undocumented dependency chains that are not tracked or scanned as part of the standard build process
+
+### Consequences
+
+* **Active exploitation** — Known vulnerabilities with public exploit code can be weaponised rapidly, and financial institutions are frequently targeted due to the value of the data and systems they hold.
+* **Customer data breach** — Exploited vulnerabilities in web-facing applications or APIs can expose customer PII, account credentials, and transaction histories, triggering breach notification requirements under GDPR, CCPA, and GLBA.
+* **Regulatory non-compliance** — Financial regulators require timely vulnerability management as a core security control. Running known-vulnerable software violates requirements under PCI DSS Requirement 6, SOX Section 404, DORA Article 7, and FFIEC supervisory guidance on patch management.
+* **Service disruption** — Exploitation of vulnerabilities can lead to denial of service, data corruption, or system compromise that forces emergency shutdowns of customer-facing services.
+* **Reputational damage** — Public disclosure that a breach resulted from a known, unpatched vulnerability is particularly damaging, as it signals failure of basic security hygiene to customers, partners, and regulators.
+
+## Links
