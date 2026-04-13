@@ -19,7 +19,7 @@ related_risks:
 ---
 ## Summary
 
-State of runtime support documentation is out of risk with the current runtime environment. This creates a growing operational risk of increased MTTR. Focuses on how systems are operated compared to how systems are defined (i.e. config drift.)
+Runtime operations risk is when the state of runtime support documentation is not in sync with the current runtime environment. This creates a growing operational risk of increased MTTR. Focuses on how systems are operated compared to how systems are defined (i.e. config drift.)
 
 ## Description
 
@@ -27,11 +27,13 @@ One of the outcomes of a successful SDLC is maintaining runbooks, telemetry, pro
 
 - Manual production changes — Ad hoc modifications applied directly to production infrastructure or application configuration outside the standard change management process
 - Not updating observability systems for new features and services.
-- Runbook drift. Particularly when they manually maintained, and separate from the code.
+- Runbook drift. Particularly when they are manually maintained, and separate from the code.
 
 
 ### Examples
 - Delays in resolving incidents, and further outages.
+- A gap in monitoring would make it difficult to troubleshoot production applications
+- Hard to trace errors in distributed systems, results in higher mean time to restore (MTTR)
 
 ### Consequences
 
