@@ -5,13 +5,14 @@ layout: risk
 doc-status: Draft
 type: OP
 nist-sp-800-53r5_references:
-  - cm-2   # CM-2 Baseline Configuration (primary)
-  - cm-3   # CM-3 Configuration Change Control (primary)
-  - cm-6   # CM-6 Configuration Settings (supporting)
-  - si-7   # SI-7 Software, Firmware, and Information Integrity (supporting)
-ffiec-itbooklets_references:
-  - aio-6  # AIO: VI Operations (primary)
-  - sec-3  # SEC: III Security Operations (supporting)
+  - id: cm-2
+    note: Baseline Configuration (primary)
+  - id: cm-3
+    note: Configuration Change Control (primary)
+  - id: cm-6
+    note: Configuration Settings (supporting)
+  - id: si-7
+    note: Software, Firmware, and Information Integrity (supporting)
 related_risks:
   - ri-4   # Vulnerable Software in Production
   - ri-8   # Unauthorised Change

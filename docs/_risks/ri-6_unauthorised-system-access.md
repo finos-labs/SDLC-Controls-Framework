@@ -5,14 +5,16 @@ layout: risk
 doc-status: Draft
 type: SEC
 nist-sp-800-53r5_references:
-  - ac-2   # AC-2 Account Management (primary)
-  - ac-3   # AC-3 Access Enforcement (primary)
-  - ac-6   # AC-6 Least Privilege (primary)
-  - ia-2   # IA-2 Identification and Authentication (primary)
-  - ac-17  # AC-17 Remote Access (supporting)
-ffiec-itbooklets_references:
-  - sec-2  # SEC: II Information Security Program Management (primary)
-  - sec-3  # SEC: III Security Operations (primary)
+  - id: ac-2
+    note: Account Management (primary)
+  - id: ac-3
+    note: Access Enforcement (primary)
+  - id: ac-6
+    note: Least Privilege (primary)
+  - id: ia-2
+    note: Identification and Authentication (primary)
+  - id: ac-17
+    note: Remote Access (supporting)
 related_risks:
   - ri-1   # Insider Threat
   - ri-3   # Credential and Secret Exposure

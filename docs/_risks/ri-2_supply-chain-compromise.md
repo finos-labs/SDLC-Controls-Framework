@@ -5,13 +5,12 @@ layout: risk
 doc-status: Draft
 type: SEC
 nist-sp-800-53r5_references:
-  - sr-3   # SR-3 Supply Chain Controls and Processes (primary)
-  - sr-4   # SR-4 Provenance (primary)
-  - sa-9   # SA-9 External System Services (supporting)
-ffiec-itbooklets_references:
-  - dam-4  # DAM: IV Common Development, Acquisition, and Maintenance Risk Topics (primary)
-  - ots-2  # OTS: Risk Management (primary)
-  - sec-3  # SEC: III Security Operations (supporting)
+  - id: sr-3
+    note: Supply Chain Controls and Processes (primary)
+  - id: sr-4
+    note: Provenance (primary)
+  - id: sa-9
+    note: External System Services (supporting)
 related_risks:
   - ri-1   # Insider Threat
   - ri-4   # Vulnerable Software in Production
