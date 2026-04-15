@@ -5,13 +5,12 @@ layout: risk
 doc-status: Draft
 type: RC
 nist-sp-800-53r5_references:
-  - au-2   # AU-2 Event Logging (primary)
-  - au-6   # AU-6 Audit Record Review, Analysis, and Reporting (primary)
-  - ca-7   # CA-7 Continuous Monitoring (supporting)
-ffiec-itbooklets_references:
-  - aud-3  # AUD: III Internal Audit Program (primary)
-  - aud-4  # AUD: IV Risk Assessment and Risk-Based Auditing (primary)
-  - mgt-2  # MGT: II Risk Management (supporting)
+  - id: au-2
+    note: Event Logging (primary)
+  - id: au-6
+    note: Audit Record Review, Analysis, and Reporting (primary)
+  - id: ca-7
+    note: Continuous Monitoring (supporting)
 related_risks:
   - ri-7   # Configuration Drift
   - ri-8   # Unauthorised Change

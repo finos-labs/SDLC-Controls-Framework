@@ -5,12 +5,12 @@ layout: risk
 doc-status: Draft
 type: SEC
 nist-sp-800-53r5_references:
-  - si-4   # SI-4 System Monitoring (primary)
-  - ir-4   # IR-4 Incident Handling (primary)
-  - sc-7   # SC-7 Boundary Protection (primary)
-ffiec-itbooklets_references:
-  - sec-3  # SEC: III Security Operations (primary)
-  - aio-3  # AIO: III Common AIO Risk Management Topics (supporting)
+  - id: si-4
+    note: System Monitoring (primary)
+  - id: ir-4
+    note: Incident Handling (primary)
+  - id: sc-7
+    note: Boundary Protection (primary)
 related_risks:
   - ri-2   # Supply Chain Compromise
   - ri-4   # Vulnerable Software in Production

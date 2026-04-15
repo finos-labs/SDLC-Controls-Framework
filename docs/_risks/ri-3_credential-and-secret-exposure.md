@@ -5,12 +5,12 @@ layout: risk
 doc-status: Draft
 type: SEC
 nist-sp-800-53r5_references:
-  - ia-5   # IA-5 Authenticator Management (primary)
-  - sc-12  # SC-12 Cryptographic Key Establishment and Management (primary)
-  - sc-28  # SC-28 Protection of Information at Rest (supporting)
-ffiec-itbooklets_references:
-  - sec-2  # SEC: II Information Security Program Management (primary)
-  - sec-3  # SEC: III Security Operations (supporting)
+  - id: ia-5
+    note: Authenticator Management (primary)
+  - id: sc-12
+    note: Cryptographic Key Establishment and Management (primary)
+  - id: sc-28
+    note: Protection of Information at Rest (supporting)
 related_risks:
   - ri-1   # Insider Threat
   - ri-6   # Unauthorised System Access

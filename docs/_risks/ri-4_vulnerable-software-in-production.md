@@ -5,12 +5,12 @@ layout: risk
 doc-status: Draft
 type: SEC
 nist-sp-800-53r5_references:
-  - ra-5   # RA-5 Vulnerability Monitoring and Scanning (primary)
-  - si-2   # SI-2 Flaw Remediation (primary)
-  - si-5   # SI-5 Security Alerts, Advisories, and Directives (supporting)
-ffiec-itbooklets_references:
-  - dam-4  # DAM: IV Common Development, Acquisition, and Maintenance Risk Topics (primary)
-  - sec-3  # SEC: III Security Operations (supporting)
+  - id: ra-5
+    note: Vulnerability Monitoring and Scanning (primary)
+  - id: si-2
+    note: Flaw Remediation (primary)
+  - id: si-5
+    note: Security Alerts, Advisories, and Directives (supporting)
 related_risks:
   - ri-2   # Supply Chain Compromise
   - ri-7   # Configuration Drift
