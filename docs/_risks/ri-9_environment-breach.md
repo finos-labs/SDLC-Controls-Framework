@@ -30,6 +30,8 @@ While unauthorised system access (ri-6) concerns access governance failures, env
 - **Cryptojacking and resource abuse** — Attackers deploying cryptocurrency mining workloads or using compromised infrastructure for computational tasks, consuming resources and increasing costs
 - **Staging ground for further attacks** — Using the breached environment as a launch point for lateral movement into other internal systems, data stores, or connected partner networks
 - **Persistent backdoor deployment** — Installing persistent access mechanisms such as reverse shells, web shells, or rogue services that survive routine maintenance and restarts
+- **Insufficient runtime monitoring and detection** — Absence of workload-level monitoring, anomaly detection, or runtime security tooling that would identify unauthorised processes, unexpected network connections, or anomalous resource consumption within the production environment
+- **Lateral movement across trust boundaries** — Attackers leveraging initial access in one workload to move laterally — from container to host, from one namespace to cluster admin, from application tier to data tier — exploiting implicit trust relationships between components
 
 ### Consequences
 
@@ -39,6 +41,7 @@ While unauthorised system access (ri-6) concerns access governance failures, env
 * **Regulatory escalation** — An environment breach represents a fundamental control failure. Regulators will treat the ability of an external attacker to run workloads in a financial institution's production environment as a critical finding, triggering mandatory incident reporting under DORA Article 17, PCI DSS Requirement 12.10, and GLBA breach notification obligations.
 * **Supply chain risk to customers** — Attacker-controlled workloads running within the institution's infrastructure can potentially intercept, modify, or inject data into legitimate business processes, affecting downstream customers and partners.
 * **Prolonged and costly incident response** — Detecting and eradicating an attacker with operational presence requires thorough forensic investigation of all running workloads, comprehensive review of deployment history, and potentially rebuilding affected infrastructure from known-good state.
+* **Dwell time amplifies blast radius** — The longer an attacker maintains operational presence, the more data they can exfiltrate, the more systems they can compromise, and the more difficult eradication becomes. Environment breaches that go undetected for weeks or months result in exponentially greater damage than those detected within hours.
 * **Severe reputational damage** — Disclosure that an external attacker was running their own workloads inside a financial institution's production environment represents a serious breach of trust that can significantly damage the institution's standing with customers, partners, and regulators.
 
 ## Links
