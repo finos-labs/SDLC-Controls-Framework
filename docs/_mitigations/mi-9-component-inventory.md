@@ -7,6 +7,9 @@ type: PREV
 nist-sp-800-53r5_references:
   - cm-8   # CM-8 System Component Inventory
   - sr-4   # SR-4 Provenance
+mitigates:
+  - ri-7   # Configuration Drift
+  - ri-10  # Dependency and Transitive Supply Chain Compromise
 ---
 
 ## Summary
