@@ -12,8 +12,9 @@ nist-sp-800-53r5_references:
   - id: si-5
     note: Security Alerts, Advisories, and Directives (supporting)
 related_risks:
-  - ri-2   # Supply Chain Compromise
   - ri-7   # Configuration Drift
+  - ri-10  # Dependency and Transitive Supply Chain Compromise
+  - ri-11  # Build Toolchain and Service Supply Chain Compromise
 ---
 
 ## Summary
