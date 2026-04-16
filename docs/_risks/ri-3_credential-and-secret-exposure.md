@@ -27,6 +27,7 @@ Credential exposure commonly occurs through secrets committed to version control
 - **Secrets committed to source control** — API keys, passwords, or tokens checked into Git repositories where they persist in history even after removal from the working tree
 - **Hardcoded credentials in application code** — Database connection strings, service account passwords, or encryption keys embedded directly in source files rather than injected at runtime
 - **CI/CD log leakage** — Build and deployment pipelines inadvertently printing secrets to log output, making them visible to anyone with access to pipeline logs
+- **Secrets embedded in infrastructure-as-code and CI/CD configuration** — Credentials hardcoded in Terraform state files, Ansible playbooks and variable files, CloudFormation/SAM templates, Helm values files, Kubernetes manifests, Dockerfiles, or CI/CD pipeline definitions (`.github/workflows`, `.gitlab-ci.yml`, Jenkinsfile) where they are committed to version control alongside the infrastructure they configure
 - **Insecure secret storage** — Credentials stored in plaintext configuration files, environment variables without encryption, shared documents, or messaging platforms
 - **Overprivileged service credentials** — Service accounts or API keys granted excessive permissions, amplifying the blast radius if the credential is compromised
 
