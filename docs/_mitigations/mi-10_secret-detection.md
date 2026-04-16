@@ -11,6 +11,7 @@ nist-sp-800-53r5_references:
   - sc-28  # SC-28 Protection Of Information At Rest
   - si-2   # SI-2 Flaw Remediation
 mitigates:
+  - ri-3   # Credential and Secret Exposure
 related_mitigations:
   - mi-5   # Vulnerability Scanning - SAST
   - mi-11  # Vulnerability Remediation SLAs
