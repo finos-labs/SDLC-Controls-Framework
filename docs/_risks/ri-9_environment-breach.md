@@ -12,9 +12,10 @@ nist-sp-800-53r5_references:
   - id: sc-7
     note: Boundary Protection (primary)
 related_risks:
-  - ri-2   # Supply Chain Compromise
   - ri-4   # Vulnerable Software in Production
   - ri-6   # Unauthorised System Access
+  - ri-10  # Dependency and Transitive Supply Chain Compromise
+  - ri-11  # Build Toolchain and Service Supply Chain Compromise
 ---
 
 ## Summary
