@@ -6,6 +6,8 @@ doc-status: Draft
 type: PREV
 nist-sp-800-53r5_references:
   - pm-5   # PM-5 System Inventory
+mitigates:
+  - ri-6   # Unauthorised System Access
 ---
 
 ## Summary

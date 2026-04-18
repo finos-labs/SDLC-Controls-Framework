@@ -12,6 +12,8 @@ nist-sp-800-53r5_references:
   - sa-11  # SA-11 Developer Testing And Evaluation
   - ca-2   # CA-2 Control Assessments
 mitigates:
+  - ri-4   # Vulnerable Software in Production
+  - ri-9   # Environment Breach
 related_mitigations:
   - mi-5   # Vulnerability Scanning - SAST
   - mi-6   # Vulnerability Scanning - DAST

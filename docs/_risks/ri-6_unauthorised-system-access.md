@@ -5,14 +5,16 @@ layout: risk
 doc-status: Draft
 type: SEC
 nist-sp-800-53r5_references:
-  - ac-2   # AC-2 Account Management (primary)
-  - ac-3   # AC-3 Access Enforcement (primary)
-  - ac-6   # AC-6 Least Privilege (primary)
-  - ia-2   # IA-2 Identification and Authentication (primary)
-  - ac-17  # AC-17 Remote Access (supporting)
-ffiec-itbooklets_references:
-  - sec-2  # SEC: II Information Security Program Management (primary)
-  - sec-3  # SEC: III Security Operations (primary)
+  - id: ac-2
+    note: Account Management (primary)
+  - id: ac-3
+    note: Access Enforcement (primary)
+  - id: ac-6
+    note: Least Privilege (primary)
+  - id: ia-2
+    note: Identification and Authentication (primary)
+  - id: ac-17
+    note: Remote Access (supporting)
 related_risks:
   - ri-1   # Insider Threat
   - ri-3   # Credential and Secret Exposure
@@ -25,13 +27,18 @@ Individuals gain access to production environments, infrastructure, or sensitive
 
 ## Description
 
-Unlike insider threat (ri-1), which focuses on the actions of authorised personnel, this risk focuses on access governance — the granting, scoping, and auditing of access itself. It includes scenarios where access controls are too broad, where former employees or contractors retain active credentials, where shared accounts obscure individual accountability, or where privileged access is granted without time-bound restrictions or proper justification. The risk extends to both external attackers who exploit weak access controls and internal personnel whose access exceeds their legitimate operational needs.
+This risk focuses on access governance — the granting, scoping, monitoring, and revocation of access itself. It is distinct from insider threat (ri-1), which concerns the deliberate misuse of access by authorised personnel acting with malicious intent. An authorised user with overly broad permissions who acts maliciously is an insider threat (ri-1); the governance failure that granted them unnecessary access in the first place is this risk (ri-6). Similarly, this risk is distinct from credential and secret exposure (ri-3), which concerns the exposure of authentication material — but when exposed credentials also carry excessive privileges, the compound risk is significantly amplified.
 
+The risk extends to both external attackers who exploit weak access controls and internal personnel whose access exceeds their legitimate operational needs.
+
+**Access governance:**
 - **Overprivileged access** — Users or service accounts granted broader permissions than required for their role, providing unnecessary access to sensitive systems, data, or infrastructure
 - **Stale access credentials** — Former employees, contractors, or rotated team members retaining active access to production systems after their need for access has ended
-- **Shared and generic accounts** — Use of shared credentials or service accounts that obscure which individual performed a given action, undermining accountability and audit trails
-- **Insufficient access logging** — Systems that do not record who accessed what, when, and from where, making it impossible to detect or investigate unauthorised access
 - **Lack of time-bound or just-in-time access** — Persistent privileged access that remains active indefinitely rather than being granted on-demand for specific, justified operational needs
+
+**Access monitoring:**
+- **Insufficient access logging** — Systems that do not record who accessed what, when, and from where, making it impossible to detect or investigate unauthorised access
+- **Shared and generic accounts** — Use of shared credentials or service accounts that obscure which individual performed a given action, undermining accountability and audit trails
 
 ### Consequences
 

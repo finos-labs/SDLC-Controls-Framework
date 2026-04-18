@@ -9,7 +9,9 @@ nist-sp-800-53r5_references:
   - sa-10  # SA-10 Developer Configuration Management
   - au-10  # AU-10 Non-repudiation
 mitigates:
-  - ri-1  # Insider Threat
+  - ri-1   # Insider Threat
+  - ri-7   # Configuration Drift
+  - ri-11  # Build Toolchain and Service Supply Chain Compromise
 related_mitigations:
   - mi-3  # Binary Provenance
   - mi-1  # Peer Source Code Review

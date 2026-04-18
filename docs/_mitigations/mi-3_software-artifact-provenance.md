@@ -11,7 +11,10 @@ nist-sp-800-53r5_references:
   - si-7   # SI-7 Software, Firmware, And Information Integrity
   - au-10  # AU-10 Non-repudiation
 mitigates:
-  - ri-1  # Insider Threat
+  - ri-1   # Insider Threat
+  - ri-9   # Environment Breach
+  - ri-10  # Dependency and Transitive Supply Chain Compromise
+  - ri-11  # Build Toolchain and Service Supply Chain Compromise
 related_mitigations:
   - mi-2  # Content Addressable Identities
   - mi-1  # Peer Source Code Review

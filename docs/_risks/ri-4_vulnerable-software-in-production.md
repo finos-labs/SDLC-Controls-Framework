@@ -5,15 +5,16 @@ layout: risk
 doc-status: Draft
 type: SEC
 nist-sp-800-53r5_references:
-  - ra-5   # RA-5 Vulnerability Monitoring and Scanning (primary)
-  - si-2   # SI-2 Flaw Remediation (primary)
-  - si-5   # SI-5 Security Alerts, Advisories, and Directives (supporting)
-ffiec-itbooklets_references:
-  - dam-4  # DAM: IV Common Development, Acquisition, and Maintenance Risk Topics (primary)
-  - sec-3  # SEC: III Security Operations (supporting)
+  - id: ra-5
+    note: Vulnerability Monitoring and Scanning (primary)
+  - id: si-2
+    note: Flaw Remediation (primary)
+  - id: si-5
+    note: Security Alerts, Advisories, and Directives (supporting)
 related_risks:
-  - ri-2   # Supply Chain Compromise
   - ri-7   # Configuration Drift
+  - ri-10  # Dependency and Transitive Supply Chain Compromise
+  - ri-11  # Build Toolchain and Service Supply Chain Compromise
 ---
 
 ## Summary
@@ -22,7 +23,9 @@ Applications or their dependencies containing known security vulnerabilities are
 
 ## Description
 
-This risk arises from inadequate vulnerability scanning during the build and release process, failure to keep dependencies up to date, delayed patching of known CVEs, or insufficient visibility into the software composition of running workloads. Unlike supply chain compromise (ri-2), which concerns the deliberate introduction of malicious components, this risk focuses on the presence of known, publicly disclosed vulnerabilities that remain unaddressed in production. Attackers actively scan for known vulnerabilities and can exploit them rapidly once public disclosures are made, making timely detection and remediation critical.
+This risk has two temporal dimensions. First, known-vulnerable components can enter production at build time — through inadequate vulnerability scanning during the build and release process, failure to keep dependencies up to date, or insufficient visibility into the software composition of artefacts being deployed. Second, software that was free of known vulnerabilities when deployed can become vulnerable post-deployment when new CVEs are disclosed against versions already running in production. In the second case, the software itself has not changed; the threat landscape has. This distinction matters because it demands two different sets of controls: build-time SCA gating to prevent known-vulnerable code from being deployed, and continuous runtime monitoring with patch SLAs to detect and remediate vulnerabilities disclosed after deployment.
+
+Unlike supply chain compromise (ri-10, ri-11), which concerns the deliberate introduction of malicious or tampered components, this risk focuses on the presence of known, publicly disclosed vulnerabilities that remain unaddressed in production. Attackers actively scan for known vulnerabilities and can exploit them rapidly once public disclosures are made, making timely detection and remediation critical.
 
 - **Unpatched known vulnerabilities (CVEs)** — Production systems running software with publicly disclosed vulnerabilities for which patches or mitigations are available but have not been applied
 - **Outdated or end-of-life dependencies** — Libraries, frameworks, or runtime components that no longer receive security updates, leaving known vulnerabilities permanently unaddressed
