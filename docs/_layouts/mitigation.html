@@ -69,10 +69,17 @@ layout: default
             <div class="card mb-4">
                 <div class="card-body">
                     <h2 class="h4 mb-4">Related Mitigations</h2>
+
+                    {% include control-chain.html page=page %}
+
                     <div class="list-group">
                         {% for mitigation in site.mitigations %}
                         {% assign mitigation_prefix = "mi-" | append: mitigation.sequence %}
                         {% if page.related_mitigations contains mitigation_prefix %}
+                        {% comment %} Skip chain members — they are already shown above {% endcomment %}
+                        {% if page.chain and mitigation.chain == page.chain %}
+                        {% continue %}
+                        {% endif %}
                         <div class="list-group-item">
                             <h3 class="h6 mb-1">
                                 <a href="{{ site.baseurl }}/{{ mitigation.url }}">{% include mitigation-id.html mitigation=mitigation %} : {{ mitigation.title }}</a>

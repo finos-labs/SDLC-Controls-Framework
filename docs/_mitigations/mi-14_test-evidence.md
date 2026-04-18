@@ -4,6 +4,8 @@ title: Test Evidence Retention
 layout: mitigation
 doc-status: Draft
 type: PREV
+chain:
+  - testing-assurance
 nist-sp-800-53r5_references:
   - sa-11  # SA-11 Developer Testing And Evaluation
   - au-12  # AU-12 Audit Record Generation
@@ -15,8 +17,9 @@ nist-sp-800-53r5_references:
 mitigates:
   - ri-5   # Audit and Compliance Evidence Failure
   - ri-8   # Unauthorised Change
-  - ri-1   # Insider Threat
 related_mitigations:
+  - mi-15  # Testing Requirements
+  - mi-16  # Test Execution and Sign-Off
   - mi-12  # Deployment Gating
   - mi-5   # Vulnerability Scanning - SAST
   - mi-6   # Vulnerability Scanning - DAST
@@ -30,16 +33,15 @@ Test evidence retention ensures that automated test results are captured, linked
 
 Test evidence retention addresses the requirement to produce, on demand, machine-generated records that demonstrate testing occurred for any given code change or release. Without retained evidence, an organisation cannot prove to a regulator, auditor, or customer that its test suite operated as intended at the time a change was deployed. The mere existence of a test suite is insufficient — evidence must be tied to specific commits, cover the expected scope, and survive for the full regulatory retention period.
 
-This control is distinct from deployment gating (mi-12), which concerns blocking deployments that fail control criteria. Test evidence retention concerns the preservation and retrievability of the artefacts that those gates and controls generate. An organisation may enforce gates correctly but still face an evidence failure if the resulting records are not retained in a durable, tamper-evident form linked to the change they attest to.
+This control is distinct from test execution (mi-16), which governs whether required testing was performed and any failures appropriately reviewed. Test evidence retention concerns the preservation and retrievability of the artefacts that test execution produces. An organisation may execute testing correctly but still face an evidence failure if the resulting records are not retained in a durable, tamper-evident form linked to the change they attest to.
 
 In regulated financial services environments, the inability to produce test evidence for a released change is treated by examiners as equivalent to the testing not having occurred. Coverage metrics, test run logs, pass/fail records, and the identity of the system that executed them form part of the SDLC governance trail required to demonstrate that software development risk is managed.
 
 ## Requirements
 
 * Automated test suites MUST be executed as part of the CI/CD pipeline for every pull request targeting a protected branch and every build that produces a deployable artefact
-* Test execution results MUST be captured in a structured, machine-readable format (e.g., JUnit XML, CTRF) and stored as persistent artefacts linked to the triggering commit SHA, branch, pipeline run identifier, and timestamp
-* Code coverage reports MUST be generated for each test run and stored alongside the test results as part of the same artefact bundle
-* Minimum coverage thresholds MUST be defined per repository or service and enforced as a hard CI gate; reductions below the defined threshold MUST be explicitly approved and the approval documented
+* For Automated test execution results MUST be captured in a structured, machine-readable format (e.g., JUnit XML, CTRF) and stored as persistent artefacts linked to the triggering commit SHA, branch, pipeline run identifier, and timestamp or any other references to ensure traceability back to the intented release
+* Manual test evidence must be associated with the intented release for traceability, downstream gating and reporting.
 * Test evidence artefacts MUST be retained for a minimum period aligned with the organisation's regulatory audit retention policy; this period MUST NOT be less than the longest applicable regulatory retention requirement
 * Retained artefacts MUST be immutable after capture; they MUST NOT be modifiable, deletable, or re-runnable outside an approved and auditable exception process
 * Each deployment record MUST include a reference to the test evidence artefact that corresponds to the artefact being deployed, enabling end-to-end traceability from deployment back to the test run
@@ -48,11 +50,8 @@ In regulated financial services environments, the inability to produce test evid
 ## Examples & Commentary
 
 * **Artefact Storage:** Configure CI pipelines to publish test results and coverage reports as pipeline artefacts. Where the pipeline's native retention is short-lived (e.g., 30 days), archive to long-term storage such as an object store with immutable object policies enabled (e.g., S3 Object Lock). Record the artefact location in the deployment record
-* **Traceability:** Tag artefacts with the commit SHA and include this reference in the release record, deployment ticket, and change advisory board entry. This allows an auditor examining any production release to trace back to the specific test run that validated it
-* **Coverage Thresholds:** Define thresholds appropriate to the risk profile of each repository — a payment processing service may require 80% line coverage, while an internal tooling repository may set a lower bar. Document the rationale for the chosen threshold in the repository's governance documentation
+* **Traceability:** Tag artefacts with the commit SHA or release tag so that the evidence can be addressible later by downstream gating or for reporting purposes.
 * **Immutability:** Use object storage features such as write-once-read-many (WORM) policies or versioning with deletion protection to ensure artefacts cannot be altered after the pipeline writes them. Audit access logs periodically to detect any access pattern inconsistent with normal read-only retrieval
-* **Relationship to Deployment Gating:** Deployment gating (mi-12) blocks deployment when criteria are not met; test evidence retention ensures the outcome of those gates is preserved as an auditable record. Both controls are required — gating without retention provides enforcement but no audit trail; retention without gating captures evidence of untested deployments
-* **Exceptions:** Where an emergency deployment must proceed without a full passing test run (e.g., a critical production fix under time pressure), the exception process must capture: who approved the exception, the justification, which test requirements were waived, and the remediation commitment. The evidence of the exception itself forms part of the audit record
 
 ## Links
 

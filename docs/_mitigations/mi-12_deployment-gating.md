@@ -20,6 +20,9 @@ related_mitigations:
   - mi-7   # Vulnerability Scanning - Dependencies
   - mi-10  # Secret Detection
   - mi-11  # Vulnerability Remediation SLAs
+  - mi-15  # Testing Requirements
+  - mi-16  # Test Execution and Sign-Off
+  - mi-14  # Test Evidence Retention
 ---
 
 ## Summary
