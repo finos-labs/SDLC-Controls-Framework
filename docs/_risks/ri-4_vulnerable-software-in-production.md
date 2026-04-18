@@ -27,7 +27,7 @@ This risk has two temporal dimensions. First, known-vulnerable components can en
 
 Unlike supply chain compromise (ri-10, ri-11), which concerns the deliberate introduction of malicious or tampered components, this risk focuses on the presence of known, publicly disclosed vulnerabilities that remain unaddressed in production. Attackers actively scan for known vulnerabilities and can exploit them rapidly once public disclosures are made, making timely detection and remediation critical.
 
-- **Unpatched known vulnerabilities (CVEs)** — Production systems running software with publicly disclosed vulnerabilities for which patches or mitigations are available but have not been applied
+- **Unpatched known vulnerabilities (CVEs)** — Production systems running software with publicly disclosed vulnerabilities that have not been patched or mitigated
 - **Outdated or end-of-life dependencies** — Libraries, frameworks, or runtime components that no longer receive security updates, leaving known vulnerabilities permanently unaddressed
 - **Incomplete vulnerability scanning** — Security scans that do not cover the full software stack — including transitive dependencies, container base images, and runtime libraries — leaving blind spots in vulnerability detection
 - **Delayed remediation cycles** — Organisational processes that are too slow to triage, prioritise, and deploy fixes for critical vulnerabilities before they can be exploited
