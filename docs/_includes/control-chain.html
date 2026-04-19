@@ -22,7 +22,7 @@
           <div class="chain-name">{{ member.title }}</div>
         </div>
         {% else %}
-        <a href="{{ site.baseurl }}/{{ member.url }}" class="control-chain-step text-decoration-none">
+        <a href="{{ member.url | prepend: site.baseurl }}" class="control-chain-step text-decoration-none">
           <div class="chain-title">{% include mitigation-id.html mitigation=member %}</div>
           <div class="chain-name">{{ member.title }}</div>
         </a>
