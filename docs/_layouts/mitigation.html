@@ -77,9 +77,16 @@ layout: default
                         {% assign mitigation_prefix = "mi-" | append: mitigation.sequence %}
                         {% if page.related_mitigations contains mitigation_prefix %}
                         {% comment %} Skip chain members — they are already shown above {% endcomment %}
-                        {% if page.chain and mitigation.chain == page.chain %}
-                        {% continue %}
+                        {% assign skip_mitigation = false %}
+                        {% if page.chain %}
+                          {% for chain_id in page.chain %}
+                            {% if mitigation.chain contains chain_id %}
+                              {% assign skip_mitigation = true %}
+                              {% break %}
+                            {% endif %}
+                          {% endfor %}
                         {% endif %}
+                        {% if skip_mitigation %}{% continue %}{% endif %}
                         <div class="list-group-item">
                             <h3 class="h6 mb-1">
                                 <a href="{{ site.baseurl }}/{{ mitigation.url }}">{% include mitigation-id.html mitigation=mitigation %} : {{ mitigation.title }}</a>
