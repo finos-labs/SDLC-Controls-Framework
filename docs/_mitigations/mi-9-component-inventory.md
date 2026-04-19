@@ -30,11 +30,11 @@ The inventory provides visibility and traceability and enables fast response: yo
 
 ## Examples & Commentary
 
-* No releasable artifact should be deployed without a corresponding component inventory (SBOM); this complements Software Artifact Provenance (mi-3), which establishes build-level provenance, by providing component-level visibility and traceability.
+* No releasable artifact should be deployed without a corresponding component inventory (SBOM); this complements Software Artifact Provenance ([SDLC-PREV-003]({% link _mitigations/mi-3_software-artifact-provenance.md %})), which establishes build-level provenance, by providing component-level visibility and traceability.
 * Automated extraction from the artifact plus a machine-readable manifest (SBOM) together provide full coverage. Extraction (e.g. automated binary scan) can be compared to declared dependencies to identify discrepancies; the manifest records what is in each artifact so you can query it when issues arise (e.g. which artifacts contain a given component).
 * When a new CVE is published (e.g. Log4Shell), query the inventory across all artifacts to identify which contain the affected component and version; without an inventory, manual inspection or waiting for a scan would be required — with SBOMs, remediation can be prioritised and executed within hours.
 * Use the inventory for license compliance: an SBOM listing components with their licenses allows automated checks before deployment; any artifact containing a prohibited license can be flagged or blocked.
-* Implement deployment gates that verify an artifact has a valid SBOM before allowing promotion to production; the SBOM can be stored alongside provenance records (mi-3) or in a dedicated SBOM store.
+* Implement deployment gates that verify an artifact has a valid SBOM before allowing promotion to production; the SBOM can be stored alongside provenance records ([SDLC-PREV-003]({% link _mitigations/mi-3_software-artifact-provenance.md %})) or in a dedicated SBOM store.
 * Tools exist to extract components from container images or filesystems, or to generate SBOMs from the build; the SBOM is the input for vulnerability scanning and license compliance checks.
 * The SBOM MAY include recommended elements (e.g. component name, version, PURL, CPE, license info, file hashes) to support faster response and downstream analysis.
 
