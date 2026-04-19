@@ -1,35 +1,40 @@
 {% if include.page.chain %}
-  {% assign chain_id = include.page.chain %}
   {% assign current_id = "mi-" | append: include.page.sequence %}
-  {% assign chain_members = site.mitigations | where: "chain", chain_id | sort: "sequence" %}
 
-  {% if chain_members.size > 1 %}
-  <div class="control-chain mb-3">
-    {% for member in chain_members %}
-      {% assign m_id = "mi-" | append: member.sequence %}
-      {% assign is_current = false %}
-      {% if m_id == current_id %}
-        {% assign is_current = true %}
+  {% for chain_id in include.page.chain %}
+    {% comment %} Collect all mitigations whose chain array contains this chain_id {% endcomment %}
+    {% assign chain_members = "" | split: "" %}
+    {% for m in site.mitigations %}
+      {% if m.chain contains chain_id %}
+        {% assign chain_members = chain_members | push: m %}
       {% endif %}
-
-      {% if is_current %}
-      <div class="control-chain-step active">
-        <div class="chain-title">{% include mitigation-id.html mitigation=member %}</div>
-        <div class="chain-name">{{ member.title }}</div>
-      </div>
-      {% else %}
-      <a href="{{ site.baseurl }}/{{ member.url }}" class="control-chain-step text-decoration-none">
-        <div class="chain-title">{% include mitigation-id.html mitigation=member %}</div>
-        <div class="chain-name">{{ member.title }}</div>
-      </a>
-      {% endif %}
-
-      {% unless forloop.last %}
-      <div class="chain-arrow">
-        <i class="bi bi-chevron-right"></i>
-      </div>
-      {% endunless %}
     {% endfor %}
-  </div>
-  {% endif %}
+    {% assign chain_members = chain_members | sort: "sequence" %}
+
+    {% if chain_members.size > 1 %}
+    <div class="control-chain mb-3">
+      {% for member in chain_members %}
+        {% assign m_id = "mi-" | append: member.sequence %}
+
+        {% if m_id == current_id %}
+        <div class="control-chain-step active">
+          <div class="chain-title">{% include mitigation-id.html mitigation=member %}</div>
+          <div class="chain-name">{{ member.title }}</div>
+        </div>
+        {% else %}
+        <a href="{{ site.baseurl }}/{{ member.url }}" class="control-chain-step text-decoration-none">
+          <div class="chain-title">{% include mitigation-id.html mitigation=member %}</div>
+          <div class="chain-name">{{ member.title }}</div>
+        </a>
+        {% endif %}
+
+        {% unless forloop.last %}
+        <div class="chain-arrow">
+          <i class="bi bi-chevron-right"></i>
+        </div>
+        {% endunless %}
+      {% endfor %}
+    </div>
+    {% endif %}
+  {% endfor %}
 {% endif %}
