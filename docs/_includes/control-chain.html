@@ -2,18 +2,21 @@
   {% assign current_id = "mi-" | append: include.page.sequence %}
 
   {% for chain_id in include.page.chain %}
-    {% comment %} Collect all mitigations whose chain array contains this chain_id {% endcomment %}
-    {% assign chain_members = "" | split: "" %}
-    {% for m in site.mitigations %}
+    {% comment %} Render chain members sorted by sequence — no push needed {% endcomment %}
+    {% assign chain_members = site.mitigations | sort: "sequence" %}
+    {% assign chain_count = 0 %}
+    {% for m in chain_members %}
       {% if m.chain contains chain_id %}
-        {% assign chain_members = chain_members | push: m %}
+        {% assign chain_count = chain_count | plus: 1 %}
       {% endif %}
     {% endfor %}
-    {% assign chain_members = chain_members | sort: "sequence" %}
 
-    {% if chain_members.size > 1 %}
+    {% if chain_count > 1 %}
     <div class="control-chain mb-3">
+      {% assign rendered = 0 %}
       {% for member in chain_members %}
+        {% unless member.chain contains chain_id %}{% continue %}{% endunless %}
+        {% assign rendered = rendered | plus: 1 %}
         {% assign m_id = "mi-" | append: member.sequence %}
 
         {% if m_id == current_id %}
@@ -22,17 +25,17 @@
           <div class="chain-name">{{ member.title }}</div>
         </div>
         {% else %}
-        <a href="{{ site.baseurl }}/{{ member.url }}" class="control-chain-step text-decoration-none">
+        <a href="{{ member.url | prepend: site.baseurl }}" class="control-chain-step text-decoration-none">
           <div class="chain-title">{% include mitigation-id.html mitigation=member %}</div>
           <div class="chain-name">{{ member.title }}</div>
         </a>
         {% endif %}
 
-        {% unless forloop.last %}
+        {% if rendered < chain_count %}
         <div class="chain-arrow">
           <i class="bi bi-chevron-right"></i>
         </div>
-        {% endunless %}
+        {% endif %}
       {% endfor %}
     </div>
     {% endif %}
