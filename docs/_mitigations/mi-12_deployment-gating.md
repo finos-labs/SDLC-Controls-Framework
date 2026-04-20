@@ -49,7 +49,7 @@ Deployment gating enforces policy-based decisions at the point of deployment to 
 * **Graduated Policies:** Apply different gate strictness by environment and application criticality. A development environment might allow deployment with medium findings, while production for a customer-facing application blocks on anything high or above
 * **Emergency Overrides:** Define an emergency deployment process for genuinely urgent situations (e.g., a critical production outage fix). The override should require real-time approval from a security lead or on-call manager, be time-limited, and automatically create a follow-up ticket to address the bypassed condition
 * **Visibility & Feedback:** When a deployment is blocked, provide clear and actionable feedback to the engineering team: which gate failed, what findings caused the failure, and what actions are needed to proceed. Poor feedback loops lead to frustration and incentivise workarounds
-* **Relationship to Remediation SLAs:** Deployment gating works hand-in-hand with Remediation SLAs (mi-11). SLAs define *when* findings must be remediated; gates enforce that deployments cannot proceed when those timelines are breached. For example, a high-severity SAST finding with a 7-day SLA may not block deployment on day 1, but will block it on day 8 if unresolved
+* **Relationship to Remediation SLAs:** Deployment gating works hand-in-hand with Remediation SLAs ([SDLC-PREV-011]({% link _mitigations/mi-11_vulnerability-remediation-slas.md %})). SLAs define *when* findings must be remediated; gates enforce that deployments cannot proceed when those timelines are breached. For example, a high-severity SAST finding with a 7-day SLA may not block deployment on day 1, but will block it on day 8 if unresolved
 
 ## Links
 

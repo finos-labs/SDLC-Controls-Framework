@@ -25,18 +25,18 @@ related_mitigations:
 
 ## Summary
 
-Required appropriate testing as defined by the testing policy (mi-15) must be executed before any change is released to production. Human review and sign-off is required only when test failures occur or when the testing policy cannot be fully satisfied.
+Required appropriate testing as defined by the testing policy ([SDLC-PREV-015]({% link _mitigations/mi-15_testing-requirements.md %})) must be executed before any change is released to production. Human review and sign-off is required only when test failures occur or when the testing policy cannot be fully satisfied.
 
 ## Description
 
-This control governs the execution of testing for each individual release. It bridges the gap between the testing policy (mi-15), which defines what testing must be performed, and the evidence trail (mi-14), which preserves the records of that testing. This control answers the question: for this specific change, was the required testing actually performed, and were the results acceptable?
+This control governs the execution of testing for each individual release. It bridges the gap between the testing policy ([SDLC-PREV-015]({% link _mitigations/mi-15_testing-requirements.md %})), which defines what testing must be performed, and the evidence trail ([SDLC-PREV-014]({% link _mitigations/mi-14_test-evidence.md %})), which preserves the records of that testing. This control answers the question: for this specific change, was the required testing actually performed, and were the results acceptable?
 
 When all required testing passes and the testing policy is fully satisfied, no manual intervention is needed — the automated pipeline confirms compliance and the release may proceed. Human review and sign-off is required only in two circumstances: when test failures exist that need to be assessed and accepted, or when the testing policy cannot be fully followed and an exception is needed. This keeps the control proportionate — it does not impose manual review overhead on the majority of releases where automated testing passes cleanly, but ensures accountability when it matters.
 
 
 ## Requirements
 
-* All changes released to production MUST have completed the testing categories required for their classification as defined in the testing policy (mi-15) before release
+* All changes released to production MUST have completed the testing categories required for their classification as defined in the testing policy ([SDLC-PREV-015]({% link _mitigations/mi-15_testing-requirements.md %})) before release
 * Where all required testing passes and the testing policy is fully satisfied, the release MAY proceed without manual sign-off; the automated test results constitute sufficient evidence of compliance
 * Where test failures exist in the results failures MUST be explicitly reviewed and either remediated or accepted by a named individual; acceptance MUST be recorded with the identity of the approver, the rationale for acceptance, and confirmation that the failure is not attributable to the change being released
 * Where testing cannot be completed to the required standard prior to release, a documented and approved exception MUST be raised, specifying: who approved the exception, the justification, which test requirements were waived, any compensating controls applied (e.g., enhanced post-deployment monitoring), and a time-bound remediation commitment
@@ -44,7 +44,7 @@ When all required testing passes and the testing policy is fully satisfied, no m
 ## Examples & Commentary
 
 * **Happy Path:** When a change passes all required automated tests, meets coverage thresholds, and satisfies all gate criteria defined in the testing policy, it proceeds to release without requiring manual review. The pipeline run and its results are the evidence — no additional sign-off is needed
-* **Failed Test Acceptance:** When a test failure is accepted rather than remediated, the sign-off record should include: the specific test(s) that failed, the reason the failure is considered acceptable for this release (e.g., pre-existing known issue tracked in ticket X, flaky test under investigation), and the name of the individual accepting the risk. This record forms part of the audit trail and must be preserved per mi-14
+* **Failed Test Acceptance:** When a test failure is accepted rather than remediated, the sign-off record should include: the specific test(s) that failed, the reason the failure is considered acceptable for this release (e.g., pre-existing known issue tracked in ticket X, flaky test under investigation), and the name of the individual accepting the risk. This record forms part of the audit trail and must be preserved per [SDLC-PREV-014]({% link _mitigations/mi-14_test-evidence.md %})
 
 ## Links
 
