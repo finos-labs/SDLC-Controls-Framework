@@ -18,13 +18,13 @@ related_mitigations:
 
 ## Summary
 
-Service Dependency Mapping provides visibility into how services, external APIs, and shared components interact across systems and applications. It enables faster incident response, coordinated remediation, and reduced operational risk by maintaining an accurate, up-to-date view of runtime dependencies and their relationships at both service and application levels.
+Service Dependency Mapping provides visibility into how services and external APIs interact across systems and applications. It enables faster incident response, coordinated remediation, and reduced operational risk by maintaining an accurate, up-to-date view of runtime dependencies and their relationships at both service and application levels.
 
 This control complements Component Inventory by extending visibility from artifact-level composition to runtime service and application-level dependency relationships.
 
 ## Description
 
-Service Dependency Mapping is the practice of identifying, maintaining, and continuously updating relationships between services, applications, and their dependencies, including internal services, shared libraries, infrastructure components, and external APIs.
+Service Dependency Mapping is the practice of identifying, maintaining, and continuously updating relationships between services, applications, and their dependencies, including internal services and external APIs.
 
 While component inventory focuses on what is included within a software artifact (e.g., libraries and packages), this control focuses on how those components are used and interconnected at runtime across systems. This enables organizations to understand dependencies not only at a technical level, but also at an application and business level.
 
@@ -45,9 +45,8 @@ Maintaining this mapping ensures that when a failure, vulnerability, or change o
 
 * Service-to-service dependencies MUST be documented and maintained for all production systems
 * Dependencies MUST include:
-  - Internal services
+  - Internal services 
   - External APIs and third-party integrations
-  - Shared libraries and platform components (where relevant at runtime)
 * Each service MUST be mapped to its corresponding application or business capability
 * Ownership information MUST be maintained for each service and application to enable clear accountability during incidents
 * Dependency mappings MUST capture upstream and downstream relationships to identify impact propagation
