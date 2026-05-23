@@ -16,6 +16,7 @@ nist-sp-800-53r5_references:
 related_risks:
   - ri-4   # Vulnerable Software in Production
   - ri-8   # Unauthorised Change
+  - ri-12  # Operational Readiness Drift
 ---
 
 ## Summary
