@@ -1,6 +1,6 @@
 ---
 sequence: 1
-title: Runtime Operations
+title: Operational Readiness Drift
 layout: risk
 doc-status: draft
 type: RC
@@ -19,19 +19,17 @@ related_risks:
 ---
 ## Summary
 
-Runtime operations risk is when the state of runtime support documentation is not in sync with the current runtime environment. This creates a growing operational risk of increased MTTR. Focuses on how systems are operated compared to how systems are defined (i.e. config drift.)
+Operational readiness drift is when the state of runtime support documentation, observability, and operational practices diverge from the actual runtime environment. This creates a growing operational risk of increased MTTR and reduced operability; it focuses on how systems are operated rather than how they are defined (i.e. config drift).
 
 ## Description
 
 One of the outcomes of a successful SDLC is maintaining runbooks, telemetry, production tests, synthetic tests, etc.
 
-- Manual production changes — Ad hoc modifications applied directly to production infrastructure or application configuration outside the standard change management process
 - Not updating observability systems for new features and services.
 - Runbook drift. Particularly when they are manually maintained, and separate from the code.
 
 
 ### Examples
-- Delays in resolving incidents, and further outages.
 - A gap in monitoring would make it difficult to troubleshoot production applications
 - Hard to trace errors in distributed systems, results in higher mean time to restore (MTTR)
 
@@ -57,3 +55,5 @@ Does this capture the right scope and tone for your risk register?
 ## Links
 
 - [FFIEC IT Handbook](https://ithandbook.ffiec.gov/)
+- [NIST SP 800-53 Rev. 5](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final)
+
