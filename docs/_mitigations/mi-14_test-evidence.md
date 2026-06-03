@@ -40,7 +40,7 @@ In regulated financial services environments, the inability to produce test evid
 ## Requirements
 
 * Automated test suites MUST be executed as part of the CI/CD pipeline for every pull request targeting a protected branch and every build that produces a deployable artefact
-* For Automated test execution results MUST be captured in a structured, machine-readable format (e.g., JUnit XML, CTRF) and stored as persistent artefacts linked to the triggering commit SHA, branch, pipeline run identifier, and timestamp or any other references to ensure traceability back to the intented release
+* For Automated test execution results MUST be captured in a structured, machine-readable format (e.g., JUnit XML, CTRF) and stored as persistent artefacts linked to the triggering commit SHA, branch, built artifact, pipeline run identifier, and timestamp or any other references to ensure traceability back to the intented release
 * Manual test evidence must be associated with the intented release for traceability, downstream gating and reporting.
 * Test evidence artefacts MUST be retained for a minimum period aligned with the organisation's regulatory audit retention policy; this period MUST NOT be less than the longest applicable regulatory retention requirement
 * Retained artefacts MUST be immutable after capture; they MUST NOT be modifiable, deletable, or re-runnable outside an approved and auditable exception process
