@@ -27,11 +27,13 @@ Usage:
     ./scripts/readiness-check --report                  # writes readiness-report.md
     ./scripts/readiness-check --files docs/_risks/ri-1_insider-threat.md --report
                                                # writes readiness-report.changed.md
+    ./scripts/readiness-check --show-missing-frameworks
     ./scripts/readiness-check --report path/to/out.md   # custom path
 
 The --report flag writes a Markdown file containing:
   - Per-document status table with a pass/fail column per check category
-  - Framework validation coverage (which data files are available)
+  - Framework validation coverage (available data files, with missing files
+    shown only when explicitly requested)
   - Issues detail section for documents with open items
   - Risk-mitigation coverage matrix
 
@@ -106,6 +108,11 @@ def parse_args() -> argparse.Namespace:
         const="AUTO",
         metavar="PATH",
         help="Write a Markdown status report (default path: readiness-report.md, or readiness-report.changed.md when --files is used)",
+    )
+    parser.add_argument(
+        "--show-missing-frameworks",
+        action="store_true",
+        help="Include frameworks whose data files are missing in terminal and report coverage output",
     )
     return parser.parse_args()
 
@@ -307,17 +314,27 @@ def _seq(filename: str) -> int:
     return int(m.group(1)) if m else 0
 
 
-def _framework_coverage_lines(data_files: dict) -> list[str]:
+def _framework_coverage_lines(data_files: dict, show_missing: bool = False) -> list[str]:
+    visible_frameworks = [
+        dataset for dataset in sorted(DATA_MAKE_TARGETS)
+        if show_missing or dataset in data_files
+    ]
+    if not visible_frameworks:
+        return []
+
     lines = [
         "## Framework Validation Coverage",
         "",
         "Reference IDs are validated against a data file when one is available.",
-        "Run the corresponding make target to generate any missing file.",
         "",
         "| Framework | Status |",
         "|:----------|:-------|",
     ]
-    for dataset, make_target in sorted(DATA_MAKE_TARGETS.items()):
+    if show_missing:
+        lines.insert(3, "Run the corresponding make target to generate any missing file.")
+
+    for dataset in visible_frameworks:
+        make_target = DATA_MAKE_TARGETS[dataset]
         if dataset in data_files:
             status = f"{PASS} validated"
         elif dataset.startswith("ffiec-itbooklets"):
@@ -336,6 +353,7 @@ def generate_report(
     mitigation_results: dict[Path, dict],
     data_files: dict,
     scope_label: str | None = None,
+    show_missing_frameworks: bool = False,
 ) -> str:
     lines: list[str] = []
 
@@ -398,7 +416,9 @@ def generate_report(
     # -----------------------------------------------------------------------
     # Framework validation coverage
     # -----------------------------------------------------------------------
-    lines += [""] + _framework_coverage_lines(data_files)
+    framework_lines = _framework_coverage_lines(data_files, show_missing=show_missing_frameworks)
+    if framework_lines:
+        lines += [""] + framework_lines
 
     # -----------------------------------------------------------------------
     # Issues detail
@@ -491,7 +511,7 @@ def main() -> None:
 
     # Terminal output — framework coverage warning
     missing_data = [d for d in sorted(DATA_MAKE_TARGETS) if d not in data_files]
-    if missing_data:
+    if args.show_missing_frameworks and missing_data:
         print("\nFramework validation — some data files are missing (reference IDs not validated):")
         for dataset in missing_data:
             make_target = DATA_MAKE_TARGETS[dataset]
@@ -507,7 +527,13 @@ def main() -> None:
             report_arg = "readiness-report.changed.md" if args.files else "readiness-report.md"
 
         report_path = Path(report_arg)
-        report = generate_report(risk_results, mitigation_results, data_files, scope_label=scope_label)
+        report = generate_report(
+            risk_results,
+            mitigation_results,
+            data_files,
+            scope_label=scope_label,
+            show_missing_frameworks=args.show_missing_frameworks,
+        )
         if str(report_path) == "-":
             sys.stdout.write(report)
             if not report.endswith("\n"):

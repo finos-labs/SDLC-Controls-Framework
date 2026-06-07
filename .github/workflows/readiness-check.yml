@@ -19,6 +19,8 @@ on:
 
 permissions:
   contents: read
+  issues: write
+  pull-requests: write
 
 jobs:
   readiness-check:
@@ -26,12 +28,12 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
@@ -107,8 +109,49 @@ jobs:
       - name: Publish job summary
         run: cat .artifacts/readiness-report.md >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Publish pull request comment
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/github-script@v9
+        env:
+          READINESS_REPORT_PATH: .artifacts/readiness-report.md
+        with:
+          script: |
+            const fs = require('fs')
+
+            const marker = '<!-- readiness-check-report -->'
+            const body = `${marker}
+            ## Readiness Check
+
+            ${fs.readFileSync(process.env.READINESS_REPORT_PATH, 'utf8')}`
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+
+            const existing = comments.find((comment) =>
+              comment.user?.type === 'Bot' && comment.body?.includes(marker)
+            )
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              })
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body,
+              })
+            }
+
       - name: Upload readiness report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: readiness-report
           path: .artifacts/readiness-report.md
