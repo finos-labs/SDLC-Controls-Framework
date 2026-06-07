@@ -21,13 +21,18 @@ This directory contains scripts for downloading external references, processing 
    - Requires: `pip install requests pyyaml`
    - Usage: `python dl_owasp.py [llm|ml|all]` (default: all)
 
-## dl_nist-pdfs.py
-   - Extracts precise bookmarks from NIST documents (SP 800-53r5, AI 600-1) with object-based deep links.
-   - Supports multiple output formats: fancy/plain Markdown or YAML for Jekyll integration.
-   - Can extract leaf nodes only (`--leafs`) for individual controls/risks, or full hierarchical structure.
-   - Generates YAML files in `docs/_data/` with normalized keys (e.g., `ac-1`, `2-1`) for easy reference.
+## dl_nist-sp-800-53r5.py
+   - Dedicated generator for `docs/_data/nist-sp-800-53r5.yml`.
+   - Downloads the PDF if needed, reads it page by page with `pypdf`, extracts base control codes and titles from text, and prefers bookmark-derived deep links with page-link fallback.
+   - Warns when control numbering within a family is not consecutive. Use `--strict` to fail on gaps.
    - Requires: `pip install requests pypdf pyyaml`
-   - Usage: `python dl_nist-pdfs.py --document ai-600-1 --leafs --format yaml`
+   - Usage: `python3 scripts/dl_nist-sp-800-53r5.py`
+
+## dl_nist-ai-600-1.py
+   - Dedicated generator for `docs/_data/nist-ai-600-1.yml`.
+   - Downloads the AI 600-1 PDF if needed, extracts bookmarks, filters to the configured section, and emits deep links from the PDF outline.
+   - Requires: `pip install requests pypdf pyyaml`
+   - Usage: `python3 scripts/dl_nist-ai-600-1.py --leafs`
 
 ## annotate_yaml_front_matter.py
    - Adds title comments to YAML front matter in risk and mitigation files for better readability.
@@ -45,6 +50,15 @@ This directory contains scripts for downloading external references, processing 
    - Validates filename conventions and project structure consistency.
    - Checks that files follow expected naming patterns.
    - Usage: `./lint-check`
+
+## readiness-check
+   - Validates that risk and mitigation documents meet the criteria required for Working-Group approval.
+   - Complements `lint-check` with content-level checks: required sections, non-empty `mitigates` links, at least one regulatory reference, and cross-references that resolve to existing files.
+   - Supports scoped validation for pull requests via `--files`, while still resolving cross-references against the full repository.
+   - Writes `readiness-report.md` with a per-document status table and a risk–mitigation coverage matrix when `--report` is passed.
+   - When `--files` and `--report` are used without an explicit output path, the scoped report is written to `readiness-report.changed.md`.
+   - Requires: `pip install PyYAML`
+   - Usage: `python readiness-check --report readiness-report.md`, `python readiness-check --files docs/_risks/ri-1_insider-threat.md`, or `make readiness`
 
 ---
 
