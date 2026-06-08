@@ -15,7 +15,9 @@ mitigations:
 Software versions that have not completed the required approval, validation, or governance process but are released to production, might cause customer-facing defects, regulatory non-compliance, or security vulnerabilities that erode market confidence, damage the institution's reputation, and trigger stakeholder backlash.
 Additionally, versions that are misaligned with product direction or has features that conflict with the companies broader strategic goals or marketing messages might harm strategic goals.
 
-As a result, for companies that are publicly traded in the US (or falls under global equivalents like UK SOX), a formal version release approval process is one of the most critical elements of a Sarbanes-Oxley (SOX) audit.
+As a result, for companies that are publicly traded in the US (or falls under global equivalents like UK SOX), a formal version release approval process is one of the most critical elements of a Sarbanes-Oxley (SOX) audit: 
+- SOC 2 Type II - CC8.1 (Change Management) - Requires organizations to authorize, design, develop, test, **approval**, and implement system changes to prevent unauthorized modifications and maintain integrity.
+
 
 ## Description
 
