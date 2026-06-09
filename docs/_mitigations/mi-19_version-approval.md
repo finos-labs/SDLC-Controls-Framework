@@ -3,7 +3,7 @@ sequence: 19
 title: Version Release Approval Gating
 layout: mitigation
 doc-status: Draft
-type: BUS
+type: PREV
 
 mitigates:
   - ri-12  # Business Reputation Risk from Non-Approved Software Version Releases
