@@ -4,6 +4,7 @@ title: Content Addressable Identities
 layout: mitigation
 doc-status: Draft
 type: PREV
+phase: BUILD
 nist-sp-800-53r5_references:
   - si-7   # SI-7 Software, Firmware, And Information Integrity
   - sa-10  # SA-10 Developer Configuration Management

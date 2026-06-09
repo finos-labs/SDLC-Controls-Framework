@@ -4,6 +4,7 @@ title: Requirements Management
 layout: mitigation
 doc-status: Pre-Draft
 type: PREV
+phase: LIFECYCLE
 mitigates:
 related_mitigations:
 ---

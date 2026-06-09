@@ -4,6 +4,7 @@ title: Component Inventory
 layout: mitigation
 doc-status: Draft
 type: PREV
+phase: BUILD
 nist-sp-800-53r5_references:
   - cm-8   # CM-8 System Component Inventory
   - sr-4   # SR-4 Provenance

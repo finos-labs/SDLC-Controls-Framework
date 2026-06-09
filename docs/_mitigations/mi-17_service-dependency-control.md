@@ -4,6 +4,7 @@ title: Service Dependency Control
 layout: mitigation
 doc-status: Draft
 type: PREV
+phase: RUNTIME
 nist-sp-800-53r5_references:
   - cm-8   # CM-8 System Component Inventory
   - si-4   # SI-4 System Monitoring
