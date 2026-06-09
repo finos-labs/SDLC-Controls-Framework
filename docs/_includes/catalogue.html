@@ -52,7 +52,7 @@
                                             <div class="form-check form-check-sm mb-1">
                                                 <input class="form-check-input category-checkbox" type="checkbox" value="{{ code }}" id="cat-{{ code }}" data-type="risk">
                                                 <label class="form-check-label small" for="cat-{{ code }}">
-                                                    <i class="{{ site.category_icons[code] }} me-1"></i>{{ label }}
+                                                    <i class="bi {{ site.category_icons[code] }} me-1"></i>{{ label }}
                                                 </label>
                                             </div>
                                             {% endfor %}
@@ -67,7 +67,7 @@
                                             <div class="form-check form-check-sm mb-1">
                                                 <input class="form-check-input category-checkbox" type="checkbox" value="{{ code }}" id="cat-{{ code }}" data-type="mitigation">
                                                 <label class="form-check-label small" for="cat-{{ code }}">
-                                                    <i class="{{ site.category_icons[code] }} me-1"></i>{{ label }}
+                                                    <i class="bi {{ site.category_icons[code] }} me-1"></i>{{ label }}
                                                 </label>
                                             </div>
                                             {% endfor %}
@@ -115,7 +115,7 @@
                       <div class="mb-4">
                           <div class="d-flex justify-content-between align-items-center mb-2">
                               <h3 class="h5 mb-0 text-primary">
-                                  {% if category_icon %}<i class="{{ category_icon }} me-2"></i>{% endif %}
+                                  {% if category_icon %}<i class="bi {{ category_icon }} me-2"></i>{% endif %}
                                   {{ site.risk_classification[risk_group.name] }}
                               </h3>
                               <span class="badge bg-primary">{{ risk_group.items | size }} risks</span>
@@ -124,7 +124,7 @@
                               {% assign sorted_risks = risk_group.items | sort: "sequence" %}
                               {% for risk in sorted_risks %}
                               {% assign risk_status = risk['doc-status'] | default: '' %}
-                              <div class="col-12 risk-item" data-title="{{ risk.title | downcase }}" data-content="{{ risk.content | strip_html | strip_newlines | downcase }}" data-status="{{ risk_status }}">
+                              <div class="col-12 risk-item" data-id="ri-{{ risk.sequence }}" data-title="{{ risk.title | downcase }}" data-content="{{ risk.content | strip_html | strip_newlines | downcase }}" data-status="{{ risk_status }}">
                                   <div class="card border-start border-primary border-3 h-100 card-hover" onclick="window.location.href='{{ site.baseurl }}{{ risk.id }}.html'" style="cursor: pointer;">
                                       <div class="card-body py-2">
                                           <div class="d-flex justify-content-between align-items-start">
@@ -197,7 +197,7 @@
                       <div class="mb-4">
                           <div class="d-flex justify-content-between align-items-center mb-2">
                               <h3 class="h5 mb-0 text-success">
-                                  {% if category_icon %}<i class="{{ category_icon }} me-2"></i>{% endif %}
+                                  {% if category_icon %}<i class="bi {{ category_icon }} me-2"></i>{% endif %}
                                   {{ site.mitigation_classification[mitigation_group.name] }}
                               </h3>
                               <span class="badge bg-success">{{ mitigation_group.items | size }} mitigations</span>
@@ -206,7 +206,7 @@
                               {% assign sorted_mitigations = mitigation_group.items | sort: "sequence" %}
                               {% for mitigation in sorted_mitigations %}
                               {% assign mitigation_status = mitigation['doc-status'] | default: '' %}
-                              <div class="col-12 mitigation-item" data-title="{{ mitigation.title | downcase }}" data-content="{{ mitigation.content | strip_html | strip_newlines | downcase }}" data-status="{{ mitigation_status }}">
+                              <div class="col-12 mitigation-item" data-mitigates="{{ mitigation.mitigates | join: ' ' }}" data-title="{{ mitigation.title | downcase }}" data-content="{{ mitigation.content | strip_html | strip_newlines | downcase }}" data-status="{{ mitigation_status }}">
                                   <div class="card border-start border-success border-3 h-100 card-hover" onclick="window.location.href='{{ site.baseurl }}{{ mitigation.id }}.html'" style="cursor: pointer;">
                                       <div class="card-body py-2">
                                           <div class="d-flex justify-content-between align-items-start">
@@ -359,38 +359,81 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedCategories = Array.from(categoryCheckboxes)
             .filter(checkbox => checkbox.checked)
             .map(checkbox => checkbox.value);
-        
+        // Category checkboxes are scoped by data-type — a ticked SEC must
+        // only constrain risks, a ticked PREV only constrain mitigations,
+        // otherwise the cross-type filter zeroes out one panel.
+        const selectedCategoriesByType = {
+            risk: Array.from(categoryCheckboxes)
+                .filter(cb => cb.checked && cb.dataset.type === 'risk')
+                .map(cb => cb.value),
+            mitigation: Array.from(categoryCheckboxes)
+                .filter(cb => cb.checked && cb.dataset.type === 'mitigation')
+                .map(cb => cb.value),
+        };
+
         let riskCount = 0;
         let mitigationCount = 0;
-        
+
         const selectedStatus = statusFilter.value;
 
-        // Filter items
-        ['risk', 'mitigation'].forEach(type => {
-            document.querySelectorAll(`.${type}-item`).forEach(item => {
-                const title = item.getAttribute('data-title') || '';
-                const content = item.getAttribute('data-content') || '';
-                const itemStatus = item.getAttribute('data-status') || '';
-                const parentSection = item.closest('[data-category]');
-                const itemCategory = parentSection?.getAttribute('data-category') || '';
+        // Pass 1: evaluate each item against its own filters (no
+        // cross-linkage yet) and remember the decision.
+        const ownMatch = (item, type) => {
+            const title = item.getAttribute('data-title') || '';
+            const content = item.getAttribute('data-content') || '';
+            const itemStatus = item.getAttribute('data-status') || '';
+            const itemCategory = item.closest('[data-category]')?.getAttribute('data-category') || '';
+            const cats = selectedCategoriesByType[type];
+            return (!searchTerm || title.includes(searchTerm) || content.includes(searchTerm))
+                && (!selectedType || selectedType === type)
+                && (cats.length === 0 || cats.includes(itemCategory))
+                && (!selectedStatus || itemStatus === selectedStatus);
+        };
 
-                const matchesSearch = !searchTerm || title.includes(searchTerm) || content.includes(searchTerm);
-                const matchesType = !selectedType || selectedType === type;
-                const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(itemCategory);
-                const matchesStatus = !selectedStatus || itemStatus === selectedStatus;
+        const riskDecisions = [];
+        const visibleRiskIds = new Set();
+        document.querySelectorAll('.risk-item').forEach(item => {
+            const ok = ownMatch(item, 'risk');
+            const id = item.getAttribute('data-id');
+            riskDecisions.push({ item, ownOk: ok, id });
+            if (ok && id) visibleRiskIds.add(id);
+        });
 
-                const isVisible = matchesSearch && matchesType && matchesCategory && matchesStatus;
-                item.style.display = isVisible ? 'block' : 'none';
-                
-                // Count visible items
-                if (isVisible) {
-                    if (type === 'risk') {
-                        riskCount++;
-                    } else {
-                        mitigationCount++;
-                    }
-                }
-            });
+        const mitDecisions = [];
+        const targetedRiskIds = new Set();
+        document.querySelectorAll('.mitigation-item').forEach(item => {
+            const ok = ownMatch(item, 'mitigation');
+            const mitigates = (item.getAttribute('data-mitigates') || '').split(/\s+/).filter(Boolean);
+            mitDecisions.push({ item, ownOk: ok, mitigates });
+            if (ok) mitigates.forEach(id => targetedRiskIds.add(id));
+        });
+
+        // Pass 2: apply bidirectional cross-linkage. Each side narrows the
+        // other when (a) it has filtered down below its full set and (b)
+        // it still has at least one match (so a search with no hits on
+        // one side doesn't wipe out the other side too).
+        const risksNarrowed = visibleRiskIds.size > 0
+            && visibleRiskIds.size < riskDecisions.length;
+        const mitsOwnVisibleCount = mitDecisions.filter(d => d.ownOk).length;
+        const mitsNarrowed = mitsOwnVisibleCount > 0
+            && mitsOwnVisibleCount < mitDecisions.length;
+
+        riskDecisions.forEach(({ item, ownOk, id }) => {
+            let visible = ownOk;
+            if (visible && mitsNarrowed && selectedType !== 'risk') {
+                visible = targetedRiskIds.has(id);
+            }
+            item.style.display = visible ? 'block' : 'none';
+            if (visible) riskCount++;
+        });
+
+        mitDecisions.forEach(({ item, ownOk, mitigates }) => {
+            let visible = ownOk;
+            if (visible && risksNarrowed && selectedType !== 'mitigation') {
+                visible = mitigates.some(id => visibleRiskIds.has(id));
+            }
+            item.style.display = visible ? 'block' : 'none';
+            if (visible) mitigationCount++;
         });
         
         // Update category section visibility and badges
@@ -399,8 +442,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const sectionType = section.getAttribute('data-type');
             const visibleItems = section.querySelectorAll(`.${sectionType}-item:not([style*="display: none"])`);
             
-            const shouldShow = (!selectedType || selectedType === sectionType) && 
-                             (selectedCategories.length === 0 || selectedCategories.includes(categoryType)) &&
+            const sectionCats = selectedCategoriesByType[sectionType] || [];
+            const shouldShow = (!selectedType || selectedType === sectionType) &&
+                             (sectionCats.length === 0 || sectionCats.includes(categoryType)) &&
                              visibleItems.length > 0;
             
             const container = section.closest('.mb-4');
