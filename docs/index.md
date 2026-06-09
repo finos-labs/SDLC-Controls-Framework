@@ -2,13 +2,6 @@
 layout: index
 title: "FINOS SDLC³- SDLC Common Controls Catalog"
 subtitle: "A comprehensive collection of risks and control that support the regulated software development lifecycle"
-risk_order:
-  - OP
-  - SEC
-  - RC
-mitigation_order:
-  - PREV
-  - DET
 ---
 
 In today’s highly regulated technology landscape, the Software Development Life Cycle (SDLC) must be executed with rigor, discipline, and with increasing focus on compliance. Organizations are increasingly required to demonstrate adherence to governance frameworks, regulatory standards, and internal risk management policies.

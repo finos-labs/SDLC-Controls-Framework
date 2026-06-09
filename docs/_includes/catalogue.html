@@ -46,41 +46,31 @@
                                             <div class="small text-muted fw-bold mb-2">
                                                 <i class="bi bi-asterisk me-1"></i>Risks
                                             </div>
+                                            {% for entry in site.risk_classification %}
+                                            {% assign code = entry[0] %}
+                                            {% assign label = entry[1] %}
                                             <div class="form-check form-check-sm mb-1">
-                                                <input class="form-check-input category-checkbox" type="checkbox" value="OP" id="cat-OP" data-type="risk">
-                                                <label class="form-check-label small" for="cat-OP">
-                                                    <i class="bi bi-person-fill-gear me-1"></i>Operational
+                                                <input class="form-check-input category-checkbox" type="checkbox" value="{{ code }}" id="cat-{{ code }}" data-type="risk">
+                                                <label class="form-check-label small" for="cat-{{ code }}">
+                                                    <i class="{{ site.category_icons[code] }} me-1"></i>{{ label }}
                                                 </label>
                                             </div>
-                                            <div class="form-check form-check-sm mb-1">
-                                                <input class="form-check-input category-checkbox" type="checkbox" value="SEC" id="cat-SEC" data-type="risk">
-                                                <label class="form-check-label small" for="cat-SEC">
-                                                    <i class="bi bi-bug-fill me-1"></i>Security
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-sm mb-0">
-                                                <input class="form-check-input category-checkbox" type="checkbox" value="RC" id="cat-RC" data-type="risk">
-                                                <label class="form-check-label small" for="cat-RC">
-                                                    <i class="bi bi-clipboard2-check-fill me-1"></i>Regulatory
-                                                </label>
-                                            </div>
+                                            {% endfor %}
                                         </div>
                                         <div class="col-6">
                                             <div class="small text-muted fw-bold mb-2">
                                                 <i class="bi bi-shield-shaded me-1"></i>Mitigations
                                             </div>
+                                            {% for entry in site.mitigation_classification %}
+                                            {% assign code = entry[0] %}
+                                            {% assign label = entry[1] %}
                                             <div class="form-check form-check-sm mb-1">
-                                                <input class="form-check-input category-checkbox" type="checkbox" value="PREV" id="cat-PREV" data-type="mitigation">
-                                                <label class="form-check-label small" for="cat-PREV">
-                                                    <i class="bi bi-lock-fill me-1"></i>Preventative
+                                                <input class="form-check-input category-checkbox" type="checkbox" value="{{ code }}" id="cat-{{ code }}" data-type="mitigation">
+                                                <label class="form-check-label small" for="cat-{{ code }}">
+                                                    <i class="{{ site.category_icons[code] }} me-1"></i>{{ label }}
                                                 </label>
                                             </div>
-                                            <div class="form-check form-check-sm mb-0">
-                                                <input class="form-check-input category-checkbox" type="checkbox" value="DET" id="cat-DET" data-type="mitigation">
-                                                <label class="form-check-label small" for="cat-DET">
-                                                    <i class="bi bi-eye-fill me-1"></i>Detective
-                                                </label>
-                                            </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>
@@ -117,19 +107,15 @@
                 <div class="card-body">
                     <p class="text-muted mb-4">Identify potential risks in your AI implementation across operational, security, and regulatory dimensions.</p>
                     
-                    {% for order in page.risk_order %}
+                    {% for entry in site.risk_classification %}
+                      {% assign order = entry[0] %}
                       {% assign risk_group = site.risks | group_by: "type" | where: "name", order | first %}
                       {% if risk_group %}
+                      {% assign category_icon = site.category_icons[order] %}
                       <div class="mb-4">
                           <div class="d-flex justify-content-between align-items-center mb-2">
                               <h3 class="h5 mb-0 text-primary">
-                                  {% if order == 'OP' %}
-                                      <i class="bi bi-person-fill-gear me-2"></i>
-                                  {% elsif order == 'SEC' %}
-                                      <i class="bi bi-bug-fill me-2"></i>
-                                  {% elsif order == 'RC' %}
-                                      <i class="bi bi-clipboard2-check-fill me-2"></i>
-                                  {% endif %}
+                                  {% if category_icon %}<i class="{{ category_icon }} me-2"></i>{% endif %}
                                   {{ site.risk_classification[risk_group.name] }}
                               </h3>
                               <span class="badge bg-primary">{{ risk_group.items | size }} risks</span>
@@ -203,17 +189,15 @@
                 <div class="card-body">
                     <p class="text-muted mb-4">Discover preventative and detective controls to mitigate identified risks in your AI systems.</p>
                     
-                    {% for order in page.mitigation_order %}
+                    {% for entry in site.mitigation_classification %}
+                      {% assign order = entry[0] %}
                       {% assign mitigation_group = site.mitigations | group_by: "type" | where: "name", order | first %}
                       {% if mitigation_group %}
+                      {% assign category_icon = site.category_icons[order] %}
                       <div class="mb-4">
                           <div class="d-flex justify-content-between align-items-center mb-2">
                               <h3 class="h5 mb-0 text-success">
-                                  {% if order == 'PREV' %}
-                                      <i class="bi bi-lock-fill me-2"></i>
-                                  {% elsif order == 'DET' %}
-                                      <i class="bi bi-eye-fill me-2"></i>
-                                  {% endif %}
+                                  {% if category_icon %}<i class="{{ category_icon }} me-2"></i>{% endif %}
                                   {{ site.mitigation_classification[mitigation_group.name] }}
                               </h3>
                               <span class="badge bg-success">{{ mitigation_group.items | size }} mitigations</span>
