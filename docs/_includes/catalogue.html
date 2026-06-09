@@ -16,11 +16,11 @@
                 <!-- Filter content that can be collapsed -->
                 <div class="filter-content" id="filterContent" style="display: none;">
                     <div class="row g-3">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label for="searchInput" class="form-label fw-bold">Search</label>
                             <input type="text" class="form-control" id="searchInput" placeholder="Search risks and mitigations by title or content...">
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label for="typeFilter" class="form-label fw-bold">Filter by Type</label>
                             <select class="form-select" id="typeFilter">
                                 <option value="">All Types</option>
@@ -28,7 +28,7 @@
                                 <option value="mitigation">Mitigations Only</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label for="statusFilter" class="form-label fw-bold">Filter by Status</label>
                             <select class="form-select" id="statusFilter">
                                 <option value="">All Statuses</option>
@@ -37,7 +37,13 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold">&nbsp;</label>
+                            <button type="button" class="btn btn-outline-secondary w-100" id="resetFilters">
+                                Reset
+                            </button>
+                        </div>
+                        <div class="col-md-6">
                             <label class="form-label fw-bold">Filter by Category</label>
                             <div class="card border">
                                 <div class="card-body p-2">
@@ -76,7 +82,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <label class="form-label fw-bold">Filter by Phase</label>
                             <div class="card border">
                                 <div class="card-body p-2">
@@ -87,7 +93,7 @@
                                         {% for entry in site.phase_classification %}
                                         {% assign code = entry[0] %}
                                         {% assign label = entry[1] %}
-                                        <div class="col-6">
+                                        <div class="col-6 col-lg-4">
                                             <div class="form-check form-check-sm mb-1">
                                                 <input class="form-check-input phase-checkbox" type="checkbox" value="{{ code }}" id="phase-{{ code }}">
                                                 <label class="form-check-label small" for="phase-{{ code }}">
@@ -99,12 +105,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label fw-bold">&nbsp;</label>
-                            <button type="button" class="btn btn-outline-secondary w-100" id="resetFilters">
-                                Reset
-                            </button>
                         </div>
                     </div>
                 </div>
