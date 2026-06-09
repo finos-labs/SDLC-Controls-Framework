@@ -15,3 +15,5 @@ docs/contributing.md
 
 # We use YARN
 website/package-lock.json
+.venv/
+_refs-markdown

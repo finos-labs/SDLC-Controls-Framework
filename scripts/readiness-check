@@ -1,0 +1,547 @@
+#!/usr/bin/env python3
+"""
+Readiness Check for SDLC Controls Framework
+
+Validates that risk and mitigation documents meet the criteria required for
+Working-Group approval. Complements lint-check (filenames and required YAML
+keys) with content-level checks.
+
+Checks performed:
+  All documents:
+    - Required body sections are present
+    - Unexpected headings are flagged
+    - Cross-references (related_risks, related_mitigations, mitigates) resolve
+      to existing files
+    - Regulatory reference IDs resolve in their data files (when available)
+
+  Risks only:
+    - ### Consequences is a subsection of ## Description
+
+  Mitigations only:
+    - 'mitigates' field is non-empty
+    - At least one regulatory reference field is populated
+
+Usage:
+    ./scripts/readiness-check
+    ./scripts/readiness-check --files docs/_risks/ri-1_insider-threat.md
+    ./scripts/readiness-check --report                  # writes readiness-report.md
+    ./scripts/readiness-check --files docs/_risks/ri-1_insider-threat.md --report
+                                               # writes readiness-report.changed.md
+    ./scripts/readiness-check --show-missing-frameworks
+    ./scripts/readiness-check --report path/to/out.md   # custom path
+
+The --report flag writes a Markdown file containing:
+  - Per-document status table with a pass/fail column per check category
+  - Framework validation coverage (available data files, with missing files
+    shown only when explicitly requested)
+  - Issues detail section for documents with open items
+  - Risk-mitigation coverage matrix
+
+Dependencies: PyYAML  (pip install pyyaml)
+
+Exit code: always 0 — open items are reported but do not fail the script.
+"""
+
+import argparse
+import re
+import sys
+from datetime import date
+from pathlib import Path
+
+import yaml
+
+SCRIPT_DIR = Path(__file__).parent
+DOCS_DIR = SCRIPT_DIR.parent / "docs"
+RISKS_DIR = DOCS_DIR / "_risks"
+MITIGATIONS_DIR = DOCS_DIR / "_mitigations"
+
+# Required headings for each document type — also used as the permitted set
+# for unexpected-heading detection. '## Examples' variants are handled separately.
+RISK_HEADINGS = {"## Summary", "## Description", "### Consequences", "## Links"}
+MITIGATION_HEADINGS = {"## Summary", "## Description", "## Requirements", "## Links"}
+
+REGULATORY_REF_FIELDS = [
+    "eu-ai-act_references",
+    "ffiec-itbooklets_references",
+    "ffiec-itbooklets_v2_references",
+    "iso-42001_references",
+    "nist-ai-600-1_references",
+    "nist-sp-800-53r5_references",
+    "owasp-llm_references",
+    "owasp-ml_references",
+]
+
+# Maps each dataset name to the make target that generates it.
+# None means the dataset is not currently automated.
+DATA_MAKE_TARGETS: dict[str, str | None] = {
+    "eu-ai-act":           "make data-eu-ai-act",
+    "ffiec-itbooklets":    None,  # source access is not currently automated
+    "ffiec-itbooklets_v2": None,  # source access is not currently automated
+    "iso-42001":           None,  # not currently automated
+    "nist-ai-600-1":       "make data-nist",
+    "nist-sp-800-53r5":    "make data-nist",
+    "owasp-llm":           "make data-owasp",
+    "owasp-ml":            "make data-owasp",
+}
+
+PASS = "✅"
+FAIL = "❌"
+WARN = "⚠️"
+
+
+# ---------------------------------------------------------------------------
+# Parsing
+# ---------------------------------------------------------------------------
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument(
+        "--files",
+        nargs="+",
+        metavar="PATH",
+        help="Limit validation/reporting to the specified risk or mitigation documents",
+    )
+    parser.add_argument(
+        "--report",
+        nargs="?",
+        const="AUTO",
+        metavar="PATH",
+        help="Write a Markdown status report (default path: readiness-report.md, or readiness-report.changed.md when --files is used)",
+    )
+    parser.add_argument(
+        "--show-missing-frameworks",
+        action="store_true",
+        help="Include frameworks whose data files are missing in terminal and report coverage output",
+    )
+    return parser.parse_args()
+
+
+def parse_front_matter(path: Path) -> tuple[dict, str]:
+    text = path.read_text(encoding="utf-8")
+    if not text.startswith("---"):
+        return {}, text
+    end = text.find("\n---", 3)
+    if end == -1:
+        return {}, text
+    try:
+        fm = yaml.safe_load(text[3:end]) or {}
+    except yaml.YAMLError:
+        fm = {}
+    return fm, text[end + 4:]
+
+
+def collect_ids() -> tuple[set[str], set[str]]:
+    risk_ids = {re.match(r"(ri-\d+)", f.name).group(1)
+                for f in RISKS_DIR.glob("*.md")
+                if re.match(r"ri-\d+", f.name)}
+    mitigation_ids = {re.match(r"(mi-\d+)", f.name).group(1)
+                      for f in MITIGATIONS_DIR.glob("*.md")
+                      if re.match(r"mi-\d+", f.name)}
+    return risk_ids, mitigation_ids
+
+
+def resolve_target_files(paths: list[str] | None) -> tuple[list[Path], list[Path]]:
+    if not paths:
+        return (
+            sorted(RISKS_DIR.glob("*.md")),
+            sorted(MITIGATIONS_DIR.glob("*.md")),
+        )
+
+    risk_paths: list[Path] = []
+    mitigation_paths: list[Path] = []
+    seen: set[Path] = set()
+
+    for raw_path in paths:
+        candidate = Path(raw_path)
+        if not candidate.is_absolute():
+            candidate = (SCRIPT_DIR.parent / candidate).resolve()
+        else:
+            candidate = candidate.resolve()
+
+        if not candidate.exists() or candidate.suffix != ".md":
+            continue
+        if candidate in seen:
+            continue
+
+        try:
+            relative = candidate.relative_to(SCRIPT_DIR.parent)
+        except ValueError:
+            continue
+
+        if relative.parent == Path("docs/_risks"):
+            risk_paths.append(candidate)
+            seen.add(candidate)
+        elif relative.parent == Path("docs/_mitigations"):
+            mitigation_paths.append(candidate)
+            seen.add(candidate)
+
+    return risk_paths, mitigation_paths
+
+
+def load_data_files() -> dict[str, dict]:
+    """Load available _data YAML files keyed by stem (filename without .yml)."""
+    data = {}
+    for f in (DOCS_DIR / "_data").glob("*.yml"):
+        try:
+            data[f.stem] = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
+        except yaml.YAMLError:
+            pass
+    return data
+
+
+# ---------------------------------------------------------------------------
+# Checks
+# ---------------------------------------------------------------------------
+
+def check_sections(body: str, required: set[str], require_examples: bool = False) -> list[str]:
+    errors = []
+    for section in sorted(required):
+        if not re.search(rf"^{re.escape(section)}\s*$", body, re.MULTILINE):
+            errors.append(f"missing section '{section}'")
+    # Accepts '## Examples' or '## Examples & Commentary'
+    if require_examples and not re.search(r"^## Examples", body, re.MULTILINE):
+        errors.append("missing section '## Examples & Commentary'")
+    return errors
+
+
+def check_refs(front_matter: dict, field: str, known: set[str]) -> list[str]:
+    errors = []
+    refs = front_matter.get(field) or []
+    if not isinstance(refs, list):
+        return errors
+    for item in refs:
+        # YAML strips inline comments so items are plain strings like 'ri-1'
+        ref_id = item.strip() if isinstance(item, str) else None
+        if ref_id and ref_id not in known:
+            errors.append(f"'{field}' references '{ref_id}' which does not exist")
+    return errors
+
+
+def check_consequences_placement(body: str) -> list[str]:
+    """Check that ### Consequences is a subsection of ## Description, not elsewhere."""
+    # Presence is already checked by check_sections; here we only verify placement.
+    if not re.search(r'^### Consequences', body, re.MULTILINE):
+        return []
+    desc_match = re.search(r'^## Description\s*$', body, re.MULTILINE)
+    if not desc_match:
+        return []
+    rest = body[desc_match.end():]
+    next_h2 = re.search(r'^## ', rest, re.MULTILINE)
+    desc_body = rest[:next_h2.start()] if next_h2 else rest
+    if not re.search(r'^### Consequences\s*$', desc_body, re.MULTILINE):
+        return ["'### Consequences' must be a subsection of '## Description'"]
+    return []
+
+
+def check_unexpected_headings(body: str, expected: set[str], examples_prefix: bool = False) -> list[str]:
+    """Flag any ## or ### heading not in the expected set."""
+    errors = []
+    for m in re.finditer(r'^(#{2,3}) (.+?)\s*$', body, re.MULTILINE):
+        heading = f"{m.group(1)} {m.group(2).strip()}"
+        if examples_prefix and heading.startswith("## Examples"):
+            continue
+        if heading not in expected:
+            errors.append(f"unexpected heading '{heading}'")
+    return errors
+
+
+def check_data_refs(fm: dict, data_files: dict) -> list[str]:
+    """Check that regulatory reference IDs resolve in their data files when available.
+    Silently skips frameworks whose data file has not been generated yet."""
+    errors = []
+    for field in REGULATORY_REF_FIELDS:
+        refs = fm.get(field) or []
+        if not refs:
+            continue
+        dataset = field.replace("_references", "")
+        if dataset not in data_files:
+            continue  # data file not available — coverage is shown separately
+        for item in refs:
+            if isinstance(item, str):
+                ref_id = item.strip()
+            elif isinstance(item, dict):
+                ref_id = str(item.get("id", "")).strip()
+            else:
+                continue
+            if ref_id and ref_id not in data_files[dataset]:
+                errors.append(f"'{field}': '{ref_id}' not found in {dataset}.yml")
+    return errors
+
+
+def run_risk_checks(fm: dict, body: str, risk_ids: set[str], mitigation_ids: set[str],
+                    data_files: dict) -> list[str]:
+    errors = []
+    errors += check_sections(body, RISK_HEADINGS)
+    errors += check_consequences_placement(body)
+    errors += check_unexpected_headings(body, RISK_HEADINGS)
+    errors += check_data_refs(fm, data_files)
+    errors += check_refs(fm, "related_risks", risk_ids)
+    errors += check_refs(fm, "related_mitigations", mitigation_ids)
+    return errors
+
+
+def run_mitigation_checks(fm: dict, body: str, risk_ids: set[str], mitigation_ids: set[str],
+                          data_files: dict) -> list[str]:
+    errors = []
+    errors += check_sections(body, MITIGATION_HEADINGS, require_examples=True)
+    errors += check_unexpected_headings(body, MITIGATION_HEADINGS, examples_prefix=True)
+    errors += check_data_refs(fm, data_files)
+    errors += check_refs(fm, "mitigates", risk_ids)
+    errors += check_refs(fm, "related_mitigations", mitigation_ids)
+    if not (fm.get("mitigates") or []):
+        errors.append("'mitigates' is empty — every mitigation must reference at least one risk")
+    if not any(fm.get(f) for f in REGULATORY_REF_FIELDS):
+        errors.append("no regulatory references found (nist-sp-800-53r5, ffiec, owasp, etc.)")
+    return errors
+
+
+def categorize(errors: list[str]) -> dict[str, bool]:
+    return {
+        "sections":  not any("missing section" in e for e in errors),
+        "crossrefs": not any("does not exist" in e for e in errors),
+        "mitigates": not any("'mitigates' is empty" in e for e in errors),
+        "refrefs":   not any("no regulatory references" in e for e in errors),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Report generation
+# ---------------------------------------------------------------------------
+
+def _seq(filename: str) -> int:
+    m = re.search(r"-(\d+)", filename)
+    return int(m.group(1)) if m else 0
+
+
+def _framework_coverage_lines(data_files: dict, show_missing: bool = False) -> list[str]:
+    visible_frameworks = [
+        dataset for dataset in sorted(DATA_MAKE_TARGETS)
+        if show_missing or dataset in data_files
+    ]
+    if not visible_frameworks:
+        return []
+
+    lines = [
+        "## Framework Validation Coverage",
+        "",
+        "Reference IDs are validated against a data file when one is available.",
+        "",
+        "| Framework | Status |",
+        "|:----------|:-------|",
+    ]
+    if show_missing:
+        lines.insert(3, "Run the corresponding make target to generate any missing file.")
+
+    for dataset in visible_frameworks:
+        make_target = DATA_MAKE_TARGETS[dataset]
+        if dataset in data_files:
+            status = f"{PASS} validated"
+        elif dataset.startswith("ffiec-itbooklets"):
+            status = f"{WARN} not currently automated due to source access restrictions — see `scripts_docs/RUNBOOK.md`"
+        elif make_target is None:
+            status = f"{WARN} not currently automated — see `scripts_docs/RUNBOOK.md`"
+        else:
+            status = f"{WARN} not available — run `{make_target}`"
+        lines.append(f"| `{dataset}` | {status} |")
+    lines.append("")
+    return lines
+
+
+def generate_report(
+    risk_results: dict[Path, dict],
+    mitigation_results: dict[Path, dict],
+    data_files: dict,
+    scope_label: str | None = None,
+    show_missing_frameworks: bool = False,
+) -> str:
+    lines: list[str] = []
+
+    lines += [
+        "# SDLC Controls Framework — Readiness Report",
+        "",
+        f"Generated: {date.today()}",
+        "",
+    ]
+    if scope_label:
+        lines += [f"_Scope: {scope_label}_", ""]
+
+    # -----------------------------------------------------------------------
+    # Risks table
+    # -----------------------------------------------------------------------
+    lines += [
+        "## Risks",
+        "",
+        "| ID | Title | Doc Status | Type | Sections | Cross-refs | Ready |",
+        "|:---|:------|:-----------|:-----|:--------:|:----------:|:-----:|",
+    ]
+    for path in sorted(risk_results, key=lambda p: _seq(p.name)):
+        fm     = risk_results[path]["fm"]
+        errors = risk_results[path]["errors"]
+        cats   = categorize(errors)
+        rid    = re.match(r"(ri-\d+)", path.name).group(1)
+        lines.append(
+            f"| {rid} | {fm.get('title', '—')} | {fm.get('doc-status', '—')} "
+            f"| {fm.get('type', '—')} "
+            f"| {PASS if cats['sections'] else FAIL} "
+            f"| {PASS if cats['crossrefs'] else FAIL} "
+            f"| {PASS if not errors else FAIL} |"
+        )
+
+    # -----------------------------------------------------------------------
+    # Mitigations table
+    # -----------------------------------------------------------------------
+    lines += [
+        "",
+        "## Mitigations",
+        "",
+        "| ID | Title | Doc Status | Type | Sections | Mitigates | Reg. Refs | Cross-refs | Ready |",
+        "|:---|:------|:-----------|:-----|:--------:|:---------:|:---------:|:----------:|:-----:|",
+    ]
+    for path in sorted(mitigation_results, key=lambda p: _seq(p.name)):
+        fm     = mitigation_results[path]["fm"]
+        errors = mitigation_results[path]["errors"]
+        cats   = categorize(errors)
+        mid    = re.match(r"(mi-\d+)", path.name).group(1)
+        lines.append(
+            f"| {mid} | {fm.get('title', '—')} | {fm.get('doc-status', '—')} "
+            f"| {fm.get('type', '—')} "
+            f"| {PASS if cats['sections'] else FAIL} "
+            f"| {PASS if cats['mitigates'] else FAIL} "
+            f"| {PASS if cats['refrefs'] else FAIL} "
+            f"| {PASS if cats['crossrefs'] else FAIL} "
+            f"| {PASS if not errors else FAIL} |"
+        )
+
+    # -----------------------------------------------------------------------
+    # Framework validation coverage
+    # -----------------------------------------------------------------------
+    framework_lines = _framework_coverage_lines(data_files, show_missing=show_missing_frameworks)
+    if framework_lines:
+        lines += [""] + framework_lines
+
+    # -----------------------------------------------------------------------
+    # Issues detail
+    # -----------------------------------------------------------------------
+    all_results = {**risk_results, **mitigation_results}
+    failing = {p: d for p, d in all_results.items() if d["errors"]}
+    if failing:
+        lines += ["## Issues Detail", ""]
+        for path in sorted(failing, key=lambda p: _seq(p.name)):
+            rel = path.relative_to(SCRIPT_DIR.parent)
+            lines.append(f"**`{rel}`**")
+            for error in failing[path]["errors"]:
+                lines.append(f"- {error}")
+            lines.append("")
+
+    # -----------------------------------------------------------------------
+    # Coverage matrix
+    # -----------------------------------------------------------------------
+    lines += ["## Risk–Mitigation Coverage Matrix", ""]
+
+    sorted_risks = sorted(risk_results, key=lambda p: _seq(p.name))
+    sorted_mits  = sorted(mitigation_results, key=lambda p: _seq(p.name))
+    mit_ids      = [re.match(r"(mi-\d+)", p.name).group(1) for p in sorted_mits]
+
+    coverage: dict[str, set[str]] = {}
+    for path in sorted_mits:
+        mid       = re.match(r"(mi-\d+)", path.name).group(1)
+        mitigates = mitigation_results[path]["fm"].get("mitigates") or []
+        coverage[mid] = {item.strip() for item in mitigates if isinstance(item, str)}
+
+    header    = "| Risk |" + "".join(f" {mid} |" for mid in mit_ids)
+    separator = "|:-----|" + ":---:|" * len(mit_ids)
+    lines += [header, separator]
+
+    for rpath in sorted_risks:
+        rid    = re.match(r"(ri-\d+)", rpath.name).group(1)
+        rtitle = risk_results[rpath]["fm"].get("title", "")
+        row    = f"| **{rid}** {rtitle} |"
+        for mid in mit_ids:
+            row += f" {PASS if rid in coverage.get(mid, set()) else ''} |"
+        lines.append(row)
+
+    lines.append("")
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+def main() -> None:
+    args = parse_args()
+    risk_ids, mitigation_ids = collect_ids()
+    data_files = load_data_files()
+    risk_paths, mitigation_paths = resolve_target_files(args.files)
+    scope_label = "changed files only" if args.files else "full repository"
+
+    risk_results: dict[Path, dict] = {}
+    for path in risk_paths:
+        fm, body = parse_front_matter(path)
+        risk_results[path] = {
+            "fm": fm,
+            "errors": run_risk_checks(fm, body, risk_ids, mitigation_ids, data_files),
+        }
+
+    mitigation_results: dict[Path, dict] = {}
+    for path in mitigation_paths:
+        fm, body = parse_front_matter(path)
+        mitigation_results[path] = {
+            "fm": fm,
+            "errors": run_mitigation_checks(fm, body, risk_ids, mitigation_ids, data_files),
+        }
+
+    # Terminal output — per-file issues
+    all_results = {**risk_results, **mitigation_results}
+    failing     = {p: d for p, d in all_results.items() if d["errors"]}
+    total       = len(all_results)
+
+    if not failing:
+        if total == 0:
+            print(f"Readiness check: no matching documents found in scope ({scope_label})")
+        else:
+            print(f"Readiness check: all {total} files ready")
+    else:
+        for path, data in failing.items():
+            print(f"{path.relative_to(SCRIPT_DIR.parent)}:")
+            for error in data["errors"]:
+                print(f"  - {error}")
+        print(f"\nReadiness check: {total - len(failing)}/{total} files ready, {len(failing)} with open items")
+
+    # Terminal output — framework coverage warning
+    missing_data = [d for d in sorted(DATA_MAKE_TARGETS) if d not in data_files]
+    if args.show_missing_frameworks and missing_data:
+        print("\nFramework validation — some data files are missing (reference IDs not validated):")
+        for dataset in missing_data:
+            make_target = DATA_MAKE_TARGETS[dataset]
+            if dataset.startswith("ffiec-itbooklets"):
+                hint = "not currently automated due to source access restrictions, see RUNBOOK"
+            else:
+                hint = f"run `{make_target}`" if make_target else "not currently automated, see RUNBOOK"
+            print(f"  {WARN}  {dataset} — {hint}")
+
+    if args.report:
+        report_arg = args.report
+        if report_arg == "AUTO":
+            report_arg = "readiness-report.changed.md" if args.files else "readiness-report.md"
+
+        report_path = Path(report_arg)
+        report = generate_report(
+            risk_results,
+            mitigation_results,
+            data_files,
+            scope_label=scope_label,
+            show_missing_frameworks=args.show_missing_frameworks,
+        )
+        if str(report_path) == "-":
+            sys.stdout.write(report)
+            if not report.endswith("\n"):
+                sys.stdout.write("\n")
+        else:
+            report_path.write_text(report, encoding="utf-8")
+            print(f"Report written to {report_path}")
+
+
+if __name__ == "__main__":
+    main()

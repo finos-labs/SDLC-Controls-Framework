@@ -53,6 +53,20 @@ Meeting minutes are posted as issues in the [DevOps Automation repository](https
 
 See [MAINTAINERS.md](MAINTAINERS.md) for the list of participating organisations and maintainers.
 
+## Checking document readiness
+
+The `readiness-check` script validates that risk and mitigation documents meet the criteria required for Working-Group approval and produces a status report.
+
+```sh
+make readiness
+```
+
+This runs all checks and writes `readiness-report.md` at the repo root with a per-document status table and a risk–mitigation coverage matrix.
+
+For a scoped run, pass `--files`; if you also pass `--report` without a path, the script writes `readiness-report.changed.md` so the full report is not overwritten.
+
+Pull requests also run the readiness check in GitHub Actions for the risk and mitigation documents changed in the PR. That CI job is informative only: it highlights open items for reviewers and publishes the scoped report without blocking merges.
+
 ## Running Jekyll
 
 You will need Ruby and `bundle` installed, then run the site locally using the following.
