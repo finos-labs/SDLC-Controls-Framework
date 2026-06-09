@@ -8,6 +8,7 @@ risk_classification:
   RC: Regulatory and Compliance
   OP: Operational
   SEC: Security
+  BUS: Business
 
 mitigation_classification:
   PREV: Preventative
