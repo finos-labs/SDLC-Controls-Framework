@@ -14,6 +14,16 @@ mitigation_classification:
   PREV: Preventative
   DET: Detective
 
+# SDLC phase at which a mitigation primarily operates. LIFECYCLE is the
+# cross-cutting bucket for governance/process controls that are not tied to a
+# single phase. Used by the catalogue phase filter.
+phase_classification:
+  CODE: Code
+  BUILD: Build
+  RELEASE: Release
+  RUNTIME: Runtime
+  LIFECYCLE: Lifecycle
+
 # Bootstrap Icons class for each classification code, used by the catalogue
 # headings and filter checkboxes. Adding a new code above requires adding the
 # matching icon here.
@@ -24,6 +34,11 @@ category_icons:
   BUS: bi-briefcase-fill
   PREV: bi-lock-fill
   DET: bi-eye-fill
+  CODE: bi-code-slash
+  BUILD: bi-hammer
+  RELEASE: bi-rocket-takeoff-fill
+  RUNTIME: bi-play-circle-fill
+  LIFECYCLE: bi-arrow-repeat
 
 document_status:
   - name: Pre-Draft

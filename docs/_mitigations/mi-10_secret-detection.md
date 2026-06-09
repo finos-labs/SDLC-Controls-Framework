@@ -4,6 +4,7 @@ title: Secret Detection
 layout: mitigation
 doc-status: Draft
 type: PREV
+phase: CODE
 nist-sp-800-53r5_references:
   - ra-5   # RA-5 Vulnerability Monitoring And Scanning
   - ia-5   # IA-5 Authenticator Management

@@ -4,6 +4,7 @@ title: Testing Requirements
 layout: mitigation
 doc-status: Draft
 type: PREV
+phase: LIFECYCLE
 chain:
   - testing-assurance
 nist-sp-800-53r5_references:

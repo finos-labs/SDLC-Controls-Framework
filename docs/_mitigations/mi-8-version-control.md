@@ -4,6 +4,7 @@ title: Version Control
 layout: mitigation
 doc-status: Draft
 type: PREV
+phase: CODE
 nist-sp-800-53r5_references:
   - id: sa-10
     note: Core control — requires source code and associated documentation to be placed under configuration management.

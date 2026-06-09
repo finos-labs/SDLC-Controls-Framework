@@ -4,6 +4,7 @@ title: System Inventory
 layout: mitigation
 doc-status: Draft
 type: PREV
+phase: LIFECYCLE
 nist-sp-800-53r5_references:
   - pm-5   # PM-5 System Inventory
 mitigates:

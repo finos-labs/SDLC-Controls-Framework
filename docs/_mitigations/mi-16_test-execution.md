@@ -4,6 +4,7 @@ title: Test Execution and Sign-Off
 layout: mitigation
 doc-status: Draft
 type: PREV
+phase: BUILD
 chain:
   - testing-assurance
 nist-sp-800-53r5_references:

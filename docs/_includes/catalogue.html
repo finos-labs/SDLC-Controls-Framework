@@ -76,6 +76,30 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Filter by Phase</label>
+                            <div class="card border">
+                                <div class="card-body p-2">
+                                    <div class="small text-muted fw-bold mb-2">
+                                        <i class="bi bi-diagram-3-fill me-1"></i>Mitigation Phase
+                                    </div>
+                                    <div class="row g-2">
+                                        {% for entry in site.phase_classification %}
+                                        {% assign code = entry[0] %}
+                                        {% assign label = entry[1] %}
+                                        <div class="col-6">
+                                            <div class="form-check form-check-sm mb-1">
+                                                <input class="form-check-input phase-checkbox" type="checkbox" value="{{ code }}" id="phase-{{ code }}">
+                                                <label class="form-check-label small" for="phase-{{ code }}">
+                                                    <i class="bi {{ site.category_icons[code] }} me-1"></i>{{ label }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-2">
                             <label class="form-label fw-bold">&nbsp;</label>
                             <button type="button" class="btn btn-outline-secondary w-100" id="resetFilters">
@@ -206,7 +230,7 @@
                               {% assign sorted_mitigations = mitigation_group.items | sort: "sequence" %}
                               {% for mitigation in sorted_mitigations %}
                               {% assign mitigation_status = mitigation['doc-status'] | default: '' %}
-                              <div class="col-12 mitigation-item" data-mitigates="{{ mitigation.mitigates | join: ' ' }}" data-title="{{ mitigation.title | downcase }}" data-content="{{ mitigation.content | strip_html | strip_newlines | downcase }}" data-status="{{ mitigation_status }}">
+                              <div class="col-12 mitigation-item" data-phase="{{ mitigation.phase }}" data-mitigates="{{ mitigation.mitigates | join: ' ' }}" data-title="{{ mitigation.title | downcase }}" data-content="{{ mitigation.content | strip_html | strip_newlines | downcase }}" data-status="{{ mitigation_status }}">
                                   <div class="card border-start border-success border-3 h-100 card-hover" onclick="window.location.href='{{ site.baseurl }}{{ mitigation.id }}.html'" style="cursor: pointer;">
                                       <div class="card-body py-2">
                                           <div class="d-flex justify-content-between align-items-start">
@@ -371,6 +395,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 .map(cb => cb.value),
         };
 
+        // Phase is a property of mitigations only; it narrows the mitigation
+        // panel directly and the risk panel indirectly via cross-linkage.
+        const selectedPhases = Array.from(document.querySelectorAll('.phase-checkbox'))
+            .filter(cb => cb.checked)
+            .map(cb => cb.value);
+
         let riskCount = 0;
         let mitigationCount = 0;
 
@@ -384,10 +414,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const itemStatus = item.getAttribute('data-status') || '';
             const itemCategory = item.closest('[data-category]')?.getAttribute('data-category') || '';
             const cats = selectedCategoriesByType[type];
+            const phaseOk = type !== 'mitigation'
+                || selectedPhases.length === 0
+                || selectedPhases.includes(item.getAttribute('data-phase') || '');
             return (!searchTerm || title.includes(searchTerm) || content.includes(searchTerm))
                 && (!selectedType || selectedType === type)
                 && (cats.length === 0 || cats.includes(itemCategory))
-                && (!selectedStatus || itemStatus === selectedStatus);
+                && (!selectedStatus || itemStatus === selectedStatus)
+                && phaseOk;
         };
 
         const riskDecisions = [];
@@ -546,6 +580,11 @@ document.addEventListener('DOMContentLoaded', function() {
             checkbox.checked = false;
             checkbox.disabled = false;
         });
+
+        // Uncheck phase checkboxes
+        document.querySelectorAll('.phase-checkbox').forEach(checkbox => {
+            checkbox.checked = false;
+        });
         
         // Reset column opacity
         document.querySelectorAll('.col-6').forEach(column => {
@@ -601,8 +640,8 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCategoryOptions();
     applyCatalogueStates();
     
-    // Add initial event listeners to category checkboxes
-    document.querySelectorAll('.category-checkbox').forEach(checkbox => {
+    // Add initial event listeners to category and phase checkboxes
+    document.querySelectorAll('.category-checkbox, .phase-checkbox').forEach(checkbox => {
         checkbox.addEventListener('change', filterItems);
     });
     

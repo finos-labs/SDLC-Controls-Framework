@@ -4,6 +4,7 @@ title: Software Artifact Provenance
 layout: mitigation
 doc-status: Draft
 type: PREV
+phase: BUILD
 nist-sp-800-53r5_references:
   - sa-10  # SA-10 Developer Configuration Management
   - sa-11  # SA-11 Developer Testing And Evaluation
