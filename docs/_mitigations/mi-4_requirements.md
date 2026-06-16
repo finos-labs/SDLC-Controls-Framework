@@ -1,73 +1,48 @@
 ---
 sequence: 4
-title: Requirements Management
+title: Requirements Repository
 layout: mitigation
-doc-status: Pre-Draft
+doc-status: Draft
 type: PREV
 phase: LIFECYCLE
 mitigates:
+  - ri-5   # Audit and Compliance Evidence Failure
+chain:
+  - requirements-governance
 related_mitigations:
+  - mi-8   # Version Control
+  - mi-20  # Requirements Approval for Release
 ---
 
-# Control 1: Requirement Repository Confirmation and Usage Attestation (XXXX-x§§1024)
-
 ## Summary
 
-Ensures requirements are maintained in an approved repository and that its correct usage is periodically attested.
-
-## Map to related risks
-
-•	Risk 1: Ungoverned or inconsistent requirements repositories
-•	Risk 2: Requirements progressing without minimum readiness
+Requirements Repository ensures that every application records its requirements in a designated and approved system of record. 
 
 ## Description
 
-This control establishes a single, governed source of truth for requirements and requires periodic confirmation that the repository is actively used and that requirements meet agreed readiness criteria.
+This control requires the organisation to designate an approved repository or repositories for storage of the requirements that are used as part of software development. It is important for such a repository to have appropriate requirements around storage in terms of duration since this will need to live alongside the software it helps inform and create, but also around appropriate audit trail of who created a requirement and what its content was at the time the work was carried out.
 
-## Requirements (Expectations)
+The repository must also either hold requirements immutably or maintain an audit trail sufficient to reconstruct the state of any requirement at any past point in time — a property commonly achieved by holding requirements as files in version control, or as tickets in a system that preserves full revision history.
 
-•	An approved requirements repository is designated for the application
-•	Usage of the repository is periodically attested
-•	Requirements meet an agreed Definition of Ready before development
+A repository can be designated on paper while teams continue to work from informal channels; periodic attestation by a named owner confirms it is in active use. The control sits at the entry point of the SDLC and is a precondition for traceability between requirements and tests ([MI-15]({% link _mitigations/mi-15_testing-requirements.md %})), release-time approval ([MI-20]({% link _mitigations/mi-20_requirements-approval.md %})), and audit reconstruction.
 
+## Requirements
 
-## Examples 
+* Each application MUST use an approved requirements repository
+* The approved repository MUST either hold requirements immutably or maintain a complete, attributable, timestamped audit trail of every creation, amendment, and closure sufficient to reconstruct the state of any requirement at any past point in time
+* The retention of requirement history (whether by immutability or by audit trail) MUST cover the period required by applicable regulation and the organisation's record-keeping policy
+* All requirements that enter development for the application MUST be recorded in an approved repository.
+* A named owner MUST attest, on a defined cadence (no less than annually, or following any material change to the application's delivery model), that the approved repository is in active use as the authoritative record of requirements for the application or organisation
+* Attestations MUST be timestamped, attributed to a named individual, and retained as governance evidence in accordance with the organisation's record-retention policy
 
-The control supports a “shift left” approach by embedding quality and clarity at the point requirements enter development, rather than relying on downstream inspection.
+## Examples & Commentary
 
-Links to external standards for controls
+* **Designated repository with enforcement:** An application's metadata in the technology system of record names a specific Jira project as its approved requirements repository. Branch-protection rules and PR templates require that every change reference a ticket in that project; PRs referencing tickets from other projects (or none) are blocked.
 
-•	ISO/IEC 27001 – information integrity and governance
-•	IREB / IIBA requirements management standards
+* **Audit trail via version control:** Requirements for a regulated trading application are held as Markdown files in a Git repository, with every change made through a pull request that records the author, the reviewer, the timestamp, and the rationale. The repository's commit history provides the complete reconstructable record; immutability is not required because the audit trail is sufficient.
 
+* **Audit trail via ticketing system:** An application uses a ticketing system that preserves every field change with author and timestamp. The state of any requirement on any past date can be reproduced from the ticket's revision history, satisfying the audit-trail requirement without external tooling.
 
-# Control 2: Requirements for Release – Reviewed and Agreed (XXXX-01068)
+## Links
 
-## Summary
-
-Ensures all business, functional, and non functional requirements for a release are formally reviewed and agreed.
-
-## Map to related risks
-
-•	Risk 2: Insufficiently defined requirements
-•	Risk 3: Lack of stakeholder agreement
-•	Risk 4: Missing non functional or regulatory requirements
-
-## Description
-
-This control establishes a formal approval baseline for requirements, confirming that what is being delivered has been explicitly reviewed and authorised prior to release.
-Requirements (Expectations)
-
-•	Requirements for the release are documented
-•	Business, functional, and non functional requirements are included
-•	Evidence of review and agreement is retained
-
-## Examples 
-
-RCTLDEF0001068 provides the authoritative confirmation that requirements are approved inputs into testing, release, and deployment decisions rather than informal guidance. 
-Links to external standards for controls
-
-Links to external standards for controls
-
-•	ISO 9001 – requirements review and approval
-•	COBIT – governance and assurance over requirements
+* [ISO/IEC/IEEE 29148 — Systems and software engineering — Life cycle processes — Requirements engineering](https://www.iso.org/standard/72089.html)
