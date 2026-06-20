@@ -29,6 +29,8 @@ Usage:
                                                # writes readiness-report.changed.md
     ./scripts/readiness-check --show-missing-frameworks
     ./scripts/readiness-check --report path/to/out.md   # custom path
+    ./scripts/readiness-check --update-checksums                    # refresh all datasets
+    ./scripts/readiness-check --update-checksums eu-ai-act          # refresh one dataset only
 
 The --report flag writes a Markdown file containing:
   - Per-document status table with a pass/fail column per check category
@@ -37,12 +39,20 @@ The --report flag writes a Markdown file containing:
   - Issues detail section for documents with open items
   - Risk-mitigation coverage matrix
 
+Every docs/_data/*.yml file listed in DATA_MAKE_TARGETS is checked against
+scripts/checked-in-checksums.yml. A missing file or a checksum mismatch is
+always reported, regardless of --show-missing-frameworks — this catches an
+accidental deletion of a hand-maintained file (e.g. ffiec-itbooklets.yml,
+iso-42001.yml — see scripts_docs/RUNBOOK.md) as well as a script-generated
+file edited or regenerated without recording the new checksum.
+
 Dependencies: PyYAML  (pip install pyyaml)
 
 Exit code: always 0 — open items are reported but do not fail the script.
 """
 
 import argparse
+import hashlib
 import re
 import sys
 from datetime import date
@@ -54,6 +64,7 @@ SCRIPT_DIR = Path(__file__).parent
 DOCS_DIR = SCRIPT_DIR.parent / "docs"
 RISKS_DIR = DOCS_DIR / "_risks"
 MITIGATIONS_DIR = DOCS_DIR / "_mitigations"
+CHECKSUMS_FILE = SCRIPT_DIR / "checked-in-checksums.yml"
 
 # Required headings for each document type — also used as the permitted set
 # for unexpected-heading detection. '## Examples' variants are handled separately.
@@ -63,7 +74,6 @@ MITIGATION_HEADINGS = {"## Summary", "## Description", "## Requirements", "## Li
 REGULATORY_REF_FIELDS = [
     "eu-ai-act_references",
     "ffiec-itbooklets_references",
-    "ffiec-itbooklets_v2_references",
     "iso-42001_references",
     "nist-ai-600-1_references",
     "nist-sp-800-53r5_references",
@@ -72,16 +82,24 @@ REGULATORY_REF_FIELDS = [
 ]
 
 # Maps each dataset name to the make target that generates it.
-# None means the dataset is not currently automated.
+# None means the dataset is hand-maintained — see scripts_docs/RUNBOOK.md.
 DATA_MAKE_TARGETS: dict[str, str | None] = {
     "eu-ai-act":           "make data-eu-ai-act",
-    "ffiec-itbooklets":    None,  # source access is not currently automated
-    "ffiec-itbooklets_v2": None,  # source access is not currently automated
-    "iso-42001":           None,  # not currently automated
+    "ffiec-itbooklets":    None,  # source now requires solving a CAPTCHA; file is hand-maintained
+    "iso-42001":           None,  # contributed; standard text is paywalled
     "nist-ai-600-1":       "make data-nist",
     "nist-sp-800-53r5":    "make data-nist",
     "owasp-llm":           "make data-owasp",
     "owasp-ml":            "make data-owasp",
+}
+# Every dataset is checksummed against CHECKSUMS_FILE, so an accidental
+# deletion or unrecorded edit is always caught — including files regenerated
+# by a make target, since regeneration should also refresh the recorded
+# checksum via --update-checksums.
+
+HAND_MAINTAINED_NOTES = {
+    "ffiec-itbooklets": "source returns a CAPTCHA challenge to automated requests",
+    "iso-42001":        "standard text is paywalled",
 }
 
 PASS = "✅"
@@ -113,6 +131,16 @@ def parse_args() -> argparse.Namespace:
         "--show-missing-frameworks",
         action="store_true",
         help="Include frameworks whose data files are missing in terminal and report coverage output",
+    )
+    parser.add_argument(
+        "--update-checksums",
+        nargs="*",
+        metavar="DATASET",
+        default=None,
+        help="Recompute checksums for _data files and write them to "
+             f"{CHECKSUMS_FILE.relative_to(SCRIPT_DIR.parent)}, then exit. "
+             "With no DATASET given, refreshes every dataset in DATA_MAKE_TARGETS "
+             "(e.g. eu-ai-act); otherwise refreshes only the named dataset(s).",
     )
     return parser.parse_args()
 
@@ -188,6 +216,80 @@ def load_data_files() -> dict[str, dict]:
         except yaml.YAMLError:
             pass
     return data
+
+
+def load_checksums() -> dict[str, str]:
+    """Load recorded sha256 checksums for _data files, keyed by filename."""
+    if not CHECKSUMS_FILE.exists():
+        return {}
+    return yaml.safe_load(CHECKSUMS_FILE.read_text(encoding="utf-8")) or {}
+
+
+def file_sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def update_checksums(datasets: list[str] | None = None) -> None:
+    """Recompute and persist checksums for the given datasets (default: all in DATA_MAKE_TARGETS).
+
+    Existing recorded checksums for datasets not in scope are preserved untouched, so
+    e.g. `--update-checksums eu-ai-act` cannot accidentally bless an unrelated, unreviewed
+    edit sitting in another _data file.
+    """
+    target_datasets = sorted(datasets) if datasets else sorted(DATA_MAKE_TARGETS)
+    unknown = [d for d in target_datasets if d not in DATA_MAKE_TARGETS]
+    if unknown:
+        print(f"Unknown dataset(s): {', '.join(unknown)}. "
+              f"Known datasets: {', '.join(sorted(DATA_MAKE_TARGETS))}", file=sys.stderr)
+        sys.exit(1)
+
+    checksums = load_checksums()
+    for dataset in target_datasets:
+        path = DOCS_DIR / "_data" / f"{dataset}.yml"
+        if path.exists():
+            checksums[path.name] = file_sha256(path)
+        else:
+            checksums.pop(path.name, None)
+            print(f"  skipping {dataset} — no file at {path.relative_to(SCRIPT_DIR.parent)}")
+
+    with CHECKSUMS_FILE.open("w", encoding="utf-8") as f:
+        f.write("# Checksums for docs/_data files, used to catch an accidental deletion or an\n")
+        f.write("# unrecorded edit (including after a regen script runs) — see scripts_docs/RUNBOOK.md.\n")
+        f.write("# Regenerate after any intentional change: scripts/readiness-check --update-checksums\n")
+        yaml.dump(checksums, f, default_flow_style=False, sort_keys=True)
+
+    print(f"Wrote {len(checksums)} checksum(s) to {CHECKSUMS_FILE.relative_to(SCRIPT_DIR.parent)}")
+
+
+def check_checked_in_file(dataset: str, checksums: dict[str, str]) -> str:
+    """Return a status string for a dataset's _data file, checksum-verified."""
+    filename = f"{dataset}.yml"
+    path = DOCS_DIR / "_data" / filename
+    expected = checksums.get(filename)
+    make_target = DATA_MAKE_TARGETS[dataset]
+
+    if not path.exists():
+        if expected:
+            hint = f"run `{make_target}` to regenerate it" if make_target else "see `scripts_docs/RUNBOOK.md`"
+            return f"{FAIL} file is missing but a checksum is on record — was it deleted by mistake? {hint}"
+        if make_target:
+            return f"{WARN} not available — run `{make_target}`"
+        note = HAND_MAINTAINED_NOTES.get(dataset, "not currently automated")
+        return f"{WARN} not currently automated ({note}) — see `scripts_docs/RUNBOOK.md`"
+
+    actual = file_sha256(path)
+    if expected is None:
+        return f"{WARN} no checksum on record — run `scripts/readiness-check --update-checksums`"
+    if actual != expected:
+        return (f"{WARN} content changed since the checksum was recorded — run "
+                 "`scripts/readiness-check --update-checksums` if this was intentional")
+    return f"{PASS} validated (checksum ok)"
+
+
+def is_checked_in_missing(dataset: str, checksums: dict[str, str]) -> bool:
+    """True if a dataset's file is gone but a checksum is on record for it."""
+    path = DOCS_DIR / "_data" / f"{dataset}.yml"
+    return not path.exists() and bool(checksums.get(path.name))
 
 
 # ---------------------------------------------------------------------------
@@ -314,10 +416,11 @@ def _seq(filename: str) -> int:
     return int(m.group(1)) if m else 0
 
 
-def _framework_coverage_lines(data_files: dict, show_missing: bool = False) -> list[str]:
+def _framework_coverage_lines(data_files: dict, checksums: dict[str, str],
+                               show_missing: bool = False) -> list[str]:
     visible_frameworks = [
         dataset for dataset in sorted(DATA_MAKE_TARGETS)
-        if show_missing or dataset in data_files
+        if show_missing or dataset in data_files or is_checked_in_missing(dataset, checksums)
     ]
     if not visible_frameworks:
         return []
@@ -334,15 +437,7 @@ def _framework_coverage_lines(data_files: dict, show_missing: bool = False) -> l
         lines.insert(3, "Run the corresponding make target to generate any missing file.")
 
     for dataset in visible_frameworks:
-        make_target = DATA_MAKE_TARGETS[dataset]
-        if dataset in data_files:
-            status = f"{PASS} validated"
-        elif dataset.startswith("ffiec-itbooklets"):
-            status = f"{WARN} not currently automated due to source access restrictions — see `scripts_docs/RUNBOOK.md`"
-        elif make_target is None:
-            status = f"{WARN} not currently automated — see `scripts_docs/RUNBOOK.md`"
-        else:
-            status = f"{WARN} not available — run `{make_target}`"
+        status = check_checked_in_file(dataset, checksums)
         lines.append(f"| `{dataset}` | {status} |")
     lines.append("")
     return lines
@@ -352,6 +447,7 @@ def generate_report(
     risk_results: dict[Path, dict],
     mitigation_results: dict[Path, dict],
     data_files: dict,
+    checksums: dict[str, str],
     scope_label: str | None = None,
     show_missing_frameworks: bool = False,
 ) -> str:
@@ -416,7 +512,7 @@ def generate_report(
     # -----------------------------------------------------------------------
     # Framework validation coverage
     # -----------------------------------------------------------------------
-    framework_lines = _framework_coverage_lines(data_files, show_missing=show_missing_frameworks)
+    framework_lines = _framework_coverage_lines(data_files, checksums, show_missing=show_missing_frameworks)
     if framework_lines:
         lines += [""] + framework_lines
 
@@ -469,10 +565,38 @@ def generate_report(
 # Main
 # ---------------------------------------------------------------------------
 
+def checked_in_integrity_issues(checksums: dict[str, str]) -> list[tuple[str, str]]:
+    """Return (icon, message) pairs for any _data file that is missing or modified
+    relative to its recorded checksum."""
+    issues = []
+    for dataset in sorted(DATA_MAKE_TARGETS):
+        path = DOCS_DIR / "_data" / f"{dataset}.yml"
+        expected = checksums.get(path.name)
+        rel = path.relative_to(SCRIPT_DIR.parent)
+        if not path.exists():
+            if expected:
+                make_target = DATA_MAKE_TARGETS[dataset]
+                hint = f"run `{make_target}` to regenerate it" if make_target else "see scripts_docs/RUNBOOK.md"
+                issues.append((FAIL, f"{rel} is missing but a checksum is on record — "
+                                      f"was it deleted by mistake? {hint}"))
+            continue
+        if expected is None:
+            continue
+        if file_sha256(path) != expected:
+            issues.append((WARN, f"{rel} content changed since the checksum was recorded — run "
+                                  "`scripts/readiness-check --update-checksums` if intentional"))
+    return issues
+
+
 def main() -> None:
     args = parse_args()
+    if args.update_checksums is not None:
+        update_checksums(args.update_checksums or None)
+        return
+
     risk_ids, mitigation_ids = collect_ids()
     data_files = load_data_files()
+    checksums = load_checksums()
     risk_paths, mitigation_paths = resolve_target_files(args.files)
     scope_label = "changed files only" if args.files else "full repository"
 
@@ -509,17 +633,23 @@ def main() -> None:
                 print(f"  - {error}")
         print(f"\nReadiness check: {total - len(failing)}/{total} files ready, {len(failing)} with open items")
 
+    # Terminal output — _data file integrity (always shown, not gated behind a flag,
+    # since an accidental deletion or unrecorded edit is a real problem)
+    integrity_issues = checked_in_integrity_issues(checksums)
+    if integrity_issues:
+        print("\nChecked-in file integrity:")
+        for icon, message in integrity_issues:
+            print(f"  {icon}  {message}")
+
     # Terminal output — framework coverage warning
-    missing_data = [d for d in sorted(DATA_MAKE_TARGETS) if d not in data_files]
+    missing_data = [
+        d for d in sorted(DATA_MAKE_TARGETS)
+        if d not in data_files and not is_checked_in_missing(d, checksums)
+    ]
     if args.show_missing_frameworks and missing_data:
         print("\nFramework validation — some data files are missing (reference IDs not validated):")
         for dataset in missing_data:
-            make_target = DATA_MAKE_TARGETS[dataset]
-            if dataset.startswith("ffiec-itbooklets"):
-                hint = "not currently automated due to source access restrictions, see RUNBOOK"
-            else:
-                hint = f"run `{make_target}`" if make_target else "not currently automated, see RUNBOOK"
-            print(f"  {WARN}  {dataset} — {hint}")
+            print(f"  {dataset} — {check_checked_in_file(dataset, checksums)}")
 
     if args.report:
         report_arg = args.report
@@ -531,6 +661,7 @@ def main() -> None:
             risk_results,
             mitigation_results,
             data_files,
+            checksums,
             scope_label=scope_label,
             show_missing_frameworks=args.show_missing_frameworks,
         )
