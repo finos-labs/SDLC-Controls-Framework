@@ -13,10 +13,14 @@ The script can perform three main operations:
 Operations can be run individually or in combination using command line flags.
 
 Input: https://ithandbook.ffiec.gov/it-booklets
-Output: 
+Output:
     - _data/ffiec-itbooklets.yml (YAML mappings)
     - _refs-markdown/ffiec-itbooklets/html/*.html (HTML files with navigation removed)
     - _refs-markdown/ffiec-itbooklets/markdown/*.md (Markdown files)
+
+Note: the source site now serves a CAPTCHA challenge to automated requests,
+so this script currently fails at the download step. docs/_data/ffiec-itbooklets.yml
+is hand-maintained until source access is restored — see scripts_docs/RUNBOOK.md.
 
 Usage:
     python scripts/dl_ffiec-booklets.py --yml          # Generate YAML only
@@ -48,7 +52,7 @@ SCRIPT_DIR = Path(__file__).parent
 
 BASE_URL = "https://ithandbook.ffiec.gov"
 BOOKLETS_URL = f"{BASE_URL}/it-booklets"
-YAML_FILENAME = "ffiec-itbooklets_v2.yml"
+YAML_FILENAME = "ffiec-itbooklets.yml"
 REQUEST_TIMEOUT = 30
 DOWNLOAD_DELAY = 0.5
 URL_COMPONENTS_MAIN_BOOKLET = 5

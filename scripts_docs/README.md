@@ -57,8 +57,9 @@ This directory contains scripts for downloading external references, processing 
    - Supports scoped validation for pull requests via `--files`, while still resolving cross-references against the full repository.
    - Writes `readiness-report.md` with a per-document status table and a risk–mitigation coverage matrix when `--report` is passed.
    - When `--files` and `--report` are used without an explicit output path, the scoped report is written to `readiness-report.changed.md`.
+   - Checks every `docs/_data/*.yml` file against `scripts/checked-in-checksums.yml`, flagging a missing file or unrecorded content change (hand-edited or regenerated) even without `--show-missing-frameworks`.
    - Requires: `pip install PyYAML`
-   - Usage: `python readiness-check --report readiness-report.md`, `python readiness-check --files docs/_risks/ri-1_insider-threat.md`, or `make readiness`
+   - Usage: `python readiness-check --report readiness-report.md`, `python readiness-check --files docs/_risks/ri-1_insider-threat.md`, `python readiness-check --update-checksums`, or `make readiness`
 
 ---
 
