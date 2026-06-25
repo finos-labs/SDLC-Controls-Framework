@@ -1,0 +1,7 @@
+# SLSA (Supply-chain Levels for Software Artifacts) — v1.0
+# Hand-maintained: entries link to the SLSA specification.
+# Source: https://slsa.dev/spec/v1.0/
+
+source-track:
+  title: SLSA Source track — version-controlled source with retained, verifiable history
+  url: https://slsa.dev/spec/v1.0/

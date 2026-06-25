@@ -411,3 +411,22 @@ a:focus {
         max-height: 5.6em;
     }
 }
+
+/* Click-through reference snippets (reference-card.html) */
+.reference-detail summary {
+    cursor: pointer;
+    list-style: none;
+}
+.reference-detail summary::-webkit-details-marker {
+    display: none;
+}
+.reference-detail summary::after {
+    content: "\203A"; /* › collapsed indicator */
+    margin-left: 0.5rem;
+    color: var(--bs-secondary-color, #6c757d);
+    transition: transform 0.15s ease-in-out;
+}
+.reference-detail[open] summary::after {
+    transform: rotate(90deg);
+    display: inline-block;
+}
