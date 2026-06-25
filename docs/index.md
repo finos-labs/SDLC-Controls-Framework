@@ -10,4 +10,6 @@ To meet these expectations, SDLC processes must incorporate robust controls that
 
 This project aims to present a curated set of common risks encountered during the SDLC, along with their corresponding mitigations. By establishing a standardized library of controls, the goal is to streamline compliance efforts, reduce uncertainty, and promote safe, repeatable development practices aligned with regulatory expectations.
 
+New to the terminology? See the [Definitions of Terms]({{ site.baseurl }}/definitions.html) for what we mean by the framework's more nuanced language.
+
 {% include catalogue.html %}
