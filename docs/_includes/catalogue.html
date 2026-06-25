@@ -158,6 +158,7 @@
                                                     {% if risk_status != '' %}
                                                       {% if risk_status == 'Published' %}{% assign status_badge = 'bg-success' %}
                                                       {% elsif risk_status == 'Working-Group-Approved' %}{% assign status_badge = 'bg-info text-dark' %}
+                                                      {% elsif risk_status == 'First-Reading-Approved' %}{% assign status_badge = 'bg-primary' %}
                                                       {% elsif risk_status == 'Draft' %}{% assign status_badge = 'bg-warning text-dark' %}
                                                       {% else %}{% assign status_badge = 'bg-secondary' %}{% endif %}
                                                       <span class="badge {{ status_badge }}" style="font-size:0.65em;">{{ risk_status }}</span>
@@ -240,6 +241,7 @@
                                                     {% if mitigation_status != '' %}
                                                       {% if mitigation_status == 'Published' %}{% assign status_badge = 'bg-success' %}
                                                       {% elsif mitigation_status == 'Working-Group-Approved' %}{% assign status_badge = 'bg-info text-dark' %}
+                                                      {% elsif mitigation_status == 'First-Reading-Approved' %}{% assign status_badge = 'bg-primary' %}
                                                       {% elsif mitigation_status == 'Draft' %}{% assign status_badge = 'bg-warning text-dark' %}
                                                       {% else %}{% assign status_badge = 'bg-secondary' %}{% endif %}
                                                       <span class="badge {{ status_badge }}" style="font-size:0.65em;">{{ mitigation_status }}</span>
