@@ -1,0 +1,11 @@
+# ISO/IEC 27002:2022 — Information security controls
+# Hand-maintained: the standard text is paywalled, so entries link to the
+# ISO catalogue page for the standard rather than to per-control text.
+# Source: https://www.iso.org/standard/75652.html
+
+8-4:
+  title: ISO/IEC 27002:2022 8.4 Access to source code
+  url: https://www.iso.org/standard/75652.html
+8-32:
+  title: ISO/IEC 27002:2022 8.32 Change management
+  url: https://www.iso.org/standard/75652.html

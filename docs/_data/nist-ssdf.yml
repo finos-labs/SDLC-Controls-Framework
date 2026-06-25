@@ -1,0 +1,15 @@
+# NIST SSDF (Secure Software Development Framework) — SP 800-218 v1.1
+# Hand-maintained: the SSDF is published as a single PDF with practice
+# identifiers (PO/PS/PW/RV) rather than per-control anchors, so entries link
+# to the publication landing page.
+# Source: https://csrc.nist.gov/pubs/sp/800/218/final
+
+ps-1:
+  title: PS.1 Protect All Forms of Code from Unauthorized Access and Tampering
+  url: https://csrc.nist.gov/pubs/sp/800/218/final
+ps-3:
+  title: PS.3 Archive and Protect Each Software Release
+  url: https://csrc.nist.gov/pubs/sp/800/218/final
+po-3:
+  title: PO.3 Implement Supporting Toolchains
+  url: https://csrc.nist.gov/pubs/sp/800/218/final

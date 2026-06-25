@@ -75,10 +75,13 @@ REGULATORY_REF_FIELDS = [
     "eu-ai-act_references",
     "ffiec-itbooklets_references",
     "iso-42001_references",
+    "iso-iec-27002_references",
     "nist-ai-600-1_references",
     "nist-sp-800-53r5_references",
+    "nist-ssdf_references",
     "owasp-llm_references",
     "owasp-ml_references",
+    "slsa_references",
 ]
 
 # Maps each dataset name to the make target that generates it.
@@ -87,10 +90,13 @@ DATA_MAKE_TARGETS: dict[str, str | None] = {
     "eu-ai-act":           "make data-eu-ai-act",
     "ffiec-itbooklets":    None,  # source now requires solving a CAPTCHA; file is hand-maintained
     "iso-42001":           None,  # contributed; standard text is paywalled
+    "iso-iec-27002":       None,  # contributed; standard text is paywalled
     "nist-ai-600-1":       "make data-nist",
     "nist-sp-800-53r5":    "make data-nist",
+    "nist-ssdf":           None,  # contributed; SSDF is a single PDF with no per-practice anchors
     "owasp-llm":           "make data-owasp",
     "owasp-ml":            "make data-owasp",
+    "slsa":                None,  # contributed; spec is versioned web pages
 }
 # Every dataset is checksummed against CHECKSUMS_FILE, so an accidental
 # deletion or unrecorded edit is always caught — including files regenerated
@@ -100,6 +106,9 @@ DATA_MAKE_TARGETS: dict[str, str | None] = {
 HAND_MAINTAINED_NOTES = {
     "ffiec-itbooklets": "source returns a CAPTCHA challenge to automated requests",
     "iso-42001":        "standard text is paywalled",
+    "iso-iec-27002":    "standard text is paywalled",
+    "nist-ssdf":        "published as a single PDF with no per-practice anchors",
+    "slsa":             "specification is versioned web pages, maintained by hand",
 }
 
 PASS = "✅"

@@ -26,6 +26,24 @@ nist-sp-800-53r5_references:
     note: Requires access controls to be consistently enforced; maps to branch protection rules and repository permission models.
   - id: ia-5
     note: Covers management of credentials used to authenticate to the version control system, including SSH keys and tokens used for commit signing.
+ffiec-itbooklets_references:
+  - id: dam-5
+    note: The Development section expects source code and software to be managed under version/library control with appropriate change tracking throughout development.
+  - id: dam-7
+    note: The Maintenance section expects changes to deployed software to be controlled and traceable, which version control underpins.
+nist-ssdf_references:
+  - id: ps-1
+    note: Calls for storing all forms of code in repositories with access control and integrity protection — the SSDF practice most directly mandating version control.
+  - id: ps-3
+    note: Requires each software release to be archived and protected, supporting retrieval of exactly what was released to production.
+iso-iec-27002_references:
+  - id: 8-4
+    note: Governs managed read/write access to source code, development tools, and software libraries — implemented through version control access controls.
+  - id: 8-32
+    note: Requires changes to be controlled through a formal change-management process; version control provides the supporting change record.
+slsa_references:
+  - id: source-track
+    note: The Source track expects source to be maintained in version control with a retained, verifiable history — aligning with tamper-evident history and release traceability.
 mitigates:
   - ri-1   # Insider Threat
   - ri-8   # Unauthorised Change

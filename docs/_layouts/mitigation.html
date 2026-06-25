@@ -117,20 +117,55 @@ layout: default
             </div>
             {% endif %}
 
+            {% comment %} Regulatory guidance — issued or enforced by regulators {% endcomment %}
             {% include reference-card.html
-                references=page.iso-42001_references
-                dataset="iso-42001"
-                heading="ISO 42001 References" %}
+                references=page.ffiec-itbooklets_references
+                dataset="ffiec-itbooklets"
+                heading="FFIEC IT Handbook"
+                type="Regulatory Guidance" %}
 
+            {% include reference-card.html
+                references=page.eu-ai-act_references
+                dataset="eu-ai-act"
+                heading="EU AI Act"
+                type="Regulatory Guidance" %}
+
+            {% comment %} Industry standards & frameworks — voluntary, consensus-based {% endcomment %}
             {% include reference-card.html
                 references=page.nist-sp-800-53r5_references
                 dataset="nist-sp-800-53r5"
-                heading="NIST SP 800-53r5 References" %}
+                heading="NIST SP 800-53r5"
+                type="Industry Standard" %}
+
+            {% include reference-card.html
+                references=page.nist-ssdf_references
+                dataset="nist-ssdf"
+                heading="NIST SSDF (SP 800-218)"
+                type="Industry Standard" %}
+
+            {% include reference-card.html
+                references=page.iso-iec-27002_references
+                dataset="iso-iec-27002"
+                heading="ISO/IEC 27002:2022"
+                type="Industry Standard" %}
+
+            {% include reference-card.html
+                references=page.slsa_references
+                dataset="slsa"
+                heading="SLSA"
+                type="Industry Standard" %}
+
+            {% include reference-card.html
+                references=page.iso-42001_references
+                dataset="iso-42001"
+                heading="ISO 42001"
+                type="Industry Standard" %}
 
             {% include reference-card.html
                 references=page.nist-ai-600-1_references
                 dataset="nist-ai-600-1"
-                heading="NIST AI 600-1 References" %}
+                heading="NIST AI 600-1"
+                type="Industry Standard" %}
 
         </div>
     </div>

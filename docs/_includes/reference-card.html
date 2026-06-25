@@ -1,8 +1,13 @@
 {% assign references = include.references %}
 {% if references and references.size > 0 %}
-<div class="card">
+<div class="card mb-4">
     <div class="card-body">
-        <h2 class="h4 mb-4">{{ include.heading }}</h2>
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h2 class="h4 mb-0">{{ include.heading }}</h2>
+            {% if include.type %}
+            <span class="badge rounded-pill {% if include.type == 'Regulatory Guidance' %}bg-danger-subtle text-danger-emphasis border border-danger-subtle{% else %}bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle{% endif %}">{{ include.type }}</span>
+            {% endif %}
+        </div>
         <div class="list-group">
             {% for reference in references %}
             {% if reference.id %}
@@ -12,15 +17,22 @@
             {% endif %}
             {% assign item = site.data[include.dataset][ref_id] %}
             {% if item %}
-            <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                <div>
-                    <div>{{ item.title }}</div>
-                    {% if reference.note %}
-                    <small class="text-muted">{{ reference.note }}</small>
-                    {% endif %}
+            {% if reference.note %}
+            {% comment %} Note present — render as a click-through that reveals the snippet {% endcomment %}
+            <details class="list-group-item reference-detail">
+                <summary>{{ item.title }}</summary>
+                <div class="mt-2">
+                    <small class="text-muted d-block mb-2">{{ reference.note }}</small>
+                    <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer" class="small d-inline-flex align-items-center gap-1">View source {% include external-link-icon.html %}</a>
                 </div>
+            </details>
+            {% else %}
+            {% comment %} No note — plain external link, as before {% endcomment %}
+            <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <span>{{ item.title }}</span>
                 {% include external-link-icon.html %}
             </a>
+            {% endif %}
             {% endif %}
             {% endfor %}
         </div>
