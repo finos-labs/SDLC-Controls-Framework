@@ -1,0 +1,112 @@
+# Definitions of terms used across the SDLC Controls Framework.
+# DRAFT — to be revisited. Rendered alphabetically by `definitions.md`.
+# Each entry: term, slug (anchor id), definition.
+
+- term: Attestation
+  slug: attestation
+  definition: >-
+    A named, timestamped confirmation by an accountable owner that a stated
+    condition holds — for example, that a repository is in active use. An
+    attestation is itself an evidentiary record and is retained as governance
+    evidence.
+
+- term: Audit trail
+  slug: audit-trail
+  definition: >-
+    An attributable, timestamped record of changes — who did what, and when —
+    sufficient to reconstruct the state of something at any past point in time.
+    Where strict immutability is not used, a sufficient audit trail is the
+    accepted alternative for preserving history.
+
+- term: Content-addressable identity
+  slug: content-addressable-identity
+  definition: >-
+    Identifying an artifact by a cryptographic hash of its contents, so that any
+    change to the artifact produces a different identity and tampering is
+    immediately detectable.
+
+- term: Control chain
+  slug: control-chain
+  definition: >-
+    A set of controls that are logically dependent on one another and linked as
+    an ordered sequence, where one control establishes the conditions the next
+    relies on (for example, a requirements repository feeding release-time
+    requirements approval).
+
+- term: Control phase
+  slug: control-phase
+  definition: >-
+    The point in the software lifecycle at which a control principally applies —
+    for example CODE, RELEASE, RUNTIME, or LIFECYCLE (spanning the whole cycle).
+
+- term: Control type
+  slug: control-type
+  definition: >-
+    The control's mode of action, such as PREV (preventive — stops an undesirable
+    outcome occurring). Used to classify how a control mitigates its risks.
+
+- term: Deployment gating
+  slug: deployment-gating
+  definition: >-
+    A policy-based check at the point of deployment that blocks an individual
+    deployment from proceeding unless defined technical criteria are met.
+    Distinct from version release approval, which authorises a version to be
+    released at all.
+
+- term: Document status
+  slug: document-status
+  definition: >-
+    The maturity of a control or risk document: Pre-Draft (initial notes), Draft
+    (being written), First-Reading-Approved (passed first working-group reading,
+    substantially complete but not yet final), and Working-Group-Approved (final,
+    approved).
+
+- term: Immutability
+  slug: immutability
+  definition: >-
+    The property that, once recorded, something cannot be changed. In this
+    framework, history may be preserved either by strict immutability or by a
+    sufficient audit trail; the required property is that history cannot be
+    altered or destroyed undetectably.
+
+- term: Mitigation (Control)
+  slug: mitigation-control
+  definition: >-
+    A control that reduces one or more risks. "Mitigation" and "control" are used
+    interchangeably; each mitigation references the risks it addresses.
+
+- term: Provenance
+  slug: provenance
+  definition: >-
+    A documented, verifiable chain of custody for a software artifact, from
+    source commit through build and into deployment, establishing where it came
+    from and how it was produced.
+
+- term: Regulatory guidance vs. industry standard
+  slug: regulatory-guidance-vs-industry-standard
+  definition: >-
+    A reference distinction used in this framework. Regulatory guidance is issued
+    by regulators (for example the FFIEC IT Handbook); industry standards are
+    voluntary, consensus-based frameworks (for example NIST, ISO/IEC, SLSA).
+
+- term: Release, deployment, and promotion
+  slug: release-deployment-promotion
+  definition: >-
+    A release is a version of software made available for production; deployment
+    is the act of placing software into an environment; promotion is moving a
+    build forward through environments toward production. The framework uses
+    "released to production" for the point software goes live.
+
+- term: Risk
+  slug: risk
+  definition: >-
+    An undesirable outcome the framework seeks to reduce. Each risk is addressed
+    by one or more mitigations (controls).
+
+- term: Tamper-evident history
+  slug: tamper-evident-history
+  definition: >-
+    History that cannot be altered or destroyed without detection. It does not
+    require that history never change — only that any change is detectable and
+    that no data is silently lost. Authorised, logged amendments (for example,
+    purging a committed secret) are permitted.
