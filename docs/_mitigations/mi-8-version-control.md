@@ -2,7 +2,7 @@
 sequence: 8
 title: Version Control
 layout: mitigation
-doc-status: Draft
+doc-status: First-Reading-Approved
 type: PREV
 phase: CODE
 nist-sp-800-53r5_references:

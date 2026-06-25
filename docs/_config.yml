@@ -45,6 +45,8 @@ document_status:
     description: "Initial brainstorming or collection of ideas, notes, and outlines. The document is not yet formally written."
   - name: Draft
     description: "The document is in the early stages of development, with content being written and structured but not yet polished."
+  - name: First-Reading-Approved
+    description: "The document has passed its first reading by the working group and is substantially complete, but has not yet received final approval."
   - name: Working-Group-Approved
     description: "The document is in its final form and has been approved by the working group."
 
