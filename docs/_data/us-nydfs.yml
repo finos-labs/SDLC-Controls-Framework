@@ -1,0 +1,7 @@
+# US — NYDFS 23 NYCRR Part 500. Applies to banks, insurers and fintechs
+# licensed in New York, including many non-US-headquartered firms.
+# Complements the FFIEC IT Handbook dataset (ffiec-itbooklets.yml).
+
+nydfs-500-08:
+  title: 'NYDFS 23 NYCRR §500.08 — Application Security'
+  url: https://www.dfs.ny.gov/system/files/documents/2023/03/23NYCRR500_0.pdf

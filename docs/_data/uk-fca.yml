@@ -1,0 +1,14 @@
+# UK — FCA / PRA operational resilience regime. Deliberately outcome-based:
+# there is no UK rule that says "perform code reviews". Mitigations map as
+# evidence supporting resilience outcomes, so the per-reference notes carry
+# the explanation rather than clause numbers.
+
+sysc-15a-2:
+  title: 'FCA SYSC 15A.2 — Operational resilience requirements'
+  url: https://handbook.fca.org.uk/handbook/SYSC/15A/2.html
+pra-ss1-21:
+  title: 'PRA SS1/21 — Operational resilience: impact tolerances'
+  url: https://www.bankofengland.co.uk/prudential-regulation/publication/2021/march/operational-resilience-impact-tolerances-for-important-business-services-ss
+fca-tech-change:
+  title: 'FCA Multi-firm review — Implementing Technology Change (2021)'
+  url: https://www.fca.org.uk/publications/multi-firm-reviews/implementing-technology-change

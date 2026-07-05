@@ -119,9 +119,27 @@ layout: default
 
             {% comment %} Regulatory guidance — issued or enforced by regulators {% endcomment %}
             {% include reference-card.html
+                references=page.eu-dora_references
+                dataset="eu-dora"
+                heading="EU — DORA / RTS 2024/1774"
+                type="Regulatory Guidance" %}
+
+            {% include reference-card.html
+                references=page.uk-fca_references
+                dataset="uk-fca"
+                heading="UK — FCA / PRA Operational Resilience"
+                type="Regulatory Guidance" %}
+
+            {% include reference-card.html
                 references=page.ffiec-itbooklets_references
                 dataset="ffiec-itbooklets"
-                heading="FFIEC IT Handbook"
+                heading="US — FFIEC IT Handbook"
+                type="Regulatory Guidance" %}
+
+            {% include reference-card.html
+                references=page.us-nydfs_references
+                dataset="us-nydfs"
+                heading="US — NYDFS Part 500"
                 type="Regulatory Guidance" %}
 
             {% include reference-card.html
@@ -170,6 +188,3 @@ layout: default
         </div>
     </div>
 </main>
-
-
-
