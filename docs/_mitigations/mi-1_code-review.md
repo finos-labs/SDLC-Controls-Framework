@@ -1,5 +1,5 @@
 ---
-sequence: 22
+sequence: 1
 title: Code Review
 layout: mitigation
 doc-status: Draft
