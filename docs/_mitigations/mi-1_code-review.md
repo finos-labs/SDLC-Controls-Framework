@@ -1,5 +1,5 @@
 ---
-sequence: 22
+sequence: 1
 title: Code Review
 layout: mitigation
 doc-status: Draft
@@ -11,6 +11,81 @@ nist-sp-800-53r5_references:
   - sa-10  # SA-10 Developer Configuration Management
   - sa-11  # SA-11 Developer Testing And Evaluation
   - au-12  # AU-12 Audit Record Generation
+eu-dora_references:
+  - id: rts-art-16-3
+    note: >
+      Mandates source code reviews covering both static and dynamic testing,
+      with vulnerabilities identified, tracked through an action plan, and
+      monitored to closure. The review gate plus SAST integration required by
+      this mitigation implements the review; the immutable review records
+      provide the evidence.
+  - id: rts-art-17-1
+    note: >
+      Art. 17(1)(b) requires independence between the functions approving a
+      change and those requesting or implementing it — the regulatory basis
+      for "the author MUST NOT satisfy the human-review requirement for their
+      own change". Art. 17(1)(a) and (c) require each change to be verified
+      against ICT security requirements, tested, quality-assured and
+      documented; the review record bound to the change-set identity
+      demonstrates this per change.
+  - id: rts-art-16-7
+    note: >
+      Requires controls protecting the integrity of source code, whether
+      developed in-house or supplied by third parties. Technically blocking
+      admission to the protected baseline without a valid review outcome is
+      the primary integrity control over the baseline.
+  - id: dora-art-9-4-e
+    note: >
+      The parent DORA obligation: documented ICT change management policies
+      following a risk-based approach. The deterministic, machine-evaluable
+      review policy this mitigation requires is a direct implementation.
+uk-fca_references:
+  - id: sysc-15a-2
+    note: >
+      Outcome-based rather than prescriptive: firms must be able to remain
+      within impact tolerances for important business services. Mandatory
+      review of changes reduces the likelihood that defective or unauthorised
+      changes disrupt those services, and retained review records evidence
+      this capability in the firm's operational resilience self-assessment.
+  - id: pra-ss1-21
+    note: >
+      The PRA's parallel expectations for dual-regulated firms. Same mapping
+      logic as SYSC 15A: this mitigation is evidence of the technology-change
+      leg of the firm's resilience capability.
+  - id: fca-tech-change
+    note: >
+      The FCA's closest statement of SDLC-level expectations. It found failed
+      technology changes cause roughly a quarter of high-severity incidents,
+      and that strong governance, robust pre-deployment assurance and
+      frequent, smaller releases correlate with higher change success rates —
+      directly supporting risk-based review modes and fast review turnaround
+      over batched changes.
+ffiec-itbooklets_references:
+  - id: dam-2
+    note: >
+      Section II.B.2 gives code review as the canonical dual-control example:
+      "during development, code review involves a second individual to review
+      code before it is released to test environments. Segregation of duties
+      and dual control help foster security and resilience."
+  - id: dam-3
+    note: >
+      Sections III.A and III.D identify code review as a primary risk
+      identification and mitigation control — detecting errors before code
+      migrates toward production.
+  - id: dam-4
+    note: >
+      Section IV.D (Secure Development) covers manual and automated code
+      review, source code security analyzers, and expects management to
+      validate that the code review process meets its needs — the basis for
+      maintaining approved automated review tools and configurations.
+us-nydfs_references:
+  - id: nydfs-500-08
+    note: >
+      Requires written procedures ensuring secure development practices for
+      in-house developed applications, periodically reviewed by the CISO.
+      A documented, technically enforced review policy with retained records
+      is a central component of those procedures, and supports the covered
+      entity's annual certification.
 mitigates:
   - ri-8   # Unauthorised Change
   - ri-4   # Vulnerable Software in Production

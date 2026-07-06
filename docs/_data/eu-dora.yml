@@ -1,0 +1,26 @@
+# EU — DORA (Regulation (EU) 2022/2554) and the RTS on ICT risk
+# management framework (Commission Delegated Regulation (EU) 2024/1774).
+# DORA applies to EU financial entities from 17 January 2025 and supersedes
+# the EBA Guidelines on ICT and security risk management (EBA/GL/2019/04),
+# which were narrowed to payment-service-user relationship management by
+# EBA/GL/2025/02 (applicable 20 May 2025). Map to DORA, not the EBA guidelines.
+# Authoritative text: https://eur-lex.europa.eu/eli/reg_del/2024/1774/oj
+
+dora-art-9-4-e:
+  title: 'DORA Art. 9(4)(e) — ICT change management policies'
+  url: https://www.springlex.eu/en/packages/dora/dora-regulation/article-9/
+rts-art-15:
+  title: 'RTS 2024/1774 Art. 15 — ICT project management'
+  url: https://www.springlex.eu/en/packages/dora/rts-rmf-regulation/article-15/
+rts-art-16-2:
+  title: 'RTS 2024/1774 Art. 16(2) — Testing and approval of ICT systems'
+  url: https://www.springlex.eu/en/packages/dora/rts-rmf-regulation/article-16/
+rts-art-16-3:
+  title: 'RTS 2024/1774 Art. 16(3) — Source code reviews (static and dynamic)'
+  url: https://www.springlex.eu/en/packages/dora/rts-rmf-regulation/article-16/
+rts-art-16-7:
+  title: 'RTS 2024/1774 Art. 16(7) — Source code integrity controls'
+  url: https://www.springlex.eu/en/packages/dora/rts-rmf-regulation/article-16/
+rts-art-17-1:
+  title: 'RTS 2024/1774 Art. 17(1) — ICT change management procedures'
+  url: https://www.springlex.eu/en/packages/dora/rts-rmf-regulation/article-17/
