@@ -1,10 +1,10 @@
 ![badge-labs](https://user-images.githubusercontent.com/327285/230928932-7c75f8ed-e57b-41db-9fb7-a292a13a1e58.svg)
 
-# SDLC Controls Framework
+# SDLC Common Controls Catalog
 
 > **[View the live site](https://finos-labs.github.io/SDLC-Controls-Framework/)**
 
-The SDLC Controls Framework Working Group aims to create a shared, open reference library for software governance controls across the financial services industry. By establishing common definitions, implementations, and patterns, we reduce duplication, prevent drift, and enable institutions to focus on innovation rather than reinventing control frameworks.
+The SDLC Common Controls Catalog Working Group aims to create a shared, open reference library for software governance controls across the financial services industry. By establishing common definitions, implementations, and patterns, we reduce duplication, prevent drift, and enable institutions to focus on innovation rather than reinventing control frameworks.
 
 
 
@@ -23,11 +23,11 @@ The financial services industry faces an increasingly complex regulatory landsca
 
 ## Our Solution
 
-A **composable, technology-agnostic controls catalogue** that provides:
+A **composable, technology-agnostic controls catalog** that provides:
 - **Common definitions** for SDLC controls used across financial services
 - **Reference implementations** with concrete patterns and examples
 - **Shared vocabulary** enabling clear communication between institutions, vendors, and regulators
-- **Flexible framework** where institutions can select applicable controls while maintaining their unique requirements
+- **Flexible catalog** where institutions can select applicable controls while maintaining their unique requirements
 
 ## Getting Started
 

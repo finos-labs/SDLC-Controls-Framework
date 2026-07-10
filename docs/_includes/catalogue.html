@@ -113,14 +113,14 @@
     </div>
 </div>
 
-<!-- Main Catalogue Cards -->
+<!-- Main Catalog Cards -->
 <div class="row mb-5" id="catalogueRow">
     <div class="col-md-6">
         <div class="card h-100 shadow border-0">
             <div class="card-header bg-primary text-white">
                 <div class="d-flex justify-content-between align-items-center">
                     <h2 class="h4 mb-0">
-                        <i class="bi bi-asterisk me-2"></i>Risk Catalogue
+                        <i class="bi bi-asterisk me-2"></i>Risk Catalog
                     </h2>
                     <button class="btn btn-outline-light btn-sm expand-btn" type="button" data-catalogue="risk">
                         <i class="bi bi-chevron-bar-right"></i>
@@ -203,7 +203,7 @@
             <div class="card-header bg-success text-white">
                 <div class="d-flex justify-content-between align-items-center">
                     <h2 class="h4 mb-0">
-                        <i class="bi bi-shield-shaded me-2"></i>Mitigation Catalogue
+                        <i class="bi bi-shield-shaded me-2"></i>Mitigation Catalog
                     </h2>
                     <button class="btn btn-outline-light btn-sm expand-btn" type="button" data-catalogue="mitigation">
                         <i class="bi bi-chevron-bar-left"></i>
@@ -332,7 +332,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const riskVisible = !catalogueStates.mitigation.expanded && (selectedType !== 'mitigation');
         const mitigationVisible = !catalogueStates.risk.expanded && (selectedType !== 'risk');
         
-        // Handle Risk Catalogue
+        // Handle Risk Catalog
         if (!riskVisible) {
             riskColumn.style.display = 'none';
         } else {
@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
             riskColumn.className = catalogueStates.risk.expanded || !mitigationVisible ? 'col-12' : 'col-md-6';
         }
         
-        // Handle Mitigation Catalogue
+        // Handle Mitigation Catalog
         if (!mitigationVisible) {
             mitigationColumn.style.display = 'none';
         } else {

@@ -1,13 +1,13 @@
 ---
 layout: page
 title: "Definitions of Terms"
-subtitle: "What we mean by some of the framework's more nuanced terms"
+subtitle: "What we mean by some of the catalog's more nuanced terms"
 draft: true
 ---
 
 <p class="text-muted">
-This glossary explains terms used across the risk and mitigation catalogue that
-carry a specific meaning in this framework, or that are easy to misread. It is a
+This glossary explains terms used across the risk and mitigation catalog that
+carry a specific meaning in this catalog, or that are easy to misread. It is a
 living document.
 </p>
 

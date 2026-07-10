@@ -1,4 +1,4 @@
-# Definitions of terms used across the SDLC Controls Framework.
+# Definitions of terms used across the SDLC Common Controls Catalog.
 # DRAFT — to be revisited. Rendered alphabetically by `definitions.md`.
 # Each entry: term, slug (anchor id), definition.
 
@@ -65,7 +65,7 @@
   slug: immutability
   definition: >-
     The property that, once recorded, something cannot be changed. In this
-    framework, history may be preserved either by strict immutability or by a
+    catalog, history may be preserved either by strict immutability or by a
     sufficient audit trail; the required property is that history cannot be
     altered or destroyed undetectably.
 
@@ -85,7 +85,7 @@
 - term: Regulatory guidance vs. industry standard
   slug: regulatory-guidance-vs-industry-standard
   definition: >-
-    A reference distinction used in this framework. Regulatory guidance is issued
+    A reference distinction used in this catalog. Regulatory guidance is issued
     by regulators (for example the FFIEC IT Handbook); industry standards are
     voluntary, consensus-based frameworks (for example NIST, ISO/IEC, SLSA).
 
@@ -94,13 +94,13 @@
   definition: >-
     A release is a version of software made available for production; deployment
     is the act of placing software into an environment; promotion is moving a
-    build forward through environments toward production. The framework uses
+    build forward through environments toward production. The catalog uses
     "released to production" for the point software goes live.
 
 - term: Risk
   slug: risk
   definition: >-
-    An undesirable outcome the framework seeks to reduce. Each risk is addressed
+    An undesirable outcome the catalog seeks to reduce. Each risk is addressed
     by one or more mitigations (controls).
 
 - term: Tamper-evident history
