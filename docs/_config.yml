@@ -16,7 +16,7 @@ mitigation_classification:
 
 # SDLC phase at which a mitigation primarily operates. LIFECYCLE is the
 # cross-cutting bucket for governance/process controls that are not tied to a
-# single phase. Used by the catalogue phase filter.
+# single phase. Used by the catalog phase filter.
 phase_classification:
   CODE: Code
   BUILD: Build
@@ -24,7 +24,7 @@ phase_classification:
   RUNTIME: Runtime
   LIFECYCLE: Lifecycle
 
-# Bootstrap Icons class for each classification code, used by the catalogue
+# Bootstrap Icons class for each classification code, used by the catalog
 # headings and filter checkboxes. Adding a new code above requires adding the
 # matching icon here.
 category_icons:

@@ -1,6 +1,6 @@
-# SDLC Controls Framework Governance Policy
+# SDLC Common Controls Catalog Governance Policy
 
-This document provides the governance policy for the development of the SDLC Controls Framework specification and related materials (the “Working Group”).
+This document provides the governance policy for the development of the SDLC Common Controls Catalog specification and related materials (the “Working Group”).
 
 ## 1.	Roles.
 
@@ -8,18 +8,18 @@ The Working Group includes the following roles:
 
 ### 1.1. Participants
 
-“Participants” are those that have made Contributions to the Working Group subject to the [Community Specification Contribution Policy 1.0](https://spdx.org/licenses/Community-Spec-1.0.html).  The SDLC Controls Framework Working Group has the specific purpose of defining and releasing subsequent updates to the framework. In practice, that means people that attend and contribute to meetings, raise issues, pull requests (to submit patches to the framework) and reviews.
+“Participants” are those that have made Contributions to the Working Group subject to the [Community Specification Contribution Policy 1.0](https://spdx.org/licenses/Community-Spec-1.0.html).  The SDLC Common Controls Catalog Working Group has the specific purpose of defining and releasing subsequent updates to the catalog. In practice, that means people that attend and contribute to meetings, raise issues, pull requests (to submit patches to the catalog) and reviews.
 
 #### How do you become a Participant?
 
-Becoming a Participant is as easy as attending a meeting and/or raising issues for changes you'd like to see in the framework, commenting on issues others have raised or even asking questions (which can often result in the clarification of the framework's documentation to help others with the same questions in future).
+Becoming a Participant is as easy as attending a meeting and/or raising issues for changes you'd like to see in the catalog, commenting on issues others have raised or even asking questions (which can often result in the clarification of the catalog's documentation to help others with the same questions in future).
 
 #### Register to vote
-Participants may register to vote on changes to the SDLC Controls Framework (see [Section 2](#2decision-making) below). To do so, register to the group by sending an empty email to [sdlc-framework+subscribe@lists.finos.org](mailto:sdlc-framework+subscribe@lists.finos.org) to join the enrolled voting participants group.
+Participants may register to vote on changes to the SDLC Common Controls Catalog (see [Section 2](#2decision-making) below). To do so, register to the group by sending an empty email to [sdlc-framework+subscribe@lists.finos.org](mailto:sdlc-framework+subscribe@lists.finos.org) to join the enrolled voting participants group.
 
 ### 1.2. Discussion Groups
 
-The Working Group may form one or more "Discussion Groups" to organize collaboration around a particular aspect of a specification. Discussion Groups are for discussion only.  Approval of all portions of a specification is subject to the consensus-based decision-making process of the SDLC Controls Framework Working Group.
+The Working Group may form one or more "Discussion Groups" to organize collaboration around a particular aspect of a specification. Discussion Groups are for discussion only.  Approval of all portions of a specification is subject to the consensus-based decision-making process of the SDLC Common Controls Catalog Working Group.
 
 ### 1.3. Maintainers 
 
@@ -27,7 +27,7 @@ The Working Group may form one or more "Discussion Groups" to organize collabora
 
 #### How do you become a Maintainer?
 
-Once you are an enrolled participant, you can apply to become a **maintainer** by contacting the existing maintainers listed in [MAINTAINERS.md](MAINTAINERS.md) and then seeking the approval of the Working Group. Generally, the maintainers will look for both a history of contribution to the framework and a commitment to investing sufficient time in the role from any prospective candidates before proposing them to the Working Group for approval. 
+Once you are an enrolled participant, you can apply to become a **maintainer** by contacting the existing maintainers listed in [MAINTAINERS.md](MAINTAINERS.md) and then seeking the approval of the Working Group. Generally, the maintainers will look for both a history of contribution to the catalog and a commitment to investing sufficient time in the role from any prospective candidates before proposing them to the Working Group for approval. 
 
 If you are new to the project, but willing to make the investment of time, the maintainers can work with you to build up a history of contribution.
 

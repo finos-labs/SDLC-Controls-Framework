@@ -1,6 +1,6 @@
-# Contributing to SDLC Controls Framework
+# Contributing to the SDLC Common Controls Catalog
 
-SDLC Controls Framework is licensed under a [Creative Commons Attribution 4.0 International License][cc-by] and accepts contributions via git pull requests.  Each commit must include a DCO line in the git commit message:
+The SDLC Common Controls Catalog is licensed under a [Creative Commons Attribution 4.0 International License][cc-by] and accepts contributions via git pull requests.  Each commit must include a DCO line in the git commit message:
 
 `Signed-off-by: GitHub User Name <your.email@example.com>`
 

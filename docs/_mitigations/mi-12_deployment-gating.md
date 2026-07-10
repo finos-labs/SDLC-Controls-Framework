@@ -32,7 +32,7 @@ Deployment gating blocks promotion of software to the target environment when de
 
 ## Description
 
-Deployment gating enforces policy-based decisions at the point of deployment to ensure that only software meeting defined control criteria is promoted to production. Gates evaluate the posture of an artefact against the organisation's defined policies and block deployment when criteria are not met. Without deployment gates, other controls in the framework are advisory only, and non-compliant software may reach the target environment despite known issues. In regulated financial services environments, deployment gating provides auditable evidence that organisational policy was enforced at every release.
+Deployment gating enforces policy-based decisions at the point of deployment to ensure that only software meeting defined control criteria is promoted to production. Gates evaluate the posture of an artefact against the organisation's defined policies and block deployment when criteria are not met. Without deployment gates, other controls in the catalog are advisory only, and non-compliant software may reach the target environment despite known issues. In regulated financial services environments, deployment gating provides auditable evidence that organisational policy was enforced at every release.
 
 ## Requirements
 
