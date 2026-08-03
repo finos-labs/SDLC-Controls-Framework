@@ -8,7 +8,7 @@ By making a Contribution to this repository, I agree to the terms of the followi
 
 (c) Community Specification Contribution Policy 1.0 (/CONTRIBUTING.md)
 
-(d) Community Specification Code of Conduct (CODE_OF_CONDUCT.md)
+(d) Community Specification Code of Conduct (/CODE_OF_CONDUCT.md)
 
 
 In addition, for source code contributions, I certify that:

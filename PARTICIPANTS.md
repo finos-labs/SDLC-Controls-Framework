@@ -48,6 +48,10 @@ _:question:Please email help@finos.org if you encounter issues or have questions
 
 [<img src="https://user-images.githubusercontent.com/51138318/151393034-bde9e089-6b75-4829-9f7e-f7c2f20dcef1.png" width="500">](https://user-images.githubusercontent.com/51138318/151393034-bde9e089-6b75-4829-9f7e-f7c2f20dcef1.png) 
 
+**Step 5.4. The EasyCLA bot will flag your PR and leave a comment with instructions, follow them to sign the CLA**
+
 _:question:Please email help@finos.org if you encounter issues or have questions._
+
+
 
 
