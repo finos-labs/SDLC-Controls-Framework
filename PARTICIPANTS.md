@@ -1,4 +1,5 @@
 # Participants enrolled in the Software Development Lifecycle Common Control Catalog project
+
 Below is the list of [participants](governance-documents/5._Governance.md#1roles) in the Software Development Lifecycle Common Control Catalog, who have committed to the [Community Specification Contributor License Agreement](governance-documents/0._CS_Contributor_License_Agreement.md).
 
 ## Participants
@@ -34,7 +35,7 @@ _:question:Please email help@finos.org if you encounter issues or have questions
     
 [<img src="https://user-images.githubusercontent.com/51138318/151390757-69ca6d4a-8972-4134-9239-caf02d8fb105.png" width="500">](https://user-images.githubusercontent.com/51138318/151390757-69ca6d4a-8972-4134-9239-caf02d8fb105.png)
 
-**Step 5. Create a Pull Request** to request that the changes you made to the [participants](#participants) file be added to the "master" branch of the https://{github}.com/finos/{project slug} repository
+**Step 5. Create a Pull Request** to request that the changes you made to the [participants](#participants) file be added to the "main" branch of the https://github.com/finos/sdlc-common-controls
 
 **Step 5.1. Click on "Pull Request" in the GitHub navigation bar**
 
