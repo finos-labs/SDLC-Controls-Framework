@@ -16,13 +16,16 @@ mitigation_classification:
 
 # SDLC phase at which a mitigation primarily operates. LIFECYCLE is the
 # cross-cutting bucket for governance/process controls that are not tied to a
-# single phase. Used by the catalog phase filter.
+# single phase. META marks "meta controls" — controls whose subject is the
+# operation of other controls rather than a specific SDLC phase (see the
+# glossary). Used by the catalog phase filter.
 phase_classification:
   CODE: Code
   BUILD: Build
   RELEASE: Release
   RUNTIME: Runtime
   LIFECYCLE: Lifecycle
+  META: Meta
 
 # Bootstrap Icons class for each classification code, used by the catalog
 # headings and filter checkboxes. Adding a new code above requires adding the
@@ -39,6 +42,7 @@ category_icons:
   RELEASE: bi-rocket-takeoff-fill
   RUNTIME: bi-play-circle-fill
   LIFECYCLE: bi-arrow-repeat
+  META: bi-layers-fill
 
 document_status:
   - name: Pre-Draft

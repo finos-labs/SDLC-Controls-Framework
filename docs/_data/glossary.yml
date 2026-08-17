@@ -69,11 +69,24 @@
     sufficient audit trail; the required property is that history cannot be
     altered or destroyed undetectably.
 
+- term: Meta control
+  slug: meta-control
+  definition: >-
+    A control whose subject is the operation of other controls rather than a
+    specific SDLC risk directly — a "control over controls". Meta controls are
+    cross-cutting: they govern how the catalog's controls are managed,
+    evidenced, and overseen rather than preventing or detecting a single
+    undesirable outcome. Examples include managed control exceptions (oversight
+    and visibility of approved deviations) and evidence retention (approved
+    stores and a defined retention strategy). Distinct from a mitigation, which
+    reduces one or more named risks.
+
 - term: Mitigation (Control)
   slug: mitigation-control
   definition: >-
     A control that reduces one or more risks. "Mitigation" and "control" are used
-    interchangeably; each mitigation references the risks it addresses.
+    interchangeably; each mitigation references the risks it addresses. See also
+    Meta control, a control whose subject is other controls rather than a risk.
 
 - term: Provenance
   slug: provenance
