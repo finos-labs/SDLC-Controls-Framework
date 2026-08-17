@@ -5,6 +5,55 @@ layout: mitigation
 doc-status: Draft
 type: PREV
 phase: RELEASE
+nist-sp-800-53r5_references:
+  - cm-8   # CM-8 System Component Inventory
+  - cm-12  # CM-12 Information Location
+  - pm-5   # PM-5 System Inventory
+eu-dora_references:
+  - id: dora-art-8
+    note: >
+      Art. 8(1) requires financial entities to identify, classify and
+      document all ICT supported business functions, the information assets
+      and ICT assets supporting them, and their roles and dependencies,
+      with the classification reviewed at least yearly. Art. 8(4) extends
+      this to all information and ICT assets including remote sites,
+      network resources and hardware, mapping those considered critical
+      and the links and interdependencies between assets — the per-system
+      infrastructure dependency record this mitigation requires.
+uk-fca_references:
+  - id: sysc-15a-4
+    note: >
+      Requires firms to identify and document the people, processes,
+      technology, facilities and information necessary to deliver each
+      important business service. The technology and facilities legs of
+      that mapping are the infrastructure dependency record; retained
+      dependency data evidences the mapping in the firm's operational
+      resilience self-assessment.
+ffiec-itbooklets_references:
+  - id: aio-3
+    note: >
+      The common AIO risk management topics include IT asset management:
+      maintaining accurate inventories of hardware, software and
+      information assets with assigned ownership and lifecycle (including
+      end-of-life) tracking. The per-system dependency record implements
+      the inventory expectation from the software system's perspective.
+  - id: aio-5
+    note: >
+      Sets examiner expectations for managing the infrastructure
+      components — hardware, networks, operating systems and storage —
+      that support business operations. Knowing which software systems
+      depend on which components underpins the resilience, upgrade and
+      remediation activities the booklet describes.
+us-nydfs_references:
+  - id: nydfs-500-13
+    note: >
+      Section 500.13(a) requires written policies producing and
+      maintaining a complete, accurate and documented asset inventory of
+      information systems — tracking each asset's owner, location,
+      classification, support expiration date and recovery time
+      objectives — covering hardware, operating systems, applications,
+      infrastructure devices, APIs and cloud services. In force since
+      November 2025.
 mitigates:
   - ri-7  # Configuration Drift
   - ri-4  # Vulnerable Software in Production
@@ -97,3 +146,9 @@ Infrastructure Dependencies enables organizations to appropriately plan and reac
 * **Software Decommissioning**
 
   A software system is being retired. Infrastructure Dependencies identifies the infrastructure resources associated with the system, enabling teams to determine which compute, network, storage, and identity resources may also be decommissioned or reassigned while reducing the risk of removing infrastructure still required by other systems.
+
+## Links
+
+* [NIST SP 800-53r5 CM-8: System Component Inventory](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf)
+* [NIST SP 1800-5 — IT Asset Management practice guide](https://csrc.nist.gov/pubs/sp/1800/5/final)
+* [FFIEC IT Handbook — Architecture, Infrastructure, and Operations booklet](https://ithandbook.ffiec.gov/it-booklets/architecture-infrastructure-and-operations/)
