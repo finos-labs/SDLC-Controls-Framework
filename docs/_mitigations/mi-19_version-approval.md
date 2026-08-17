@@ -1,6 +1,6 @@
 ---
 sequence: 19
-title: Version Release Approval Gating
+title: Release Approval Gating
 layout: mitigation
 doc-status: Draft
 type: PREV
@@ -74,11 +74,11 @@ related_mitigations:
 
 ## Summary
 
-Version Release Approval Gating ensures that no software version is promoted to production without satisfying a defined approval process, enforced by designated human approvers, automated policy checks, or a combination of both. It establishes a verifiable, auditable gate at the version level — distinct from per-deployment gates — that confirms the release candidate has satisfied all governance, quality, and risk requirements before any deployment is permitted.
+Release Approval Gating ensures that no versioned release — a software artifact, an infrastructure-as-code change set, or both — is promoted to production without satisfying a defined approval process, enforced by designated human approvers, automated policy checks, or a combination of both. It establishes a verifiable, auditable gate at the release level — distinct from per-deployment gates — that confirms the release candidate has satisfied all governance, quality, and risk requirements before any deployment is permitted.
 
 ## Description
 
-Deployment gating ([mi-12]({% link _mitigations/mi-12_deployment-gating.md %})) controls whether an individual deployment job may proceed based on technical policy checks. Version Release Approval Gating operates at a higher level: it governs whether a named software version has received the organisational approval required to be released at all. A version may pass all automated deployment gates but still require explicit sign-off from a release manager, risk officer, or compliance stakeholder before it can be promoted from a candidate to an approved release.
+Deployment gating ([mi-12]({% link _mitigations/mi-12_deployment-gating.md %})) controls whether an individual deployment job may proceed based on technical policy checks. Release Approval Gating operates at a higher level: it governs whether a named release has received the organisational approval required to be released at all. A version may pass all automated deployment gates but still require explicit sign-off from a release manager, risk officer, or compliance stakeholder before it can be promoted from a candidate to an approved release.
 
 This distinction is critical in regulated financial services environments where change management frameworks require named human accountability for production releases, not merely automated technical policy satisfaction.
 
@@ -94,7 +94,7 @@ In either case, the approval state is recorded at the version level in a system 
 
 ## Requirements
 
-* Every software version intended for production MUST be subject to a defined approval process before any production deployment is initiated
+* Every versioned release intended for production MUST be subject to a defined approval process before any production deployment is initiated
 * Production deployment of a version MUST be technically prevented while the required approval for that version is absent or has been revoked
 * The approval process MUST specify which approver roles or automated checks are required, differentiated by application risk classification where appropriate
 * Manual approvals MUST be attributed to a named individual, timestamped, and recorded in an auditable system of record
