@@ -70,6 +70,9 @@ mitigates:
   - ri-12  # Business Reputation Risk from Non-Approved Software Version Releases
 related_mitigations:
   - mi-12  # Deployment Gating
+  - mi-20  # Requirements Approval for Release
+  - mi-3   # Software Artifact Provenance
+  - mi-1   # Code Review
 ---
 
 ## Summary
@@ -88,9 +91,9 @@ Two complementary approval mechanisms may be used individually or in combination
 Named approvers — such as a release manager, change advisory board (CAB) member, or risk officer — explicitly authorise a release candidate before it can proceed to any production deployment. The approval is recorded against the specific version, is timestamped and attributed to an identified individual, and must be obtained before any deployment of that version is permitted. Approval workflows may be tiered, requiring different sets of approvers depending on the risk classification of the application or the scope of the change.
 
 **Automated Policy Checks**
-Policy-as-code evaluations assess the release candidate against a defined set of criteria that must all pass before the version is marked approved. These checks may include confirmation that all required test suites have executed and passed, that vulnerability findings are within approved thresholds, that security scan results have been attested, that mandatory review steps in the development workflow are complete, and that the release artefact matches a signed, verified build provenance record. Automated checks produce a structured approval record that can be used as audit evidence independently of human action.
+Policy-as-code evaluations confirm that the evidence and decisions required for release exist before the version is marked approved: deployment gate criteria satisfied ([mi-12]({% link _mitigations/mi-12_deployment-gating.md %})), mandatory review steps complete ([mi-1]({% link _mitigations/mi-1_code-review.md %})), release-scope requirements agreed ([mi-20]({% link _mitigations/mi-20_requirements-approval.md %})), and the release artefact matched to verified build provenance ([mi-3]({% link _mitigations/mi-3_software-artifact-provenance.md %})). Evaluating the technical posture of the artefact itself — scan findings, test results, remediation timelines — is the domain of deployment gating; the distinguishing output of an automated release approval is a durable, attributable approval record that can be used as audit evidence independently of human action.
 
-In either case, the approval state is recorded at the version level in a system of record, and production deployment of the version is technically prevented until the required approval state is confirmed.
+In either case, the approval state is recorded at the release level in a system of record, and production deployment is technically prevented until the required approval state is confirmed. The approval state is typically one of the conditions a deployment gate ([mi-12]({% link _mitigations/mi-12_deployment-gating.md %})) verifies at each deployment event.
 
 ## Requirements
 
