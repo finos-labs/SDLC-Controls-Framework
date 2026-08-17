@@ -7,7 +7,7 @@ type: BUS
 related_risks:
   - ri-8   # Unauthorised Change
 mitigations:
-  - mi-19  # Version Release Approval Gating
+  - mi-19  # Release Approval Gating
   - mi-12  # Deployment Gating
 ---
 ## Summary
