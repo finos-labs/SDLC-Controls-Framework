@@ -4,7 +4,7 @@ title: Data Retention and Disposal
 layout: mitigation
 doc-status: Draft
 type: PREV
-phase: LIFECYCLE
+phase: META
 nist-sp-800-53r5_references:
   - au-11  # AU-11 Audit Record Retention
   - mp-6   # MP-6 Media Sanitization

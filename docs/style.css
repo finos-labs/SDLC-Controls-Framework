@@ -93,6 +93,25 @@
     box-shadow: 0 2px 15px rgba(25, 135, 84, 0.15) !important;
 }
 
+/* Meta controls — cross-cutting "controls over controls" (phase: META).
+   Distinguished from phase-scoped mitigations by a tasteful purple accent. */
+.mitigation-item[data-phase="META"] .card.border-success {
+    border-left-color: #6f42c1 !important;
+}
+
+.mitigation-item[data-phase="META"] .card:hover {
+    box-shadow: 0 2px 15px rgba(111, 66, 193, 0.18) !important;
+}
+
+.mitigation-item[data-phase="META"] .mitigation-id {
+    color: #6f42c1;
+}
+
+/* Tint the Meta phase filter icon to match the card accent. */
+label[for="phase-META"] i {
+    color: #6f42c1;
+}
+
 /* Clickable card styling */
 .card-hover {
     cursor: pointer;
