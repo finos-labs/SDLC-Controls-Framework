@@ -1,11 +1,8 @@
 # Contributing to the SDLC Common Controls Catalog
 
-The SDLC Common Controls Catalog is licensed under a [Creative Commons Attribution 4.0 International License][cc-by] and accepts contributions via git pull requests.  Each commit must include a DCO line in the git commit message:
+The SDLC Common Controls Catalog is licensed under the [Community Specification License 1.0](/governance-documents/Community_Specification_License-v1.md) and accepts contributions via git pull requests.  
 
-`Signed-off-by: GitHub User Name <your.email@example.com>`
-
-This sign-off means you agree the commit satisfies the
-[Developer Certificate of Origin (DCO).](https://developercertificate.org/)
+Before contributing you must enroll as a participant in the Software Development Lifecycle Common Control Catalog project. Please see the [PARTICIPANTS.md](PARTICIPANTS.md) file for instructions.
 
 ## Contributing Issues
 

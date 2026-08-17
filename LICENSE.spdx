@@ -1,7 +1,7 @@
 SPDXVersion: SPDX-2.0
 DataLicense: CC0-1.0
 Creator: FINOS
-PackageName: SDLC-Controls-Framework
+PackageName: sdlc-common-controls
 PackageOriginator: FINOS
-PackageHomePage: https://github.com/finos-labs/SDLC-Controls-Framework
+PackageHomePage: https://github.com/finos/sdlc-common-controls
 PackageLicenseDeclared: CC-BY-4.0
