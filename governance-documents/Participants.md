@@ -53,6 +53,3 @@ _:question:Please email help@finos.org if you encounter issues or have questions
 
 _:question:Please email help@finos.org if you encounter issues or have questions._
 
-
-
-
