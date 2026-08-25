@@ -92,7 +92,7 @@ o	Pull requests may be closed by a Maintainer if the decision is made that it is
 
 ## 5.	Best Practices.
 
-**5.1.	Enrollment.** All contributors should enroll by submitting a pull request to [PARTICIPANTS.md](PARTICIPANTS.md) accepting the license terms. That will trigger the [EasyCLA](https://easycla.lfx.linuxfoundation.org/) bot to require a Community Specification Contributor License Agreement be signed (either by an individual contributor or by a contributor's employer, which covers the employed contributor) before any contribution. If less formality is required, enrollment pull requests can use the [pull request template](.github/PULL_REQUEST_TEMPLATE/default.md) to indicate active agreement with the Community Specification License.
+**5.1.	Enrollment.** All contributors should enroll by submitting a pull request to [PARTICIPANTS.md](PARTICIPANTS.md) accepting the license terms. That will trigger the [EasyCLA](https://easycla.lfx.linuxfoundation.org/) bot to require a Community Specification Contributor License Agreement be signed (either by an individual contributor or by a contributor's employer, which covers the employed contributor) before any contribution.
 
 **5.2.	Use for specifications, not code.** Use the Community Specification License for specification development, not code.
 
