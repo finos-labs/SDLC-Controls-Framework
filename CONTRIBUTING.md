@@ -1,41 +1,103 @@
-# Contributing to the SDLC Common Controls Catalog
+# Community Specification Contribution Policy 1.0
 
-The SDLC Common Controls Catalog is licensed under the [Community Specification License 1.0](/governance-documents/Community_Specification_License-v1.md) and accepts contributions via git pull requests.  
+This document provides the contribution policy for specifications and other documents developed using the Community Specification process in a repository (each a “Working Group”).  Additional or alternate contribution policies may be adopted and documented by the Working Group.
 
-Before contributing you must enroll as a participant in the Software Development Lifecycle Common Control Catalog project. Please see the [PARTICIPANTS.md](PARTICIPANTS.md) file for instructions.
+## Requirements
 
-## Contributing Issues
+All contributions to this repository are made in agreement with the [Community Specification Contributor License Agreement 1.0](governance-documents/CS_Contributor_License_Agreement.md).
 
-### Prerequisites
+Pull requests **must** contain the enrollment and contribution language in the [pull request template](.github/pull_request_template.md). A pull request that omits that content will not be accepted.
 
-* [ ] Have you [searched for duplicates](https://github.com/finos-labs/SDLC-Controls-Framework/issues?utf8=%E2%9C%93&q=)?  A simple search for exception error messages or a summary of the unexpected behaviour should suffice.
-* [ ] Are you running the latest version?
-* [ ] Are you sure this is a bug or missing capability?
+## 1.	Contribution Guidelines. 
 
-### Raising an Issue
-* Create your issue [here](https://github.com/finos-labs/SDLC-Controls-Framework/issues/new).
-* New issues contain two templates in the description: bug report and enhancement request. Please pick the most appropriate for your issue, **then delete the other**.
-  * Please also tag the new issue with either "Bug" or "Enhancement".
-* Please use [Markdown formatting](https://help.github.com/categories/writing-on-github/)
-liberally to assist in readability.
-  * [Code fences](https://help.github.com/articles/creating-and-highlighting-code-blocks/) for exception stack traces and log entries, for example, massively improve readability.
+This Working Group accepts contributions via pull requests. The following section outlines the process for merging contributions to the specification
 
-## Contributing Pull Requests (Code & Docs)
-To make review of PRs easier, please:
+**1.1.	Issues.**  Issues are used as the primary method for tracking anything to do with this specification Working Group.
 
- * Please make sure your PRs will merge cleanly - PRs that don't are unlikely to be accepted.
- * For code contributions, follow the existing code layout.
- * For documentation contributions, follow the general structure, language, and tone of the [existing docs](https://github.com/finos-labs/SDLC-Controls-Framework/wiki).
- * Keep commits small and cohesive - if you have multiple contributions, please submit them as independent commits (and ideally as independent PRs too).
- * Reference issues if your PR has anything to do with an issue (even if it doesn't address it).
- * Minimise non-functional changes (e.g. whitespace).
- * Ensure all new files include a header comment block containing the following text: * Licensed under the Creative Commons Attribution 4.0 International License. See http://creativecommons.org/licenses/by/4.0/.
- * If necessary (e.g. due to 3rd party dependency licensing requirements), update the [NOTICE file](https://github.com/finos-labs/SDLC-Controls-Framework/blob/main/NOTICE) with any new attribution or other notices.
+**1.1.1.	Issue Types.**  There are three types of issues (each with their own corresponding label):
 
+**1.1.1.1.	Discussion.** These are support or functionality inquiries that we want to have a record of for future reference. Depending on the discussion, these can turn into "Spec Change" issues.
 
-### Commit and PR Messages
+**1.1.1.2.	Proposal.** Used for items that propose a new ideas or functionality that require a larger discussion. This allows for feedback from others before a specification change is actually written. All issues that are proposals should both have a label and an issue title of "Proposal: [the rest of the title]." A proposal can become a "Spec Change" and does not require a milestone.
 
-* **Reference issues, wiki pages, and pull requests liberally!**
-* Use the present tense ("Add feature" not "Added feature")
-* Use the imperative mood ("Move button left..." not "Moves button left...")
-* Limit the first line to 72 characters or less
+**1.1.1.3.	Spec Change:** These track specific spec changes and ideas until they are complete. They can evolve from "Proposal" and "Discussion" items, or can be submitted individually depending on the size. Each spec change should be placed into a milestone.
+
+## 2.	Issue Lifecycle.
+
+The issue lifecycle is mainly driven by the Maintainer. All issue types follow the same general lifecycle. Differences are noted below.
+
+**2.1.	Issue Creation.**
+
+**2.2.	Triage.**
+
+o	The Editor in charge of triaging will apply the proper labels for the issue. This includes labels for priority, type, and metadata.
+
+o	(If needed) Clean up the title to succinctly and clearly state the issue. Also ensure that proposals are prefaced with "Proposal".
+
+**2.3.	Discussion.**
+
+o	"Spec Change" issues should be connected to the pull request that resolves it.
+
+o	Whoever is working on a "Spec Change" issue should either assign the issue to themselves or make a comment in the issue saying that they are taking it.
+
+o	"Proposal" and "Discussion" issues should stay open until resolved.
+
+**2.4.	Issue Closure.**
+
+## 3.	How to Contribute a Patch.
+
+The Working Group uses pull requests to track changes. To submit a change to the specification:
+
+**3.1	Fork the Repo, modify the Specification to Address the Issue.**
+
+**3.2.	Submit a Pull Request.** The pull request description must contain the content of the [pull request template](.github/pull_request_template.md), which records agreement with the [Contributor License Agreement](governance-documents/CS_Contributor_License_Agreement.md).
+
+## 4.	Pull Request Workflow.
+
+The next section contains more information on the workflow followed for Pull Requests.
+
+**4.1.	Pull Request Creation.**
+
+o	We welcome pull requests that are currently in progress. They are a great way to keep track of important work that is in-flight, but useful for others to see. If a pull request is a work in progress, it should be prefaced with "WIP: [title]". You should also add the wip label Once the pull request is ready for review, remove "WIP" from the title and label.
+
+o	It is preferred, but not required, to have a pull request tied to a specific issue. There can be circumstances where if it is a quick fix then an issue might be overkill. The details provided in the pull request description would suffice in this case.
+
+**4.2.	Triage**
+
+o	The Editor in charge of triaging will apply the proper labels for the issue. This should include at least a size label, a milestone, and awaiting review once all labels are applied. 
+
+**4.3.	Reviewing/Discussion.**
+
+o	All reviews will be completed using the review tool.
+
+o	A "Comment" review should be used when there are questions about the spec that should be answered, but that don't involve spec changes. This type of review does not count as approval.
+
+o	A "Changes Requested" review indicates that changes to the spec need to be made before they will be merged.
+
+o	Reviewers should update labels as needed (such as needs rebase).
+
+o	When a review is approved, the reviewer should add LGTM as a comment.
+
+o	Final approval is required by a designated Editor. Merging is blocked without this final approval. Editors will factor reviews from all other reviewers into their approval process.
+
+**4.4.	Responsive.** Pull request owner should try to be responsive to comments by answering questions or changing text. Once all comments have been addressed, the pull request is ready to be merged.
+
+**4.5.	Merge or Close.**
+
+o	A pull request should stay open until a Maintainer has marked the pull request as approved.
+
+o	Pull requests can be closed by the author without merging.
+
+o	Pull requests may be closed by a Maintainer if the decision is made that it is not going to be merged.
+
+## 5.	Best Practices.
+
+**5.1.	Enrollment.** All contributors should enroll by submitting a pull request to [PARTICIPANTS.md](PARTICIPANTS.md) accepting the license terms. That will trigger the [EasyCLA](https://easycla.lfx.linuxfoundation.org/) bot to require a Community Specification Contributor License Agreement be signed (either by an individual contributor or by a contributor's employer, which covers the employed contributor) before any contribution.
+
+**5.2.	Use for specifications, not code.** Use the Community Specification License for specification development, not code.
+
+**5.3.	Specification format.** Where appropriate, use the [Community Specification Template](governance-documents/CS_Template.md) to draft your specification.
+
+**5.4.	Separate specifications and source code.** Where possible, separate specifications and source code into different repositories, with the specifications under the Community Specification License and the source code under an OSI-approved open source license.
+
+**5.5.	One specification per repository.** When developing multiple specifications, each individual specification should be in its own repository.

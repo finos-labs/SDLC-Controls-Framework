@@ -101,8 +101,8 @@ related_mitigations:
 ---
 
 <!--
-Licensed under the Creative Commons Attribution 4.0 International License.
-See http://creativecommons.org/licenses/by/4.0/.
+Licensed under the Community Specification License 1.0.
+See LICENSE and LICENSES/SPECIFICATION-LICENSE.
 -->
 
 ## Summary
