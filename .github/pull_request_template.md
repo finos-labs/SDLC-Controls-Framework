@@ -1,13 +1,6 @@
----
-name: "Enrollment in the specification process"
-about: Create this pull request to abide to the terms to participate to this project
-title: Enrollment in the specification process
-labels: enrollment
----
-
 My name is <FirstName LastName> from <Organization> and I'd like to be a Participant in the SDLC Common Controls Catalog project.
-  
-  By making a Contribution to this repository, I agree to the terms of the following documents located at https://github.com/finos/sdlc-common-controls/:
+
+By making a Contribution to this repository, I agree to the terms of the following documents located at https://github.com/finos/sdlc-common-controls/:
 
 (a) Community Specification License 1.0 ([LICENSES/SPECIFICATION-LICENSE](LICENSES/SPECIFICATION-LICENSE))
 

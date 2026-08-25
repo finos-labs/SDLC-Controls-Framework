@@ -6,7 +6,7 @@ This document provides the contribution policy for specifications and other docu
 
 All contributions to this repository are made in agreement with the [Community Specification Contributor License Agreement 1.0](governance-documents/CS_Contributor_License_Agreement.md).
 
-Pull requests **must** contain the enrollment and contribution language in the [pull request template](.github/PULL_REQUEST_TEMPLATE/default.md). A pull request that omits that content will not be accepted.
+Pull requests **must** contain the enrollment and contribution language in the [pull request template](.github/pull_request_template.md). A pull request that omits that content will not be accepted.
 
 ## 1.	Contribution Guidelines. 
 
@@ -50,7 +50,7 @@ The Working Group uses pull requests to track changes. To submit a change to the
 
 **3.1	Fork the Repo, modify the Specification to Address the Issue.**
 
-**3.2.	Submit a Pull Request.** The pull request description must contain the content of the [pull request template](.github/PULL_REQUEST_TEMPLATE/default.md), which records agreement with the [Contributor License Agreement](governance-documents/CS_Contributor_License_Agreement.md).
+**3.2.	Submit a Pull Request.** The pull request description must contain the content of the [pull request template](.github/pull_request_template.md), which records agreement with the [Contributor License Agreement](governance-documents/CS_Contributor_License_Agreement.md).
 
 ## 4.	Pull Request Workflow.
 
