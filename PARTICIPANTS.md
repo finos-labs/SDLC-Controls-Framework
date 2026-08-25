@@ -1,6 +1,6 @@
 # Participants enrolled in the Software Development Lifecycle Common Control Catalog project
 
-Below is the list of [participants](governance-documents/5._Governance.md#1roles) in the Software Development Lifecycle Common Control Catalog, who have committed to the [Community Specification Contributor License Agreement](governance-documents/0._CS_Contributor_License_Agreement.md).
+Below is the list of [participants](GOVERNANCE.md#1-roles) in the SDLC Common Controls Catalog project, who have committed to the [Community Specification Contributor License Agreement](governance-documents/CS_Contributor_License_Agreement.md).
 
 ## Participants
 - Name, organization, Date of enrollment: MMM/DD/YYYY
@@ -17,11 +17,11 @@ Below is the list of [participants](governance-documents/5._Governance.md#1roles
 
 
 ## How to enroll as a participant
-In order to enroll as a participant in the Software Development Lifecycle Common Control Catalog project, please submit a Pull Request to this [participants](#participants) file listing your name, organization, and date of enrollment, by following the steps described below. 
+In order to enroll as a participant in the SDLC Common Controls Catalog project, please submit a Pull Request to this [participants](#participants) file listing your name, organization, and date of enrollment, by following the steps described below. 
 
 _:question:Please email help@finos.org if you encounter issues or have questions._
 
-**Step 1. Go to  the [participants](#participants) file** and make sure you are signed into your {GitHub} account
+**Step 1. Go to  the [participants](#participants) file** and make sure you are signed into your GitHub account
 
 **Step 2. Click on the :pen: icon at the top right of the the [participants](#participants) file**
     
@@ -52,4 +52,3 @@ _:question:Please email help@finos.org if you encounter issues or have questions
 **Step 5.4. The EasyCLA bot will flag your PR and leave a comment with instructions, follow them to sign the CLA**
 
 _:question:Please email help@finos.org if you encounter issues or have questions._
-
