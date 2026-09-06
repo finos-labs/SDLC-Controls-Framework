@@ -96,10 +96,10 @@ Build toolchain monitoring provides comprehensive visibility across five domains
 
 ## Requirements
 
-* Update the security management system(SMS) so it includes the list of products and components that are part of your SDLC
+* Update the security management system (SMS) so it includes the list of products and components that are part of your SDLC and these products configurations, acecss and hardware.
 * Document controls that must be implemented for each product from the above list and set baselines for the controls defined
-* Record quarterly access reviews, change tickets for pipeline modifications, drift-check output, integrity verification results and internal audit reports. 
-* Perform annual internal audits that samples build systems against the baseline plus continuous automated config checks and record results.
+* Record periodically access reviews, change tickets for pipeline modifications, drift-check output, integrity verification results and internal audit reports. 
+* Perform periodic internal audits that samples build systems against the baseline plus continuous automated config checks and record results.
 * Collect the recorded internal audits results as specific "evidence pack" to allow Auditors evaluate toolchain hardening through Document Reviews and On-Site/Virtual Infrastructure Inspections
 
 ## Examples & Commentary
