@@ -7,7 +7,6 @@ type: PREV
 phase: META
 nist-sp-800-53r5_references:
   - au-11  # AU-11 Audit Record Retention
-  - mp-6   # MP-6 Media Sanitization
   - si-12  # SI-12 Information Management and Retention
   - sa-4   # SA-4 Acquisition Process
 uk-fca_references:
@@ -30,47 +29,34 @@ related_mitigations:
 
 ## Summary
 
-The organisation must define, for each class of SDLC-generated record and artefact, a minimum period for which it must be retained and a point at which it must be securely disposed of, so that governance evidence survives long enough to support oversight and to be produced on demand, while data that is no longer needed does not persist as an unmanaged exposure.
+The organisation must retain the governance and compliance evidence its SDLC controls generate, such as review outcomes, test evidence, scan results, approval records, deployment records, build artefacts, and audit logs, for at least as long as regulatory, contractual, and audit obligations require, and must keep those records immutable for that period so they can be produced on demand and trusted as evidence.
 
 ## Description
 
-SDLC activity generates records and artefacts across the lifecycle, such as review outcomes, test evidence, scan results, approval records, deployment records, build artefacts, audit logs, and exception records. Each of these is produced by a more specific mitigation elsewhere in this catalogue, for example [SDLC-PREV-001]({% link _mitigations/mi-1_code-review.md %}) for review outcomes and [SDLC-PREV-014]({% link _mitigations/mi-14_test-evidence.md %}) for test evidence. This mitigation is the general policy those records are governed by. It does not replace the record producing controls; it sets how long their output must be kept, and what happens to it afterwards.
+SDLC activity generates records and artefacts across the lifecycle. Each is produced by a more specific mitigation elsewhere in this catalogue, for example [SDLC-PREV-001]({% link _mitigations/mi-1_code-review.md %}) for review outcomes and [SDLC-PREV-014]({% link _mitigations/mi-14_test-evidence.md %}) for test evidence. This mitigation does not replace those record producing controls; it sets how long their output must survive and how it must be protected while it does, so that a control which operated correctly can still be shown to have done so.
 
-Retention has two failure directions. An organisation that deletes a review outcome, test result, or approval record too early cannot use it to investigate an incident, assess whether a control is working, or hold a decision accountable. On the other hand, stale build artefacts, decommissioned environment snapshots, superseded test data, and old pipeline logs that persist only because nobody set an end date add up to an exposure surface no one is managing.
+This mitigation exists to address [SDLC-RC-005]({% link _risks/ri-5_audit-and-compliance-evidence-failure.md %}) (Audit and Compliance Evidence Failure), which recurs in three forms: a record is deleted or overwritten before the retention window needed to cover an examination period has elapsed, a record survives but its integrity cannot be trusted because it was modifiable after the fact, or a record lives only in third-party or SaaS tooling that the organisation's retention controls were never extended to, so it is lost to the vendor's own default retention or to offboarding. The requirements below address each in turn: a minimum retention period, immutability for that period, and retention that extends to third-party tooling.
 
-A record class therefore has two boundaries. The floor is a minimum retention period, set by the longest applicable regulatory or contractual requirement, below which disposal is prohibited. The ceiling is a maximum period, or a triggering event, beyond which disposal is required. These obligations follow the record, not the system that produced it. They apply equally to records held internally and to records held in third-party or SaaS tooling, and they can be suspended by a legal or regulatory hold without being permanently disabled.
+Disposal once a record is no longer required is still necessary, since evidence with no end date becomes its own unmanaged exposure. How disposal is carried out (sanitisation methods, legal holds, decommissioning) sits outside the SDLC: it is the organisation's general data retention and disposal policy applied to this record class, and this control does not redefine it.
 
 ## Requirements
 
-* The organisation MUST maintain a data retention and disposal policy that classifies SDLC-generated record and artefact types and assigns each class a minimum retention period and a maximum retention period or disposal-triggering event
-* The minimum retention period for a record class MUST NOT be less than the longest applicable regulatory or contractual retention requirement for that class
-* Records subject to a minimum retention period MUST be immutable for the duration of that period; they MUST NOT be modifiable, deletable, or replaceable outside an approved and auditable exception process
-* Once a record class reaches its maximum retention period or disposal-triggering event, it MUST be securely disposed of unless a legal hold or an approved retention exception applies
-* Secure disposal MUST use a sanitisation method appropriate to the storage medium such that the disposed data is not recoverable through ordinary means
-* A legal hold process MUST exist that can suspend scheduled disposal for records subject to litigation, regulatory examination, or investigation, and that hold MUST be releasable only by an authorised approver
-* Retention and disposal obligations MUST extend to third-party or SaaS tooling that stores SDLC records on the organisation's behalf, through contractual terms, configuration, or both
-* Disposal actions MUST themselves be logged, including the record class, volume or identity of the disposed records, the actor or automated process that performed the disposal, and the timestamp
-* The organisation MUST review the retention and disposal policy periodically and whenever an applicable regulatory or contractual retention requirement is introduced or changes
-* An exception process MUST exist for retaining a record class beyond its maximum period or disposing of it before its minimum period has elapsed; exceptions MUST require named approval, documented justification, and are subject to periodic governance review
+* The organisation MUST classify SDLC-generated governance record and artefact types (such as review outcomes, test evidence, scan results, approval records, deployment records, build artefacts, audit logs, and exception records) and assign each class a minimum retention period
+* The minimum retention period for a record class MUST NOT be less than the longest applicable regulatory, contractual, or audit cycle requirement for that class
+* Records MUST be immutable and tamper-evident for the duration of their minimum retention period; they MUST NOT be modifiable, deletable, or replaceable outside an approved and auditable exception process
+* Retention for the record classes and minimum periods established above MUST cover SDLC records held in third-party or SaaS tooling (such as CI/CD, ticketing, code review, and artefact repositories), through contractual terms, configuration, or export before offboarding
+* An exception process MUST exist for disposing of a record class before its minimum retention period has elapsed, or for extending retention beyond policy
+* Disposal of a record class once its minimum retention period has elapsed MUST follow the organisation's data retention and disposal policy, unless a legal hold or an approved retention exception applies
 
 ## Examples & Commentary
 
-* **Setting the floor per record class:** The longest applicable requirement usually differs by record type and jurisdiction. Audit and compliance evidence, financial transaction adjacent records, and general operational records often carry different regulatory minimums. The policy should record, per class, which requirement sets the floor rather than applying one blanket period to all SDLC records.
+* **Immutability in practice:** Write once storage, object lock or retention lock settings on artefact repositories, and append only audit log configurations are the common ways to make the immutability requirement concrete rather than a paper policy.
 
-* **Disposal as a scheduled event, not an afterthought:** Configure object storage lifecycle rules, log retention settings, and artefact repository cleanup jobs to enforce the maximum period automatically, rather than relying on manual purges. Automated enforcement also produces the disposal log entries the policy requires.
-
-* **Sanitisation methods:** Cryptographic erasure (destroying the key protecting encrypted data at rest) is typically sufficient and auditable for cloud object storage; physical media destruction with a certificate of destruction may be required for on-premises hardware being decommissioned.
-
-* **Legal hold interaction:** When an incident or regulatory inquiry is opened, the records relevant to the affected systems and time period should be placed on hold before any scheduled disposal job runs, and the hold should be scoped and time-bound so it is lifted once no longer needed rather than becoming a silent, permanent retention exception.
-
-* **Third-party flow-down:** Where CI/CD, ticketing, or artefact hosting is outsourced to a SaaS vendor, the retention and disposal obligations should appear in the vendor contract, including the vendor's obligation to support export before offboarding and to confirm deletion afterwards. The organisation remains accountable for the record even though it does not control the storage.
-
-* **Stale lower-environment data:** Test and staging environments that retain copies of production-like data past their operational need are a common source of ceiling failures. Data refresh and expiry policies for these environments should be governed by the same policy as other SDLC records, even though the data did not originate from a governance process.
+* **Third-party flow-down:** Where CI/CD, ticketing, or artefact hosting is outsourced to a SaaS vendor, the retention obligation should appear in the vendor contract, including the vendor's obligation to support export before offboarding. The organisation remains accountable for the record even though it does not control the storage.
 
 ## Links
 
 - [NIST SP 800-53r5 AU-11: Audit Record Retention](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf)
-- [NIST SP 800-53r5 MP-6: Media Sanitization](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf)
 - [NIST SP 800-53r5 SI-12: Information Management and Retention](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf)
 - [NIST SSDF SP 800-218 PS.3: Archive and Protect Each Software Release](https://csrc.nist.gov/pubs/sp/800/218/final)
 - [NYDFS 23 NYCRR 500.13: Limitations on Data Retention](https://www.dfs.ny.gov/system/files/documents/2023/03/23NYCRR500_0.pdf)
