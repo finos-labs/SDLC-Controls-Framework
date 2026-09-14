@@ -30,7 +30,7 @@ related_mitigations:
 
 ## Summary
 
-Produce signed and immutable provenance evidence for any agentic process that significantly effects a high-risk system's SDLC pipeline—including processes that produce, approve, scan, or test software, or perform release operations—so that all agentic steps can be monitored and gated throughout the pipeline and after release.
+Produce signed and immutable provenance evidence for any agentic process that significantly affects a high-risk system's SDLC pipeline—including processes that produce, approve, scan, or test software, or perform release operations—so that all agentic steps can be monitored and gated throughout the pipeline and after release.
 
 ## Description
 
@@ -47,7 +47,7 @@ This control complements [MI-3 Software Artifact Provenance]({% link _mitigation
 - Provenance MUST be linked to the released software identity in a way that supports both in-pipeline gating and post-market monitoring / post-release audit
 - Pipeline and release gates MUST be able to verify that required agentic provenance exists and that the recorded agentic components were approved under corporate policy before promotion to production
 - Provenance records MUST answer, at minimum:
-  - **Which agentic process performed the operation**, identifying the agent, harness, and models involved
+  - **Which agentic process operated**, identifying the agent, harness, and models involved
   - **Which context resources** (guidelines, policies, or prompts) were used throughout the agentic session(s)
   - **Which agentic tools were involved** (e.g. skills, MCP tools, and equivalent tool integrations)
   - **How to access the agentic session logs**
