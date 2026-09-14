@@ -44,7 +44,7 @@ Disposal once a record is no longer required is still necessary, since evidence 
 * The organisation MUST classify SDLC-generated governance record and artefact types (such as review outcomes, test evidence, scan results, approval records, deployment records, build artefacts, audit logs, and exception records) and assign each class a minimum retention period
 * The minimum retention period for a record class MUST NOT be less than the longest applicable regulatory, contractual, or audit cycle requirement for that class
 * Records MUST be immutable and tamper-evident for the duration of their minimum retention period; they MUST NOT be modifiable, deletable, or replaceable outside an approved and auditable exception process
-* Retention MUST extend to SDLC records held in third-party or SaaS tooling (such as CI/CD, ticketing, code review, and artefact repositories), through contractual terms, configuration, or export before offboarding
+* Retention for the record classes and minimum periods established above MUST cover SDLC records held in third-party or SaaS tooling (such as CI/CD, ticketing, code review, and artefact repositories), through contractual terms, configuration, or export before offboarding
 * An exception process MUST exist for disposing of a record class before its minimum retention period has elapsed, or for extending retention beyond policy
 * Disposal of a record class once its minimum retention period has elapsed MUST follow the organisation's data retention and disposal policy, unless a legal hold or an approved retention exception applies
 
