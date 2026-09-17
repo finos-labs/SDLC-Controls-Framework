@@ -6,7 +6,7 @@ This document provides the contribution policy for specifications and other docu
 
 All contributions to this repository are made in agreement with the [Community Specification Contributor License Agreement 1.0](governance-documents/CS_Contributor_License_Agreement.md).
 
-Pull requests **must** contain the enrollment and contribution language in the [pull request template](.github/pull_request_template.md). A pull request that omits that content will not be accepted.
+All contributors must be listed in the [PARTICIPANTS.md](PARTICIPANTS.md) file and contributions must pass the EasyCLA checks. See [PARTICIPANTS.md#how-to-enroll-as-a-participant](PARTICIPANTS.md#how-to-enroll-as-a-participant) to enroll as a participant.
 
 ## 1.	Contribution Guidelines. 
 
