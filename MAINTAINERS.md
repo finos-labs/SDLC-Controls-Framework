@@ -9,3 +9,4 @@ This file lists the maintainers of this project.
 | Aaron Searle | Morgan Stanley | @aaronsearle |
 | Gay Pinto | UBS | |
 | Abhishek Chowdhury | UBS | @abhishek-chowdhury_ee2 |
+| Alex Kantor | Kosli | @AlexKantor87 |
