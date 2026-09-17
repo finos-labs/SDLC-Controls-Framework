@@ -11,6 +11,7 @@ This file lists the maintainers of this repository.
 | Aaron Searle | Morgan Stanley | @aaronsearle |
 | Gay Pinto | UBS | |
 | Abhishek Chowdhury | UBS | @abhishek-chowdhury_ee2 |
+| Alex Kantor | Kosli | @AlexKantor87 |
 
 For information about maintainer responsibilities, see [GOVERNANCE.md](GOVERNANCE.md) and the [FINOS Maintainers Cheatsheet](https://community.finos.org/docs/finos-maintainers-cheatsheet).
 
@@ -23,3 +24,4 @@ All changes to the maintainer list are managed openly:
 - This process creates a public audit trail of project leadership over time.
 
 Please email **help@finos.org** whenever this file is updated with a change to maintainership.
+
