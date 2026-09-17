@@ -1,4 +1,4 @@
-![badge-labs](https://user-images.githubusercontent.com/327285/230928932-7c75f8ed-e57b-41db-9fb7-a292a13a1e58.svg)
+[![FINOS - Incubating](https://cdn.jsdelivr.net/gh/finos/contrib-toolbox@master/images/badge-incubating.svg)](https://community.finos.org/docs/governance/lifecycle-stages/incubating)
 
 # SDLC Common Controls Catalog
 
@@ -92,16 +92,17 @@ docker run --rm -v "$PWD:/srv/jekyll" -p 4000:4000 jekyll/jekyll jekyll serve
 Then visit http://127.0.0.1:4000 to view the site.
 
 
+## Governance
+
+This repository follows the Community Specification process. See:
+
+* [GOVERNANCE.md](GOVERNANCE.md)
+* [CONTRIBUTING.md](CONTRIBUTING.md)
+* [SCOPE.md](SCOPE.md)
+* [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+* [MAINTAINERS.md](MAINTAINERS.md)
+* Remaining templates in [governance-documents/](governance-documents/)
+
 ## License
 
-Copyright © 2025 Fintech Open Source Foundation
-
-This work is licensed under a [Creative Commons Attribution 4.0 International License][cc-by].
-
-[![CC BY 4.0][cc-by-image]][cc-by]
-
-[cc-by]: http://creativecommons.org/licenses/by/4.0/
-[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
-[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
-
-SPDX-License-Identifier: [CC BY 4.0](https://spdx.org/licenses/CC-BY-4.0.html).
+This project uses the **Community Specification License 1.0** for its specifications and **Apache License v2** for the underlying source code; you can read more in the [LICENSE](LICENSE) file.
