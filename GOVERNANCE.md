@@ -1,6 +1,6 @@
 # Community Specification Governance Policy 1.0
 
-This document provides the governance policy for specifications and other documents developed using the Community Specification process in a repository (each a “Working Group”).  Each Working Group and must adhere to the requirements in this document.
+This document provides the governance policy for specifications and other documents developed using the Community Specification process in a repository (each a “Working Group”). Each Working Group Participant must adhere to the requirements in this document. Each Working Group is part of the SDLC Controls Catalog project, which has been established as SDLC Controls Catalog a Series of LF Projects, LLC.  The policies of LF Projects, LLC, available at www.lfprojects.org/policies/ apply to participation in each Working Group.This document provides the governance policy for specifications and other documents developed using the Community Specification process in a repository (each a “Working Group”). Each Working Group Participant must adhere to the requirements in this document. Each Working Group is part of the {standard-name} project, which has been established as {standard-name} a Series of LF Projects, LLC.  The policies of LF Projects, LLC, available at www.lfprojects.org/policies/ apply to participation in each Working Group.
 
 ## 1.	Roles.
 
