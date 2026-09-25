@@ -11,7 +11,7 @@ chain:
   - requirements-governance
 related_mitigations:
   - mi-4   # Requirements Repository
-  - mi-19  # Version Release Approval Gating
+  - mi-19  # Release Approval Gating
 ---
 
 ## Summary
