@@ -6,6 +6,9 @@
 # EBA/GL/2025/02 (applicable 20 May 2025). Map to DORA, not the EBA guidelines.
 # Authoritative text: https://eur-lex.europa.eu/eli/reg_del/2024/1774/oj
 
+dora-art-8:
+  title: 'DORA Art. 8 — Identification of ICT assets and dependencies'
+  url: https://www.springlex.eu/en/packages/dora/dora-regulation/article-8/
 dora-art-9-4-e:
   title: 'DORA Art. 9(4)(e) — ICT change management policies'
   url: https://www.springlex.eu/en/packages/dora/dora-regulation/article-9/
